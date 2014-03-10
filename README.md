@@ -13,9 +13,8 @@ TeachMe is a platform for everyone who wants to learn or needs help with studyin
 ASP.NET MVC 5 + Razor + HTML + JavaScript + MSSQL and more....
 </p>
 
-<p>
+
 <b>TeachMe Team</b><br>
-[Dev Ninjas ...](https://github.com/matrostik/teachme.mvc.net/wiki/Team)
-</p>
+[Dev Ninjas ...](https://github.com/matrostik/teachme.mvc.net/wiki/Team)</p>
 
 See more at [TeachMe Wiki](https://github.com/matrostik/teachme.mvc.net/wiki)

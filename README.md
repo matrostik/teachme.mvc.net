@@ -1,7 +1,7 @@
 teachme.mvc.net
 ===============
 
-<b>TRepository for TeachMe Project</b>
+<b>Repository for TeachMe Project</b>
 
 <p>
 <b>TeachMe Info</b><br>

@@ -154,3 +154,5 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+TeachMe/App_Data/aspnet-TeachMe-20140310100512.mdf
+TeachMe/App_Data/aspnet-TeachMe-20140310100512_log.ldf

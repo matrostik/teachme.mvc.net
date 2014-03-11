@@ -15,14 +15,14 @@ namespace TeachMe.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "TeachMe";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "TeachMe contact page.";
 
             return View();
         }

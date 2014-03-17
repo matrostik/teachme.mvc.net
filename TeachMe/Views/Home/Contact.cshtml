@@ -24,9 +24,9 @@
             @Html.ValidationMessageFor(model => model.From)
         </p>
         @*<p>
-            To:
-            @Html.TextBoxFor(m => m.To, new { @class = "form-control", @id = "inputDefault" })
-        </p>*@
+                To:
+                @Html.TextBoxFor(m => m.To, new { @class = "form-control", @id = "inputDefault" })
+            </p>*@
         <p>
             Subject:
             @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @id = "inputDefault" })
@@ -37,7 +37,7 @@
             @Html.TextAreaFor(m => m.Body, new { @class = "form-control", @rows = "5", @id = "inputDefault" })
             @Html.ValidationMessageFor(model => model.Body)
         </p>
-    <input type="submit" value="Send" class="btn btn-primary" />
-        @ViewBag.Result
+        <input type="submit" value="Send" class="btn btn-primary" />
+        <span class="label label-info">   @ViewBag.Result</span>
     }
 </fieldset>

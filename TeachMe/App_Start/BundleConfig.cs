@@ -24,7 +24,7 @@ namespace TeachMe
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/amelia.css",
                       "~/Content/site.css"));
         }
     }

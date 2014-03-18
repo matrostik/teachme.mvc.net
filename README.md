@@ -5,7 +5,7 @@ teachme.mvc.net
 ![aglos / A-Smart-Lecturer](http://i.imgur.com/PlNiLUl.jpg)
 <p>
 <b>TeachMe Info</b><br>
-TeachMe is a platform for everyone who wants to learn or needs help with studying. This application allows you to look for a teacher in your area and get recommendations for him.
+TeachMe is a platform for everyone who looking for a private teacher or want to advertise himself as a teacher.
 </p>
 
 <p>

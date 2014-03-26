@@ -36,18 +36,12 @@ namespace TeachMe.Controllers
             {
                 MailMessage email = new MailMessage();
                 email.To.Add("matrostik@gmail.com,kobieliasi@gmail.com,anttross@gmail.com,ahuvabloy@gmail.com");
-                email.From = new MailAddress(mail.From);
+                email.From = new MailAddress(mail.From, "TechMe");
                 email.Subject = mail.Subject;
                 string Body = mail.Body;
                 email.Body = Body;
                 email.IsBodyHtml = true;
                 SmtpClient smtp = new SmtpClient();
-                smtp.Host = "smtp.gmail.com";
-                smtp.Port = 587;
-                smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new System.Net.NetworkCredential
-                ("jce.teachme", "jcesoft2014");// Enter seders User name and password  
-                smtp.EnableSsl = true;
                 try
                 {
                     smtp.Send(email);
@@ -56,7 +50,7 @@ namespace TeachMe.Controllers
                 catch (Exception)
                 {
                     ViewBag.Result = "Error";
-                } 
+                }
             }
 
             return View(new MailModel());

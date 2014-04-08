@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using TeachMe.Helpers;
 using TeachMe.Models;
 
 namespace TeachMe.Controllers
@@ -34,17 +35,20 @@ namespace TeachMe.Controllers
         {
             if (ModelState.IsValid)
             {
-                MailMessage email = new MailMessage();
-                email.To.Add("matrostik@gmail.com,kobieliasi@gmail.com,anttross@gmail.com,ahuvabloy@gmail.com");
-                email.From = new MailAddress(mail.From, "TechMe");
-                email.Subject = mail.Subject;
-                string Body = mail.Body;
-                email.Body = Body;
-                email.IsBodyHtml = true;
-                SmtpClient smtp = new SmtpClient();
+                //MailMessage email = new MailMessage();
+                //email.To.Add("matrostik@gmail.com,kobieliasi@gmail.com,anttross@gmail.com,ahuvabloy@gmail.com");
+                //email.From = new MailAddress(mail.From, "TeachMe");
+                //email.Subject = mail.Subject;
+                //string Body = mail.Body;
+                //email.Body = Body;
+                //email.IsBodyHtml = true;
+                //SmtpClient smtp = new SmtpClient();
                 try
                 {
-                    smtp.Send(email);
+                    //smtp.Send(email);
+
+                    string to = "matrostik@gmail.com,kobieliasi@gmail.com,anttross@gmail.com,ahuvabloy@gmail.com";
+                    Email.Send(to, mail.From, "Feedback",mail.Body, EmailTemplate.Feedback);
                     ViewBag.Result = "Success";
                 }
                 catch (Exception)

@@ -35,29 +35,19 @@ namespace TeachMe.Controllers
         {
             if (ModelState.IsValid)
             {
-                //MailMessage email = new MailMessage();
-                //email.To.Add("matrostik@gmail.com,kobieliasi@gmail.com,anttross@gmail.com,ahuvabloy@gmail.com");
-                //email.From = new MailAddress(mail.From, "TeachMe");
-                //email.Subject = mail.Subject;
-                //string Body = mail.Body;
-                //email.Body = Body;
-                //email.IsBodyHtml = true;
-                //SmtpClient smtp = new SmtpClient();
                 try
                 {
-                    //smtp.Send(email);
-
                     string to = "matrostik@gmail.com,kobieliasi@gmail.com,anttross@gmail.com,ahuvabloy@gmail.com";
                     Email.Send(to, mail.From, "Feedback",mail.Body, EmailTemplate.Feedback);
                     ViewBag.Result = "Success";
+                    return RedirectToAction("Contact");
                 }
                 catch (Exception)
                 {
                     ViewBag.Result = "Error";
                 }
             }
-
-            return View(new MailModel());
+            return View(mail);
         }
     }
 }

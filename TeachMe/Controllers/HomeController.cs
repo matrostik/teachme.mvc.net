@@ -37,7 +37,7 @@ namespace TeachMe.Controllers
             {
                 try
                 {
-                    string to = "matrostik@gmail.com";//,kobieliasi@gmail.com,anttross@gmail.com,ahuvabloy@gmail.com";
+                    string to = "matrostik@gmail.com,kobieliasi@gmail.com,anttross@gmail.com,ahuvabloy@gmail.com";
                     Email.Send(to, mail.From, "Feedback",mail.Body, EmailTemplate.Feedback);
                     ViewBag.Result = "Success";
                     return RedirectToAction("Index", "Result", new { Message = ResultMessageId.FeedbackSend });

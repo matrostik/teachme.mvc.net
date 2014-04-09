@@ -13,6 +13,38 @@ namespace TeachMe.Controllers
     {
         public ActionResult Index()
         {
+            FakeDB db =new FakeDB();
+            //List<SelectListItem> l = db.Cat.
+            
+
+            var cats = db.Cat;
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem());
+            for (int i = 0; i < cats.Count; i++)
+            {
+                items.Add(new SelectListItem
+                {
+                    Text = cats[i],
+                    Value = cats[i]
+                });
+            }
+            ViewBag.Cats = items;
+
+
+            var cities = db.Cities;
+            items = new List<SelectListItem>();
+            //items.Add(new SelectListItem());
+            for (int i = 0; i < cities.Count; i++)
+            {
+                items.Add(new SelectListItem
+                {
+                    Text = cities[i],
+                    Value = cities[i]
+                });
+            }
+            ViewBag.Cities = items;
+
+
             return View();
         }
 

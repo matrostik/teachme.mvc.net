@@ -1,0 +1,16 @@
+﻿@using TeachMe.Models
+@{
+    ViewBag.Title = "חיפוש";
+}
+
+<h2>תוצאןת חיפוש</h2>
+
+
+  @foreach (var item in (List<Teacher>)@ViewBag.Result)
+{
+    <div class="alert alert-dismissable alert-info">
+        @item.FirstName @item.LastName @item.Age @item.City @item.Category @item.Price @item.Phone
+    </div>
+}
+
+

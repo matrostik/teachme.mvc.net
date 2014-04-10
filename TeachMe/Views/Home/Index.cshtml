@@ -3,53 +3,70 @@
 }
 
 <div class="jumbotron">
+
     <div class="row">
-        <div class="col-md-4" style="border:double; border-color:white">
-            <h1>TeachMe</h1>
-            <p class="lead"><img src="/Images/teachme.jpg" width="185" height="185" /></p>
+        <div class="col-md-4">
+            <center>
+                <h1>TeachMe</h1>
+                <img src="/Images/teachme.jpg" width="185" height="185" style="" />
+                <p>
+                    חיפוש מורה פרטי בכל תחום ובכל מקום שתבחר
+                </p>
+                <p><a href="https://github.com/matrostik/teachme.mvc.net/wiki" class="btn btn-primary btn-large">לפרטים &raquo;</a></p>
+            </center>
         </div>
 
-        <div class="col-md-8" style="border:double; border-color:white">
-            @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                <p>
-                    תחום הלימוד: @Html.DropDownList("category", (List<SelectListItem>)@ViewBag.Cats, "בחר תחום", new { @class = "form-control" })
-                </p>
-                <p>
-                    עיר: @Html.DropDownList("city", (List<SelectListItem>)@ViewBag.Cities, "בחר עיר", new { @class = "form-control" })
-                </p>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" class="btn btn-default" value="חפש" />
-                    </div>
-                </div>
-            }
-            @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                <p>
-                    @Html.Label("firstName", "שם פרטי")
-                    @Html.TextBox("firstName", "", new { @class = "form-control", @id = "inputDefault" })
-                </p>
-                <p>
-                    @Html.Label("lastName", "שם משפחה")
-                    @Html.TextBox("lastName", "", new { @class = "form-control", @id = "inputDefault" })
-                </p>
-                <p>
-                    
-                </p>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" class="btn btn-default" value="חפש" />
-                    </div>
-                </div>
-            }
-        </div>
+        <div class="col-md-8">
 
+            <div class="alert alert-dismissable alert-warning">
+                @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            @Html.Label("תחום הלימוד :", new { @class = "col-md-13 control-label" })
+                            @Html.DropDownList("category", (List<SelectListItem>)@ViewBag.Cats, "בחר תחום", new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-6">
+                            @Html.Label("עיר :", new { @class = "col-md-13 control-label" })
+                            @Html.DropDownList("city", (List<SelectListItem>)@ViewBag.Cities, "בחר עיר", new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="col-md-2">
+                            <input type="submit" class="btn btn-primary btn-large" value="חפש" style=" width: 100px" />
+                        </div>
+
+                    </div>
+
+
+                }
+            </div>
+            <div class="alert alert-dismissable alert-warning">
+                @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.Label("firstName", "שם פרטי", new { @class = "col-md-13 control-label" })
+                            @Html.TextBox("firstName", "", new { @class = "form-control", @id = "inputDefault" })
+                        </div>
+                        <div class="col-md-6">
+                            @Html.Label("lastName", "שם משפחה", new { @class = "col-md-13 control-label" })
+                            @Html.TextBox("lastName", "", new { @class = "form-control", @id = "inputDefault" })
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="col-md-2">
+                            <input type="submit" class="btn btn-primary btn-large" value="חפש" style=" width: 100px" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
     </div>
-    <p class="lead">
-        TeachMe is a platform for everyone who is looking for a private teacher or wants to advertise himself as a teacher.
-    </p>
-    <p><a href="https://github.com/matrostik/teachme.mvc.net/wiki" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+
 </div>
 
 <div class="row">

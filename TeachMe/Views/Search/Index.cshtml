@@ -3,13 +3,49 @@
     ViewBag.Title = "חיפוש";
 }
 
-<h2>תוצאןת חיפוש</h2>
+<h2>תוצאות חיפוש</h2>
+<div class="alert alert-dismissable alert-info">
+    סה"כ התקבלו @ViewBag.Count תוצאות
+</div>
 
-
-  @foreach (var item in (List<Teacher>)@ViewBag.Result)
+@foreach (var item in (List<Teacher>)@ViewBag.Result)
 {
-    <div class="alert alert-dismissable alert-info">
-        @item.FirstName @item.LastName @item.Age @item.City @item.Category @item.Price @item.Phone
+    <div class="row" dir="rtl">
+        <div class="col-lg-12">
+            <div class="well sponsor">
+                <div class="row">
+
+                    <div class="col-lg-10" style="border: double; border-color: white">
+                        <span class="lead" style="border:dotted; border-color:white">@item.FirstName @item.LastName</span>
+                        <div class="clearfix" style="border:double; border-color:white">
+                            <p class="text-warning"> 
+                               גיל: @item.Age <br/>
+                               עיר: @item.City <br/>
+                               תחום: @item.Category <br/>
+                               מחיר: @item.Price <br/>
+                               טלפון: @item.Phone <br/>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-2" style="border: double; border-color: white; ">
+                        <a href="Profile" rel="nofollow">
+                            <span>
+                                <img src="~/Images/profile-icon.png" width="150" />
+                            </span>
+                        </a>
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-2">
+                        <p><a class="btn btn-default" href="#">פרופיל המלא &raquo;</a></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 }
 

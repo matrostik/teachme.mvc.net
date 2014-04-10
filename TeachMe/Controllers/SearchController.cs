@@ -20,6 +20,7 @@ namespace TeachMe.Controllers
 
             var s3 = db.Teachers.Where(t => t.Category.Contains(category) && t.City.Contains(city)).ToList();
 
+            ViewBag.Count = s2.Count; 
             ViewBag.Result = s2;
             return View();
         }

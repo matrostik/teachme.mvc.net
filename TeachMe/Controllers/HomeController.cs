@@ -50,15 +50,11 @@ namespace TeachMe.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "TeachMe";
-
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "TeachMe contact page.";
-
             return View();
         }
 

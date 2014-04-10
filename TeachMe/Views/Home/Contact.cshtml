@@ -1,25 +1,27 @@
 ﻿@model TeachMe.Models.MailModel
-@{
-    ViewBag.Title = "Contact";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    <strong>Source code:</strong>   <a href="https://github.com/matrostik/teachme.mvc.net">GitHub</a><br />
-    <strong>Support:</strong>   <a href="https://github.com/matrostik/teachme.mvc.net/issues">Issues tracker</a><br />
-    <strong>Help:</strong> <a href="https://github.com/matrostik/teachme.mvc.net/wiki">Wiki</a>
-</address>
+<h2>כתבו אלינו.</h2>
+<h3>TeachMe יצירת קשר</h3>
+
+<div class="row">
+    <div class="col-md-2" style="float:right" dir="ltr">
+        <address>
+            <strong>Source code:</strong>   <a href="https://github.com/matrostik/teachme.mvc.net">GitHub</a><br />
+            <strong>Support:</strong>   <a href="https://github.com/matrostik/teachme.mvc.net/issues">Issues tracker</a><br />
+            <strong>Help:</strong> <a href="https://github.com/matrostik/teachme.mvc.net/wiki">Wiki</a>
+        </address>
+    </div>
+</div>
 
 <fieldset>
     <legend>
-        Send Email
+        טופס יצירת קשר
     </legend>
     @using (Html.BeginForm())
     {
         @Html.ValidationSummary(true)
         <p>
-            From:
+            דואר אלקטרוני (חובה):
             @Html.TextBoxFor(m => m.From, new { @class = "form-control", @id = "inputDefault" })
             @Html.ValidationMessageFor(model => model.From)
         </p>
@@ -28,16 +30,16 @@
                 @Html.TextBoxFor(m => m.To, new { @class = "form-control", @id = "inputDefault" })
             </p>*@
         <p>
-            Subject:
+            נושא (חובה): 
             @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @id = "inputDefault" })
             @Html.ValidationMessageFor(model => model.Subject)
         </p>
         <p>
-            Body:
+            תוכן ההודעה (חובה):
             @Html.TextAreaFor(m => m.Body, new { @class = "form-control", @rows = "5", @id = "inputDefault" })
             @Html.ValidationMessageFor(model => model.Body)
         </p>
-        <input type="submit" value="Send" class="btn btn-primary" />
+        <input type="submit" value="שלח" class="btn btn-primary" />
         <span class="label label-info">@ViewBag.Result</span>
     }
 </fieldset>

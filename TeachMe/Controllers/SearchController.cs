@@ -13,16 +13,32 @@ namespace TeachMe.Controllers
         // GET: /Search/
         public ActionResult Index(string category, string city, string firstName, string lastName)
         {
+            bool flag = firstName == null;
+            List<Teacher> list = new List<Teacher>();
+            //search by category and city
+            if (flag)
+            {
+                if (!string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(city))
+                    list = FakeDB.Teachers.Where(t => t.Category.Contains(category) && t.City.Contains(city)).ToList();
+                else if (string.IsNullOrEmpty(category))
+                    list = FakeDB.Teachers.Where(t => t.City.Contains(city)).ToList();
+                else
+                    list = FakeDB.Teachers.Where(t => t.Category.Contains(category)).ToList();
+            }
+            //search by firstname and lastname
+            else
+            {
+                if (!string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName))
+                    list = FakeDB.Teachers.Where(t => t.FirstName.Contains(firstName) && t.LastName.Contains(lastName)).ToList();
+                else if (string.IsNullOrEmpty(firstName))
+                    list = FakeDB.Teachers.Where(t => t.LastName.Contains(lastName)).ToList();
+                else
+                    list = FakeDB.Teachers.Where(t => t.FirstName.Contains(firstName)).ToList();
+            }
 
-            FakeDB db = new FakeDB();
-            var s1 = db.Teachers.Where(t => t.Category.Contains(category) ).ToList();
-            var s2 = db.Teachers.Where(t => t.City.Contains(city)).ToList();
-
-            var s3 = db.Teachers.Where(t => t.Category.Contains(category) && t.City.Contains(city)).ToList();
-
-            ViewBag.Count = s2.Count; 
-            ViewBag.Result = s2;
+            ViewBag.Count = list.Count;
+            ViewBag.Result = list;
             return View();
         }
-	}
+    }
 }

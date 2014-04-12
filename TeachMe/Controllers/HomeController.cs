@@ -15,7 +15,6 @@ namespace TeachMe.Controllers
         {
             var cats = FakeDB.Cat;
             List<SelectListItem> items = new List<SelectListItem>();
-            items.Add(new SelectListItem());
             for (int i = 0; i < cats.Count; i++)
             {
                 items.Add(new SelectListItem
@@ -29,7 +28,6 @@ namespace TeachMe.Controllers
 
             var cities = FakeDB.Cities;
             items = new List<SelectListItem>();
-            //items.Add(new SelectListItem());
             for (int i = 0; i < cities.Count; i++)
             {
                 items.Add(new SelectListItem

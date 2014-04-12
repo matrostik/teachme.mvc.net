@@ -6,16 +6,19 @@
 
     <div class="row">
         <div class="col-md-4">
-            <center>
-                <h1>TeachMe</h1>
-                <img src="/Images/teachme.jpg" width="185" height="185" style="" />
-                <p>
-                    חיפוש מורה פרטי בכל תחום ובכל מקום שתבחר
-                </p>
-                <p><a href="https://github.com/matrostik/teachme.mvc.net/wiki" class="btn btn-primary btn-large">לפרטים &raquo;</a></p>
-            </center>
+            <div class="breadcrumb">
+                <center>
+                    @*<h1>TeachMe</h1>*@
+                    <p>
+                        <img src="/Images/logo_no_bg.png" width="185" height="185" style="" />
+                    </p>
+                    <p>
+                        חיפוש מורה פרטי בכל תחום ובכל מקום שתבחר
+                    </p>
+                    <p><a href="https://github.com/matrostik/teachme.mvc.net/wiki" class="btn btn-primary btn-large">לפרטים &raquo;</a></p>
+                </center>
+            </div>
         </div>
-
         <div class="col-md-8">
 
             <div class="alert alert-dismissable alert-warning">
@@ -24,18 +27,19 @@
                     <div class="row">
 
                         <div class="col-md-6">
-                            @Html.Label("תחום הלימוד :", new { @class = "col-md-13 control-label" })
+                            @Html.Label("תחום הלימוד", new { @class = "control-label" })
                             @Html.DropDownList("category", (List<SelectListItem>)@ViewBag.Cats, "בחר תחום", new { @class = "form-control" })
                         </div>
                         <div class="col-md-6">
-                            @Html.Label("עיר :", new { @class = "col-md-13 control-label" })
+                            @Html.Label("עיר", new { @class = "control-label" })
                             @Html.DropDownList("city", (List<SelectListItem>)@ViewBag.Cities, "בחר עיר", new { @class = "form-control" })
                         </div>
                     </div>
+                    <br />
+                    <div class="form-group">
 
-                    <div class="modal-footer">
-                        <div class="col-md-2">
-                            <input type="submit" class="btn btn-primary btn-large" value="חפש" style=" width: 100px" />
+                        <div class="col-lg-2 col-lg-offset-1">
+                            <input type="submit" class="btn btn-primary btn-large" value="חפש" style=" width: 110px" />
                         </div>
 
                     </div>
@@ -47,19 +51,21 @@
                 {
                     <div class="row">
                         <div class="col-md-6">
-                            @Html.Label("firstName", "שם פרטי", new { @class = "col-md-13 control-label" })
+                            @Html.Label("firstName", "שם פרטי", new { @class = "control-label" })
                             @Html.TextBox("firstName", "", new { @class = "form-control", @id = "inputDefault" })
                         </div>
                         <div class="col-md-6">
-                            @Html.Label("lastName", "שם משפחה", new { @class = "col-md-13 control-label" })
+                            @Html.Label("lastName", "שם משפחה", new { @class = "control-label" })
                             @Html.TextBox("lastName", "", new { @class = "form-control", @id = "inputDefault" })
                         </div>
                     </div>
+                    <br />
+                    <div class="form-group">
 
-                    <div class="modal-footer">
-                        <div class="col-md-2">
-                            <input type="submit" class="btn btn-primary btn-large" value="חפש" style=" width: 100px" />
+                        <div class="col-lg-2 col-lg-offset-1">
+                            <input type="submit" class="btn btn-primary btn-large" value="חפש" style=" width: 110px" />
                         </div>
+
                     </div>
                 }
             </div>

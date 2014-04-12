@@ -60,6 +60,7 @@ namespace TeachMe.Models
         public string LastName { get; set; }
 
         [Required]
+        [EmailAddress(ErrorMessage = "Invalid Email")]
         [Display(Name = "E-mail")]
         public string Email { get; set; }
 

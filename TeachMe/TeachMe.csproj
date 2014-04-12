@@ -169,7 +169,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ActionLinkHelper.cs" />
     <Compile Include="Helpers\Email.cs" />
+    <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\FakeDB.cs" />
     <Compile Include="Models\IdentityModels.cs" />

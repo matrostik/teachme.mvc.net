@@ -13,11 +13,7 @@ namespace TeachMe.Controllers
     {
         public ActionResult Index()
         {
-            FakeDB db =new FakeDB();
-            //List<SelectListItem> l = db.Cat.
-            
-
-            var cats = db.Cat;
+            var cats = FakeDB.Cat;
             List<SelectListItem> items = new List<SelectListItem>();
             items.Add(new SelectListItem());
             for (int i = 0; i < cats.Count; i++)
@@ -31,7 +27,7 @@ namespace TeachMe.Controllers
             ViewBag.Cats = items;
 
 
-            var cities = db.Cities;
+            var cities = FakeDB.Cities;
             items = new List<SelectListItem>();
             //items.Add(new SelectListItem());
             for (int i = 0; i < cities.Count; i++)
@@ -50,15 +46,11 @@ namespace TeachMe.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "TeachMe";
-
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "TeachMe contact page.";
-
             return View();
         }
 

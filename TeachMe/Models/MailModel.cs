@@ -5,7 +5,8 @@ namespace TeachMe.Models
     public class MailModel
     {
         [Required(ErrorMessage = "* יש להכניס דוא\"ל")]
-        [RegularExpression(@"^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$",ErrorMessage="* כתובת דוא\"ל לא חוקית ")]
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress(ErrorMessage = "דוא\"ל לא חוקי")]
         public string From { get; set; }
         public string To { get; set; }
         [Required(ErrorMessage = "* יש להכניס נושא")]

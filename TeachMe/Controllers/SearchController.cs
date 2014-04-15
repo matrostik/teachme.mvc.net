@@ -11,6 +11,14 @@ namespace TeachMe.Controllers
     {
         //
         // GET: /Search/
+        public ActionResult Index(int? id)
+        {
+            ViewBag.Count = 0;
+            ViewBag.Result = new List<Teacher>();
+            return View();
+        }
+
+        [HttpPost]
         public ActionResult Index(string category, string city, string firstName, string lastName)
         {
             bool flag = firstName == null;

@@ -44,7 +44,7 @@ namespace TeachMe.Models
                     teachers.Add(teacher);
                 }
 
-                return teachers; 
+                return teachers.OrderBy(o=>o.FirstName).ToList(); 
             }
         }
     }

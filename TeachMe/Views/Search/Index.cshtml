@@ -1,4 +1,6 @@
 ﻿@using TeachMe.Models
+@using PagedList.Mvc
+@*<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />*@
 @{
     ViewBag.Title = "חיפוש";
 }
@@ -20,7 +22,7 @@
     </div>
     <div class="col-md-8" style="float:right">
         <div class="list-group" style="margin-right:15px">
-            @foreach (var item in (List<Teacher>)@ViewBag.Result)
+            @foreach (var item in (PagedList.PagedList<Teacher>)@ViewBag.Result)
             {
                 <div class="row">
 
@@ -46,6 +48,7 @@
                                         טלפון: @item.Phone
                                     </li>
                                 </ul>
+                                <p style="text-align:left"><a class="btn btn-default" href="#">פרופיל המלא &raquo;</a></p>
                             </div>
 
                             <div class="col-md-3" style="padding: 0 5px 0 0;">
@@ -59,15 +62,20 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-lg-2">
-                                <p><a class="btn btn-default" href="#">פרופיל המלא &raquo;</a></p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             }
         </div>
     </div>
 
+    <br />
+    @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+
+   
+
+</div>
+<div class="row">
+    <div class="col-md-6 col-md-offset-4">
+        @Html.PagedListPager((PagedList.PagedList<Teacher>)ViewBag.Result, page => Url.Action("Index", new { page, category = ViewBag.Category, city = ViewBag.City, firstName = ViewBag.FirstName, lastName = ViewBag.LastName }))
+    </div>
 </div>

@@ -10,8 +10,9 @@ namespace TeachMe.Controllers
     {
         //
         // GET: /Search/
-        public ActionResult Index(string category, string city, string firstName, string lastName, int? page)
+        public ActionResult Index(string category, string city, string firstName, string lastName, string sortOrder, int? page)
         {
+
             ViewBag.Category = category;
             ViewBag.City = city;
             ViewBag.FirstName = firstName;
@@ -30,6 +31,29 @@ namespace TeachMe.Controllers
             if (string.IsNullOrEmpty(category) && string.IsNullOrEmpty(city)
                 && string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
                 list = FakeDB.Teachers;
+
+            //sorting
+            if(!string.IsNullOrEmpty(sortOrder))
+            {
+                ViewBag.SortParm = sortOrder;
+                switch (sortOrder)
+                {
+                    case "firstName":
+                        list = list.OrderBy(t => t.FirstName).ToList();
+                        break;
+                    case "lastName":
+                        list = list.OrderBy(t => t.LastName).ToList();
+                        break;
+                    case "priceUp":
+                        list = list.OrderBy(t => t.Price).ToList();
+                        break;
+                    case "priceDown":
+                        list = list.OrderByDescending(t => t.Price).ToList();
+                        break;
+                    default:
+                        break;
+                }
+            }
 
             int pageSize = 10;
             int pageNumber = (page ?? 1);

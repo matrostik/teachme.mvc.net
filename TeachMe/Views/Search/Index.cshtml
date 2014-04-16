@@ -21,49 +21,56 @@
         </div>
     </div>
     <div class="col-md-8" style="float:right">
+        <div class="row" style="margin-right:10px">
+             מיין תוצאות לפי: 
+            | @Html.ActionLink("שם פרטי", "Index", new { sortOrder = "firstName" }) | 
+            @Html.ActionLink("שם משפחה", "Index", new { sortOrder = "lastName" }) | 
+            @Html.ActionLink("מחיר מהנמוך", "Index", new { sortOrder = "priceUp" }) |
+            @Html.ActionLink("מחיר מהגבוה", "Index", new { sortOrder = "priceDown" }) |
+        </div>
         <div class="list-group" style="margin-right:15px">
             @foreach (var item in (PagedList.PagedList<Teacher>)@ViewBag.Result)
             {
                 <div class="row">
 
-                    <div class="list-group-item">
-                        <div class="row">
+                        <div class="list-group-item">
+                            <div class="row">
 
-                            <div class="col-md-9">
-                                <h4 class="list-group-item-heading">@item.FirstName @item.LastName</h4>
-                                <ul class="text-warning" style="margin-right:-20px;">
-                                    <li>
-                                        גיל: @item.Age
-                                    </li>
-                                    <li>
-                                        עיר: @item.City
-                                    </li>
-                                    <li>
-                                        תחום: @item.Category
-                                    </li>
-                                    <li>
-                                        מחיר: @item.Price
-                                    </li>
-                                    <li>
-                                        טלפון: @item.Phone
-                                    </li>
-                                </ul>
-                                <p style="text-align:left"><a class="btn btn-default" href="#">פרופיל המלא &raquo;</a></p>
-                            </div>
+                                <div class="col-md-9">
+                                    <h4 class="list-group-item-heading">@item.FirstName @item.LastName</h4>
+                                    <ul class="text-warning" style="margin-right:-20px;">
+                                        <li>
+                                            גיל: @item.Age
+                                        </li>
+                                        <li>
+                                            עיר: @item.City
+                                        </li>
+                                        <li>
+                                            תחום: @item.Category
+                                        </li>
+                                        <li>
+                                            מחיר: @item.Price
+                                        </li>
+                                        <li>
+                                            טלפון: @item.Phone
+                                        </li>
+                                    </ul>
+                                    <p style="text-align:left"><a class="btn btn-default" href="#">פרופיל המלא &raquo;</a></p>
+                                </div>
 
-                            <div class="col-md-3" style="padding: 0 5px 0 0;">
-                                <div class="well" style="padding: 10px;">
-                                    <a href="#">
-                                        <span>
-                                            <img src="~/Images/profile-icon.png" class="img-responsive" />
-                                        </span>
-                                    </a>
+                                <div class="col-md-3" style="padding: 0 5px 0 0;">
+                                    <div class="well" style="padding: 10px;">
+                                        <a href="#">
+                                            <span>
+                                                <img src="~/Images/profile-icon.png" class="img-responsive" />
+                                            </span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
-                </div>
             }
         </div>
 
@@ -74,8 +81,8 @@
                     <span style="margin-right:20px">עמוד @(list.PageCount < list.PageNumber ? 0 : list.PageNumber) מתוך @list.PageCount </span>
                 }
             }
-            <center>
-                @Html.PagedListPager(list, page => Url.Action("Index", new { page, category = ViewBag.Category, city = ViewBag.City, firstName = ViewBag.FirstName, lastName = ViewBag.LastName }))
+            <center dir="ltr">
+                @Html.PagedListPager(list, page => Url.Action("Index", new { page, category = ViewBag.Category, city = ViewBag.City, firstName = ViewBag.FirstName, lastName = ViewBag.LastName, sortOrder = ViewBag.SortParm }))
             </center>
         </div>
 

@@ -21,13 +21,16 @@
         </div>
     </div>
     <div class="col-md-8" style="float:right">
-        <div class="row" style="margin-right:10px">
-             מיין תוצאות לפי: 
-            | @Html.ActionLink("שם פרטי", "Index", new { sortOrder = "firstName" }) | 
-            @Html.ActionLink("שם משפחה", "Index", new { sortOrder = "lastName" }) | 
-            @Html.ActionLink("מחיר מהנמוך", "Index", new { sortOrder = "priceUp" }) |
-            @Html.ActionLink("מחיר מהגבוה", "Index", new { sortOrder = "priceDown" }) |
-        </div>
+        @if(ViewBag.Count != 0)
+        {
+            <div class="row" style="margin-right:10px">
+                 מיין תוצאות לפי: |
+                @Html.ActionLink("שם פרטי", "Index", new { category = ViewBag.Category, city = ViewBag.City, firstName = ViewBag.FirstName, lastName = ViewBag.LastName, sortOrder = "firstName" }) | 
+                @Html.ActionLink("שם משפחה", "Index", new { category = ViewBag.Category, city = ViewBag.City, firstName = ViewBag.FirstName, lastName = ViewBag.LastName, sortOrder = "lastName" }) | 
+                @Html.ActionLink("מחיר מהנמוך", "Index", new { category = ViewBag.Category, city = ViewBag.City, firstName = ViewBag.FirstName, lastName = ViewBag.LastName, sortOrder = "priceUp" }) |
+                @Html.ActionLink("מחיר מהגבוה", "Index", new { category = ViewBag.Category, city = ViewBag.City, firstName = ViewBag.FirstName, lastName = ViewBag.LastName, sortOrder = "priceDown" }) |
+            </div>
+        }
         <div class="list-group" style="margin-right:15px">
             @foreach (var item in (PagedList.PagedList<Teacher>)@ViewBag.Result)
             {

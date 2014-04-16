@@ -66,16 +66,18 @@
                 </div>
             }
         </div>
-    </div>
 
-    <br />
-    @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+        <div class="row">
+            @{
+                var list = (PagedList.PagedList<Teacher>)ViewBag.Result;
+                if (list.PageCount > 1) { 
+                    <span style="margin-right:20px">עמוד @(list.PageCount < list.PageNumber ? 0 : list.PageNumber) מתוך @list.PageCount </span>
+                }
+            }
+            <center>
+                @Html.PagedListPager(list, page => Url.Action("Index", new { page, category = ViewBag.Category, city = ViewBag.City, firstName = ViewBag.FirstName, lastName = ViewBag.LastName }))
+            </center>
+        </div>
 
-   
-
-</div>
-<div class="row">
-    <div class="col-md-6 col-md-offset-4">
-        @Html.PagedListPager((PagedList.PagedList<Teacher>)ViewBag.Result, page => Url.Action("Index", new { page, category = ViewBag.Category, city = ViewBag.City, firstName = ViewBag.FirstName, lastName = ViewBag.LastName }))
     </div>
 </div>

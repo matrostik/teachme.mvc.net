@@ -10,17 +10,6 @@ namespace TeachMe.Controllers
     {
         //
         // GET: /Search/
-        //public ActionResult Index(int? page)
-        //{
-        //    ViewBag.Count = 0;
-        //    ViewBag.Result = new List<Teacher>();
-        //    int pageSize = 3;
-        //    int pageNumber = (page ?? 1);
-        //    //return View(students.ToPagedList(pageNumber, pageSize));
-        //    return View();
-        //}
-
-
         public ActionResult Index(string category, string city, string firstName, string lastName, int? page)
         {
             ViewBag.Category = category;

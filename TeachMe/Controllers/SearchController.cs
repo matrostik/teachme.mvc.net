@@ -19,13 +19,17 @@ namespace TeachMe.Controllers
             ViewBag.LastName = lastName;
 
             List<Teacher> list = new List<Teacher>();
-            if (!string.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(city))
+                list = (list.Union<Teacher>(FakeDB.Teachers.Where(t => t.Category.Contains(category) && t.City.Contains(city)))).ToList();
+            else if (!string.IsNullOrEmpty(category))
                 list = (list.Union<Teacher>(FakeDB.Teachers.Where(t => t.Category.Contains(category)))).ToList();
-            if (!string.IsNullOrEmpty(city))
+            else if (!string.IsNullOrEmpty(city))
                 list = (list.Union<Teacher>(FakeDB.Teachers.Where(t => t.City.Contains(city)))).ToList();
-            if (!string.IsNullOrEmpty(firstName))
+            else if (!string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName))
+                list = (list.Union<Teacher>(FakeDB.Teachers.Where(t => t.FirstName.Contains(firstName) && t.LastName.Contains(lastName)))).ToList();
+            else if (!string.IsNullOrEmpty(firstName))
                 list = (list.Union<Teacher>(FakeDB.Teachers.Where(t => t.FirstName.Contains(firstName)))).ToList();
-            if (!string.IsNullOrEmpty(lastName))
+            else if (!string.IsNullOrEmpty(lastName))
                 list = (list.Union<Teacher>(FakeDB.Teachers.Where(t => t.LastName.Contains(lastName)))).ToList();
 
             if (string.IsNullOrEmpty(category) && string.IsNullOrEmpty(city)

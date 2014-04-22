@@ -25,6 +25,9 @@
                 @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     <div class="row">
+                        @Html.Label("חיפוש לפי מיקום", new { @class = "control-label" })
+                    </div>
+                    <div class="row">
 
                         <div class="col-md-6">
                             @Html.Label("תחום הלימוד", new { @class = "control-label" })
@@ -49,6 +52,9 @@
             <div class="alert alert-dismissable alert-warning">
                 @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
+                    <div class="row">
+                        @Html.Label("חיפוש לפי פרטי מורה", new { @class = "control-label" })
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             @Html.Label("firstName", "שם פרטי", new { @class = "control-label" })

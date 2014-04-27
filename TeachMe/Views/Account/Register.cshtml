@@ -10,22 +10,25 @@
     @Html.AntiForgeryToken()
     <h4>יצירת חשבון חדש</h4>
     <hr />
-    @Html.ValidationSummary()
+    @Html.ValidationSummary(true)
     <div class="form-group">
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.FirstName)
         </div>
         @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
     </div>
     <div class="form-group">
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.LastName)
         </div>
         @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
     </div>
     <div class="form-group">
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.UserName)
         </div>
         @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
     </div>
@@ -39,12 +42,14 @@
     <div class="form-group">
         <div class="col-md-10">
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Password)
         </div>
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
     </div>
     <div class="form-group">
         <div class="col-md-10">
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ConfirmPassword)
         </div>
         @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
     </div>

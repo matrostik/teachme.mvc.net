@@ -7,6 +7,8 @@ namespace TeachMe.Models
 {
     public class Teacher
     {
+        public int Id { get; set; }
+
         string firstName;
         public string FirstName
         {
@@ -54,6 +56,20 @@ namespace TeachMe.Models
         {
             get { return phone; }
             set { phone = value; }
+        }
+
+        string _latitude;
+        public string Latitude
+        {
+            get { return _latitude; }
+            set { _latitude = value; }
+        }
+
+        string _lognitude;
+        public string Lognitude
+        {
+            get { return _lognitude; }
+            set { _lognitude = value; }
         }
 
     }

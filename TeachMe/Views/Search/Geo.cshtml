@@ -1,0 +1,58 @@
+﻿@using TeachMe.Models
+@{
+    ViewBag.Title = "Geolocation";
+}
+
+<h2>Geo</h2>
+@ViewBag.Address<br/>
+<p dir="ltr" style="text-align:right">
+    @ViewBag.Geo
+</p>
+<div id="map-canvas" style="width: 600px; height: 390px; border: 5px solid #5E5454;"></div>
+
+
+
+@section Scripts {
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGG8Hq0jur-Ca6QtjQ0iQFQ3TJG9WzEA8&v=3.exp&sensor=true&language=he" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        var mapcode;
+        var diag;
+        function initialize() {
+            mapcode = new google.maps.Geocoder();
+            var lnt = new google.maps.LatLng('@(((Geo)ViewBag.Geo).Latitude)', '@(((Geo)ViewBag.Geo).Longitude)' );
+            var diagChoice = {
+                zoom: 15,
+                center: lnt,
+                diagId: google.maps.MapTypeId.ROADMAP
+            }
+            diag = new google.maps.Map(document.getElementById('map-canvas'), diagChoice);
+
+            var marker = new google.maps.Marker({
+                position: lnt,
+                title: '@ViewBag.Address'
+            });
+
+            // To add the marker to the map, call setMap();
+            marker.setMap(diag);
+
+        }
+        function codeAddress() {
+            var add = document.getElementById('address').value;
+            mapcode.geocode({ 'address': add }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    diag.setCenter(results[0].geometry.location);
+                    var hint = new google.maps.Marker({
+                        diag: diag,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    alert('This code is not successful ' + status);
+                }
+            });
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+}
+
+

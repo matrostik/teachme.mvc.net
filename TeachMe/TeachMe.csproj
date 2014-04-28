@@ -180,6 +180,7 @@
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\FakeDB.cs" />
+    <Compile Include="Models\Geo.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\MailModel.cs" />
     <Compile Include="Models\ResultViewModel.cs" />
@@ -248,6 +249,7 @@
     <Content Include="Views\Emails\Feedback.cshtml" />
     <Content Include="Views\Result\Index.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Search\Geo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

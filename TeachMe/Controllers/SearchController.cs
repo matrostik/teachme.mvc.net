@@ -3,6 +3,8 @@ using System.Linq;
 using System.Web.Mvc;
 using TeachMe.Models;
 using PagedList;
+using System.Xml;
+using System.Web;
 
 namespace TeachMe.Controllers
 {
@@ -64,6 +66,49 @@ namespace TeachMe.Controllers
             ViewBag.Count = list.Count;
             ViewBag.Result = list.ToPagedList(pageNumber, pageSize);
             return View();
+        }
+
+         //
+        // GET: /Geo/  test get geolocation
+        public ActionResult Geo(string id)
+        {
+            // get teacher
+            var teacher = FakeDB.Teachers.FirstOrDefault(t => t.Id == int.Parse(id));
+            //get teacher address
+            string adr = "ירושלים, יפו 224";
+            // get geolocation
+            var res = GetLongitudeAndLatitude(adr);
+
+            ViewBag.Address = adr;
+            ViewBag.Geo = res;
+            return View();
+        }
+
+        public Geo GetLongitudeAndLatitude(string address)
+        {
+            string urlAddress = "http://maps.googleapis.com/maps/api/geocode/xml?address=" + HttpUtility.UrlEncode(address)
+                + "&sensor=false&language=he";
+            try
+            {
+                XmlDocument objXmlDocument = new XmlDocument();
+                objXmlDocument.Load(urlAddress);
+                XmlNodeList objXmlNodeList = objXmlDocument.SelectNodes("/GeocodeResponse/result/geometry/location");
+
+                Geo geo = new Geo();
+                foreach (XmlNode objXmlNode in objXmlNodeList)
+                {
+                    // GET LATITUDE 
+                    geo.Latitude = objXmlNode.ChildNodes.Item(0).InnerText;
+                    // GET LONGITUDE 
+                    geo.Longitude = objXmlNode.ChildNodes.Item(1).InnerText;
+                }
+                return geo;
+            }
+            catch
+            {
+                return null;
+            }
+            
         }
     }
 }

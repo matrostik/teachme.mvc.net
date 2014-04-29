@@ -39,7 +39,7 @@ namespace TeachMe.Controllers
                 list = FakeDB.Teachers;
 
             //sorting
-            if(!string.IsNullOrEmpty(sortOrder))
+            if (!string.IsNullOrEmpty(sortOrder))
             {
                 ViewBag.SortParm = sortOrder;
                 switch (sortOrder)
@@ -68,25 +68,36 @@ namespace TeachMe.Controllers
             return View();
         }
 
-         //
+        //
         // GET: /Geo/  test get geolocation
-        public ActionResult Geo(string id)
+        public ActionResult Geo(string id, string address, List<string> items, List<Geo> geos)
         {
             // get teacher
             var teacher = FakeDB.Teachers.FirstOrDefault(t => t.Id == int.Parse(id));
             //get teacher address
-            string adr = "ירושלים, יפו 224";
-            // get geolocation
-            var res = GetLongitudeAndLatitude(adr);
+            if (string.IsNullOrEmpty(address))
+                address = "ירושלים, יפו 224";
+            if (items == null)
+                items = new List<string>();
+            items.Add(address);
 
-            ViewBag.Address = adr;
+            if (geos == null)
+                geos = new List<Geo>();
+ 
+            // get geolocation
+            var res = GetLongitudeAndLatitude(address);
+            geos.Add(res);
+
+            ViewBag.Geos = geos;
+            ViewBag.Items = items;
+            ViewBag.Address = address;
             ViewBag.Geo = res;
             return View();
         }
 
         public Geo GetLongitudeAndLatitude(string address)
         {
-            string urlAddress = "http://maps.googleapis.com/maps/api/geocode/xml?address=" + HttpUtility.UrlEncode(address)
+            string urlAddress = "http://maps.googleapis.com/maps/api/geocode/xml?address=" + HttpUtility.UrlEncode("ישראל," + address)
                 + "&sensor=false&language=he";
             try
             {
@@ -95,6 +106,7 @@ namespace TeachMe.Controllers
                 XmlNodeList objXmlNodeList = objXmlDocument.SelectNodes("/GeocodeResponse/result/geometry/location");
 
                 Geo geo = new Geo();
+                geo.Address = address;
                 foreach (XmlNode objXmlNode in objXmlNodeList)
                 {
                     // GET LATITUDE 
@@ -108,7 +120,7 @@ namespace TeachMe.Controllers
             {
                 return null;
             }
-            
+
         }
     }
 }

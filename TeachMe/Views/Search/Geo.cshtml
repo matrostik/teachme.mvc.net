@@ -3,12 +3,67 @@
     ViewBag.Title = "Geolocation";
 }
 
-<h2>Geo</h2>
-@ViewBag.Address<br/>
-<p dir="ltr" style="text-align:right">
-    @ViewBag.Geo
-</p>
-<div id="map-canvas" style="width: 600px; height: 390px; border: 5px solid #5E5454;"></div>
+<h2>GeoLocation</h2>
+
+<div>
+    @using (Html.BeginForm())
+    {
+        <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-1" style="margin:0;padding:0">
+                <input type="submit" class="btn btn-default" value="חפש">@*onclick="codeAddress()"*@
+            </div>
+            <div class="col-md-3" style="margin:0;padding:0">
+                @*<input id="address" class="form-control type=" type="text" value="ירושלים">*@
+                @Html.TextBox("address", "ירושלים", new { @class = "form-control", @id = "inputDefault" })
+            </div>
+        </div>
+        <div class="row">
+            <ul>
+                @{ var list = (List<string>)ViewBag.Items;
+                 var geos = (List<Geo>)ViewBag.Geos;
+                 for (int i = 0; i < geos.Count; i++)
+                 {
+                     if (geos[i] != null)
+                     {
+                        <li>
+                            <div class="foo" data-latitude="@(geos[i].Latitude)" data-longitude="@(geos[i].Longitude)">
+                                @Html.Hidden("geos[" + i + "].Id", @geos[i].Id)
+                                @Html.Hidden("geos[" + i + "].TeacherId", @geos[i].TeacherId)
+                                @Html.Hidden("geos[" + i + "].Latitude", @geos[i].Latitude)
+                                @Html.Hidden("geos[" + i + "].Longitude", @geos[i].Longitude)
+                                @Html.Hidden("geos[" + i + "].Address", @geos[i].Address)
+                                <label>@geos[i].Address</label>
+                            </div>
+                        </li>
+                     }
+                 }
+                @*for (int i = 0; i < list.Count; i++)
+                    {
+                       <li>
+                           <label>@geos[i].Address</label>
+                           @Html.Hidden("items[" + i + "]", @list[i])
+                       </li>
+                    }*@
+                }
+            </ul>
+        </div>
+
+    }
+</div>
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">Google map</div>
+        <div class="panel-body">
+            @ViewBag.Address<br />
+            <p dir="ltr" style="text-align:right">
+                @ViewBag.Geo
+            </p>
+            <div id="map-canvas" style="width: 100%; min-height:600px; height: 100%; border: 1px solid #5E5454;"></div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -17,35 +72,81 @@
 
     <script type="text/javascript">
         var mapcode;
-        var diag;
+        var map;
         function initialize() {
-            mapcode = new google.maps.Geocoder();
-            var lnt = new google.maps.LatLng('@(((Geo)ViewBag.Geo).Latitude)', '@(((Geo)ViewBag.Geo).Longitude)' );
-            var diagChoice = {
-                zoom: 15,
-                center: lnt,
-                diagId: google.maps.MapTypeId.ROADMAP
-            }
-            diag = new google.maps.Map(document.getElementById('map-canvas'), diagChoice);
-
-            var marker = new google.maps.Marker({
-                position: lnt,
-                title: '@ViewBag.Address'
+            @*var latlng = new google.maps.LatLng('@(((Geo)ViewBag.Geo).Latitude)', '@(((Geo)ViewBag.Geo).Longitude)');
+            var myOptions = {
+                zoom: 12,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+            var marker = new google.maps.Marker
+            (
+                {
+                    position: new google.maps.LatLng('@(((Geo)ViewBag.Geo).Latitude)', '@(((Geo)ViewBag.Geo).Longitude)'),
+                    map: map,
+                    title: 'Click me'
+                }
+            );
+            var contentString = '<div class="text-danger" style="width:275px">'
+                + '<strong>מורה:</strong> ' + 'שם ושם משפחה' + '<br/>'
+                + '<strong>כתובת:</strong> ' + '@ViewBag.Address' + '<br/>'
+                + '<div style="margin-top:10px"><a class="label label-warning" href="#">פרופיל המלא »</a></div><br/>'
+                + '</div>';
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString,
+                size: new google.maps.Size(250, 150)
             });
-
-            // To add the marker to the map, call setMap();
-            marker.setMap(diag);
-
+            google.maps.event.addListener(marker, 'click', function () {
+                // Calling the open method of the infoWindow
+                infowindow.open(map, marker);
+            });*@
+            markicons();
         }
+        window.onload = initialize;
+
+        function markicons() {
+            var latlng = new google.maps.LatLng('@(((Geo)ViewBag.Geo).Latitude)', '@(((Geo)ViewBag.Geo).Longitude)');
+            var foos = $(".foo");
+            var markers = new Array();
+            var mapOptions = {
+                zoom: 12,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var mapCanvas = document.getElementById('map-canvas');
+            if (mapCanvas != null) {
+                map = new google.maps.Map(mapCanvas, mapOptions);
+                $.each(foos, function (key, value) {
+                    markers[key] = new google.maps.Marker({
+                        map: map,
+                        draggable: false,
+                        animation: google.maps.Animation.DROP,
+                        position: new google.maps.LatLng(
+                            Number($(value).attr("data-latitude")),
+                            Number($(value).attr("data-longitude")
+                         ))
+                    });
+                    google.maps.event.addListener(markers[key], 'click', function () {
+                        // If you need this...
+                    });
+                });
+            }
+        }
+
+
         function codeAddress() {
             var add = document.getElementById('address').value;
             mapcode.geocode({ 'address': add }, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     diag.setCenter(results[0].geometry.location);
                     var hint = new google.maps.Marker({
-                        diag: diag,
-                        position: results[0].geometry.location
+                        diag: map,
+                        position: results[0].geometry.location,
+                        title: add
                     });
+                    hint.setMap(diag);
                 } else {
                     alert('This code is not successful ' + status);
                 }

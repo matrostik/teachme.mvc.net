@@ -37,6 +37,20 @@ namespace TeachMe.Models
             set { city = value; }
         }
 
+        string street;
+        public string Street
+        {
+            get { return street; }
+            set { street = value; }
+        }
+
+        int homeNum;
+        public int HomeNum
+        {
+            get { return homeNum; }
+            set { homeNum = value; }
+        }
+
         string category;
         public string Category
         {

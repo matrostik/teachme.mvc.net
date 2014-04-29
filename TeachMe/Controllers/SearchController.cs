@@ -70,17 +70,16 @@ namespace TeachMe.Controllers
 
         //
         // GET: /Geo/  test get geolocation
-        public ActionResult Geo(string id, string address, List<string> items, List<Geo> geos)
+        public ActionResult Geo(string id, string address, List<Geo> geos)
         {
             // get teacher
             var teacher = FakeDB.Teachers.FirstOrDefault(t => t.Id == int.Parse(id));
             //get teacher address
-            if (string.IsNullOrEmpty(address))
-                address = "ירושלים, יפו 224";
-            if (items == null)
-                items = new List<string>();
-            items.Add(address);
+            //if (string.IsNullOrEmpty(address))
+            //    address = "ירושלים";
 
+            if (teacher != null)
+                address = teacher.City + "," + teacher.Street +" "+ teacher.HomeNum;
             if (geos == null)
                 geos = new List<Geo>();
  
@@ -89,9 +88,6 @@ namespace TeachMe.Controllers
             geos.Add(res);
 
             ViewBag.Geos = geos;
-            ViewBag.Items = items;
-            ViewBag.Address = address;
-            ViewBag.Geo = res;
             return View();
         }
 

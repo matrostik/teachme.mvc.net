@@ -20,14 +20,14 @@
         </div>
         <div class="row">
             <ul>
-                @{ var list = (List<string>)ViewBag.Items;
-                 var geos = (List<Geo>)ViewBag.Geos;
+                @{ var geos = (List<Geo>)ViewBag.Geos;
                  for (int i = 0; i < geos.Count; i++)
                  {
                      if (geos[i] != null)
                      {
                         <li>
-                            <div class="foo" data-latitude="@(geos[i].Latitude)" data-longitude="@(geos[i].Longitude)">
+                            <div class="foo" data-latitude="@(geos[i].Latitude)" data-longitude="@(geos[i].Longitude)"
+                                 data-address="@(geos[i].Address)" data-name="@(geos[i].Address)">
                                 @Html.Hidden("geos[" + i + "].Id", @geos[i].Id)
                                 @Html.Hidden("geos[" + i + "].TeacherId", @geos[i].TeacherId)
                                 @Html.Hidden("geos[" + i + "].Latitude", @geos[i].Latitude)
@@ -38,13 +38,6 @@
                         </li>
                      }
                  }
-                @*for (int i = 0; i < list.Count; i++)
-                    {
-                       <li>
-                           <label>@geos[i].Address</label>
-                           @Html.Hidden("items[" + i + "]", @list[i])
-                       </li>
-                    }*@
                 }
             </ul>
         </div>
@@ -55,10 +48,6 @@
     <div class="panel panel-default">
         <div class="panel-heading">Google map</div>
         <div class="panel-body">
-            @ViewBag.Address<br />
-            <p dir="ltr" style="text-align:right">
-                @ViewBag.Geo
-            </p>
             <div id="map-canvas" style="width: 100%; min-height:600px; height: 100%; border: 1px solid #5E5454;"></div>
         </div>
     </div>
@@ -107,7 +96,7 @@
         window.onload = initialize;
 
         function markicons() {
-            var latlng = new google.maps.LatLng('@(((Geo)ViewBag.Geo).Latitude)', '@(((Geo)ViewBag.Geo).Longitude)');
+            var latlng = new google.maps.LatLng(31.7683190, 35.2137100);
             var foos = $(".foo");
             var markers = new Array();
             var mapOptions = {
@@ -119,6 +108,7 @@
             if (mapCanvas != null) {
                 map = new google.maps.Map(mapCanvas, mapOptions);
                 $.each(foos, function (key, value) {
+
                     markers[key] = new google.maps.Marker({
                         map: map,
                         draggable: false,
@@ -128,9 +118,22 @@
                             Number($(value).attr("data-longitude")
                          ))
                     });
+
+                    var contentString = '<div class="text-danger" style="width:275px">'
+               + '<strong>מורה:</strong> ' + 'שם ושם משפחה' + '<br/>'
+               + '<strong>כתובת:</strong> ' + ($(value).attr("data-address")) + '<br/>'
+               + '<div style="margin-top:10px"><a class="label label-warning" href="#">פרופיל המלא »</a></div><br/>'
+               + '</div>';
+                    var infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                        size: new google.maps.Size(250, 150)
+                    });
+
                     google.maps.event.addListener(markers[key], 'click', function () {
                         // If you need this...
+                        infowindow.open(map, markers[key]);
                     });
+
                 });
             }
         }

@@ -42,7 +42,7 @@ namespace TeachMe.Models
                     teacher.Street = temp[4];
                     teacher.HomeNum = int.Parse(temp[5]);
                     teacher.Category = temp[6];
-                    teacher.Price = int.Parse(temp[7]);
+                    teacher.LessonPrice = int.Parse(temp[7]);
                     teacher.Phone = temp[8];
                     teacher.Id = id++;
                     teachers.Add(teacher);

@@ -51,32 +51,16 @@
                     </div>
                     <div class="row" style="margin-top:10px">
                         <div class="col-md-8">
-
+                            @Html.Label(" 3) תבחרו את המקצוע", new { @class = "text-muted" })
+                            @Html.DropDownList("category", (List<SelectListItem>)@ViewBag.Cats, "בחר תחום", new { @class = "form-control" })
                         </div>
                         <div class="col-md-4">
                             @Html.Label(" 2) תכניסו טווח חיפוש בק\"מ", new { @class = "text-muted" })
                             @Html.DropDownList("distance", (List<SelectListItem>)@ViewBag.Numbers, "בחר טווח", new { @class = "form-control", @style = "width:100px" })
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                        </div>
-                        <div class=" col-md-9">
-
-                            @Html.Label(" 3) תבחרו את המקצוע", new { @class = "text-muted" })
-                            @Html.DropDownList("category", (List<SelectListItem>)@ViewBag.Cats, "בחר תחום", new { @class = "form-control" })
-
-                        </div>
-
-                        @*<div class="col-md-6">
-                                @Html.Label("עיר", new { @class = "control-label" })
-                                @Html.DropDownList("city", (List<SelectListItem>)@ViewBag.Cities, "בחר עיר", new { @class = "form-control" })
-                            </div>*@
-
-                    </div>
                     <br />
                     <div class="form-group">
-
                         <div class="col-lg-2 col-lg-offset-1">
                             <input type="submit" class="btn btn-primary btn-large" value="חפש" style=" width: 110px" />
                         </div>

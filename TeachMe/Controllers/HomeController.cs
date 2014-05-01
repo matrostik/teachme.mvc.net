@@ -38,6 +38,17 @@ namespace TeachMe.Controllers
             }
             ViewBag.Cities = items;
 
+            var numbers = new List<string>();
+            var list = new List<SelectListItem>();
+            for (double i = 2.5; i < 50; i += 2.5)
+            {
+                list.Add(new SelectListItem
+                {
+                    Text = i.ToString(),
+                    Value = i.ToString()
+                });
+            }
+            ViewBag.Numbers = list;
 
             return View();
         }

@@ -60,8 +60,26 @@ namespace TeachMe.Controllers
 
         //
         // GET: /Map/city/category/
-        public ActionResult Map(string city, string category)
+        public ActionResult Map(string city, string streetName, string streetNum, string distance, string category)
         {
+            //create and set model
+            var model = new MapSearchViewModel();
+
+            //get user location
+            string adr = city + "," + streetName + " " + streetNum;
+            var userGeo = GetLongitudeAndLatitude(adr);
+            // user location resolved set map settings
+            if(userGeo != null)
+            {
+                model.MapCenter = userGeo;
+                model.MapZoom = 12;
+            }
+            else
+            {
+                model.MapCenter = GetLongitudeAndLatitude("");
+                model.MapZoom = 8;
+            }
+
             List<Teacher> teachers;
             // search for teachers
             if (!string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(category))
@@ -80,19 +98,7 @@ namespace TeachMe.Controllers
                 geo.TeacherId = t.Id;
                 t.GeoLocation = geo;
             }
-            //create and set model
-            var model = new MapSearchViewModel();
-            // map settings
-            if (!string.IsNullOrEmpty(city))
-            {
-                model.MapCenter = GetLongitudeAndLatitude(city);
-                model.MapZoom = 12;
-            }
-            else
-            {
-                model.MapCenter = GetLongitudeAndLatitude("");
-                model.MapZoom = 8;
-            }
+
             // data
             model.Teachers = teachers;
             model.ResultCount = teachers.Count;

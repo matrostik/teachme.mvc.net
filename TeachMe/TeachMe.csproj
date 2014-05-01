@@ -187,6 +187,7 @@
     <Compile Include="Models\MailModel.cs" />
     <Compile Include="Models\MapSearchViewModel.cs" />
     <Compile Include="Models\ResultViewModel.cs" />
+    <Compile Include="Models\Subject.cs" />
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\TeachMeDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

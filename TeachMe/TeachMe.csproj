@@ -179,6 +179,8 @@
     <Compile Include="Helpers\Email.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\City.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\FakeDB.cs" />
     <Compile Include="Models\Geo.cs" />
     <Compile Include="Models\GeoLocation.cs" />
@@ -186,6 +188,7 @@
     <Compile Include="Models\MailModel.cs" />
     <Compile Include="Models\MapSearchViewModel.cs" />
     <Compile Include="Models\ResultViewModel.cs" />
+    <Compile Include="Models\Subject.cs" />
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\TeachMeDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

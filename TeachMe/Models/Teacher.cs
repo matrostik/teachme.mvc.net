@@ -33,6 +33,17 @@ namespace TeachMe.Models
 
         public string Phone{ get; set; }
 
+        public string Education { get; set; }
+
+        public string About { get; set; }
+
+        public string Raters { get; set; }
+
+        public decimal Rating { get; set; }
+
+
+
+
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}", HtmlEncode = true, ApplyFormatInEditMode = true)]
         public DateTime RegistrationDate { get; set; }

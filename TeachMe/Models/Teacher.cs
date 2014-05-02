@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,84 +8,82 @@ namespace TeachMe.Models
 {
     public class Teacher
     {
+
+        #region Fields
+        
         public int Id { get; set; }
 
-        string firstName;
-        public string FirstName
+        public string FirstName { get; set; }
+       
+        public string LastName{ get; set; }
+
+        public string PictureUrl { get; set; }
+
+        public int Age{ get; set; }
+        
+        public string City{ get; set; }
+
+        public string Street{ get; set; }
+
+        public int HomeNum { get; set; }
+
+        public string Category { get; set; }
+
+        public int LessonPrice{ get; set; }
+
+        public string Phone{ get; set; }
+
+        public string Education { get; set; }
+
+        public string About { get; set; }
+
+        public string Raters { get; set; }
+
+        public decimal Rating { get; set; }
+
+
+
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}", HtmlEncode = true, ApplyFormatInEditMode = true)]
+        public DateTime RegistrationDate { get; set; }
+
+        public GeoLocation GeoLocation { get; set; }
+
+        #endregion
+
+        #region Methods
+        
+        /// <summary>
+        /// Returns full address of teacher
+        /// City , Street 10
+        /// Needed for google map
+        /// </summary>
+        /// <returns></returns>
+        public string GetAddressForMap()
         {
-            get { return firstName; }
-            set { firstName = value; }
+            return City + "," + Street + " " + HomeNum;
         }
 
-        string lastName;
-        public string LastName
+        /// <summary>
+        /// Return teacher's full name
+        ///  Firstname Lastname
+        /// </summary>
+        /// <returns></returns>
+        public string GetFullName()
         {
-            get { return lastName; }
-            set { lastName = value; }
+            return FirstName + " " + LastName;
         }
 
-        int age;
-        public int Age
+        /// <summary>
+        /// ToString
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
         {
-            get { return age; }
-            set { age = value; }
+            return base.ToString();
         }
 
-        string city;
-        public string City
-        {
-            get { return city; }
-            set { city = value; }
-        }
-
-        string street;
-        public string Street
-        {
-            get { return street; }
-            set { street = value; }
-        }
-
-        int homeNum;
-        public int HomeNum
-        {
-            get { return homeNum; }
-            set { homeNum = value; }
-        }
-
-        string category;
-        public string Category
-        {
-            get { return category; }
-            set { category = value; }
-        }
-
-        int price;
-        public int Price
-        {
-            get { return price; }
-            set { price = value; }
-        }
-
-        string phone;
-        public string Phone
-        {
-            get { return phone; }
-            set { phone = value; }
-        }
-
-        string _latitude;
-        public string Latitude
-        {
-            get { return _latitude; }
-            set { _latitude = value; }
-        }
-
-        string _lognitude;
-        public string Lognitude
-        {
-            get { return _lognitude; }
-            set { _lognitude = value; }
-        }
-
+        #endregion
     }
 }

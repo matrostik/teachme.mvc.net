@@ -22,25 +22,45 @@
         <div class="col-md-8">
 
             <div class="alert alert-dismissable alert-warning">
-                @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("Map", "Search", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     <div class="row">
                         @Html.Label("חיפוש לפי מיקום", new { @class = "control-label" })
                     </div>
                     <div class="row">
-
-                        <div class="col-md-6">
-                            @Html.Label("תחום הלימוד", new { @class = "control-label" })
-                            @Html.DropDownList("category", (List<SelectListItem>)@ViewBag.Cats, "בחר תחום", new { @class = "form-control" })
+                        <div class="col-md-12">
+                            @Html.Label(" 1) תכניסו את מיקומכם", new { @class = "text-muted" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        @*<div class="col-md-1">
+                            </div>*@
+                        <div class="col-md-2">
+                            @Html.Label("מס' בית", new { @class = "control-label" })
+                            @Html.TextBox("streetNum", "", new { @class = "form-control", @id = "inputDefault", @onkeypress = "return isNumber(event)" })
                         </div>
                         <div class="col-md-6">
+                            @Html.Label("רחוב", new { @class = "control-label" })
+                            @Html.TextBox("streetName", "", new { @class = "form-control", @id = "inputDefault" })
+                        </div>
+                        <div class="col-md-4">
                             @Html.Label("עיר", new { @class = "control-label" })
                             @Html.DropDownList("city", (List<SelectListItem>)@ViewBag.Cities, "בחר עיר", new { @class = "form-control" })
+                        </div>
+
+                    </div>
+                    <div class="row" style="margin-top:10px">
+                        <div class="col-md-8">
+                            @Html.Label(" 3) תבחרו את המקצוע", new { @class = "text-muted" })
+                            @Html.DropDownList("category", (List<SelectListItem>)@ViewBag.Cats, "בחר תחום", new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.Label(" 2) תכניסו טווח חיפוש בק\"מ", new { @class = "text-muted" })
+                            @Html.DropDownList("distance", (List<SelectListItem>)@ViewBag.Numbers, "בחר טווח", new { @class = "form-control", @style = "width:100px" })
                         </div>
                     </div>
                     <br />
                     <div class="form-group">
-
                         <div class="col-lg-2 col-lg-offset-1">
                             <input type="submit" class="btn btn-primary btn-large" value="חפש" style=" width: 110px" />
                         </div>
@@ -122,3 +142,57 @@
             <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
         </div>*@
 </div>
+
+@section Scripts {
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGG8Hq0jur-Ca6QtjQ0iQFQ3TJG9WzEA8&v=3.exp&sensor=true&language=he" type="text/javascript"></script>
+    <script language="javascript" type="text/javascript">
+        //Allow only numbers to be typed in a textbox
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+        //Allow only numbers and decimal point
+        function isDecimalNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode != 46 && charCode > 31
+              && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+        //$(function () {
+        //    navigator.geolocation.getCurrentPosition(showPosition, positionError);
+
+        //    function showPosition(position) {
+        //        var coordinates = position.coords;
+        //        $("#lat").val(coordinates.latitude);
+        //        $("#lon").val(coordinates.longitude);
+
+        //        var latlng = new google.maps.LatLng(coordinates.latitude, coordinates.longitude);
+        //        var geocoder = new google.maps.Geocoder();
+        //        geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+        //            if (status !== google.maps.GeocoderStatus.OK) {
+        //                alert(status);
+        //            }
+        //            // This is checking to see if the Geoeode Status is OK before proceeding
+        //            if (status == google.maps.GeocoderStatus.OK) {
+        //                console.log(results);
+        //                var address = (results[0].formatted_address);
+        //                alert(address);
+        //                // create the Marker where the address variable is valid
+        //                //var marker = createMarker(point, "Marker 1", point + "<br> Closest Matching Address:" + address)
+        //            }
+        //        });
+        //    }
+
+        //    function positionError(position) {
+        //        alert("" + position.code);
+        //    }
+
+        //});
+    </script>
+}

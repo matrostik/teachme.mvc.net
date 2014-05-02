@@ -6,13 +6,24 @@ namespace TeachMe.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required(ErrorMessage = "* יש להכניס שם משתמש")]
+        [Required]
         [Display(Name = "שם משתמש")]
         public string UserName { get; set; }
+        public string Email { get; set; }
     }
 
-    public class ManageUserViewModel
+    public class ResetPasswordViewModel
     {
+        [Required]
+        [Display(Name = "דוא\"ל")]
+        [EmailAddress(ErrorMessage = "דוא\"ל שגוי")]
+        public string Email { get; set; }
+    }
+
+    public class ResetPasswordStepTwoViewModel
+    {
+        public string UserId { get; set; }
+
         [Required(ErrorMessage = "* יש להכניס סיסמא נוכחית")]
         [DataType(DataType.Password)]
         [Display(Name = "סיסמא נוכחית")]
@@ -62,6 +73,7 @@ namespace TeachMe.Models
 
         [Required(ErrorMessage = "* יש להכניס דוא\"ל")]
         [Display(Name = "דוא\"ל")]
+        [EmailAddress(ErrorMessage = "דוא\"ל שגוי")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "* יש להכניס סיסמא")]
@@ -146,4 +158,26 @@ namespace TeachMe.Models
         [Required]
         public string RoleName { get; set; }
     }
+
+    public class ManageUserViewModel
+    {
+        public string Id { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "יש להכניס סיסמא נוכחית")]
+        public string OldPassword { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage ="ה{0} חייבת להכיל {2} תווים לפחות.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name ="יש להכניס סיסמא חדשה")]
+        public string NewPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "אימות סיסמא")]
+        [Compare("NewPassword", ErrorMessage = "הסיסמא החדשה ואימות הסיסמא החדשה לא תואמים.")]
+        public string ConfirmPassword { get; set; }
+    }
+
 }

@@ -178,6 +178,7 @@
     <Compile Include="Helpers\ActionLinkHelper.cs" />
     <Compile Include="Helpers\Email.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
+    <Compile Include="Helpers\ShortGuid.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\FakeDB.cs" />
     <Compile Include="Models\Geo.cs" />

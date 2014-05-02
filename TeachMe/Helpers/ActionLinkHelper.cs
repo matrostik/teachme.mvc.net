@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -15,7 +16,10 @@ namespace TeachMe.Helpers
         {
             return ActionLinkIcon(helper, linkText, actionName, controllerName, glyphiconClass, null);
         }
-
+        public static string SimpleLink(this HtmlHelper html, string url, string text)
+        {
+            return String.Format("<a href=\"{0}\">{1}</a>", url, text);
+        }
         public static MvcHtmlString ActionLinkIcon(this HtmlHelper helper, string linkText, string actionName, string controllerName, string glyphiconClass, object htmlAttributes)
         {
             // Glyphicons

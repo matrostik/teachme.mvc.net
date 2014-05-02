@@ -204,6 +204,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\logo_no_bg.png" />
+    <Content Include="Images\map-marker.png" />
     <Content Include="Images\profile-icon.png" />
     <Content Include="Images\teachme.jpg" />
     <Content Include="Scripts\bootstrap.js" />

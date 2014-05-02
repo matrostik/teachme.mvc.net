@@ -29,7 +29,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            @Html.Label(" 1) תכניסו את מיקומכם", new { @class = "text-muted" })
+                            @Html.Label(" 1) הכנס את מיקומך", new { @class = "text-muted" })
                         </div>
                     </div>
                     <div class="row">
@@ -51,11 +51,11 @@
                     </div>
                     <div class="row" style="margin-top:10px">
                         <div class="col-md-8">
-                            @Html.Label(" 3) תבחרו את המקצוע", new { @class = "text-muted" })
+                            @Html.Label(" 3)בחר מקצוע", new { @class = "text-muted" })
                             @Html.DropDownList("category", (List<SelectListItem>)@ViewBag.Cats, "בחר תחום", new { @class = "form-control" })
                         </div>
                         <div class="col-md-4">
-                            @Html.Label(" 2) תכניסו טווח חיפוש בק\"מ", new { @class = "text-muted" })
+                            @Html.Label(" 2) הכנס טווח חיפוש בק\"מ", new { @class = "text-muted" })
                             @Html.DropDownList("distance", (List<SelectListItem>)@ViewBag.Numbers, "בחר טווח", new { @class = "form-control", @style = "width:100px" })
                         </div>
                     </div>

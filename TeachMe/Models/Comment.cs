@@ -17,7 +17,7 @@ namespace TeachMe.Models
 
         public int TeacherId { get; set; }
 
-        public DateTimeKind Date { get; set; }
+        public DateTime Date { get; set; }
 
         #endregion
     }

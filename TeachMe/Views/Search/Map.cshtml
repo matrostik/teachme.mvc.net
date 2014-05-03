@@ -71,6 +71,7 @@
         window.onload = initialize;
 
         function markicons() {
+            var image = '/Images/map-marker.png';
             var latlng = new google.maps.LatLng('@Model.MapCenter.Latitude', '@Model.MapCenter.Longitude');
             var foos = $(".teachmemap");
             var markers = new Array();
@@ -88,6 +89,7 @@
                         map: map,
                         draggable: false,
                         animation: google.maps.Animation.DROP,
+                        icon: image,
                         position: new google.maps.LatLng(
                             Number($(value).attr("data-latitude")),
                             Number($(value).attr("data-longitude")

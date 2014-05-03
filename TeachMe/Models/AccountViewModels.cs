@@ -7,9 +7,9 @@ namespace TeachMe.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "שם משתמש")]
+        [Display(Name = "דוא\"ל")]
+        [EmailAddress(ErrorMessage = "דוא\"ל שגוי")]
         public string UserName { get; set; }
-        public string Email { get; set; }
     }
 
     public class ResetPasswordViewModel
@@ -17,17 +17,12 @@ namespace TeachMe.Models
         [Required]
         [Display(Name = "דוא\"ל")]
         [EmailAddress(ErrorMessage = "דוא\"ל שגוי")]
-        public string Email { get; set; }
+        public string UserName { get; set; }
     }
 
     public class ResetPasswordStepTwoViewModel
     {
         public string UserId { get; set; }
-
-        [Required(ErrorMessage = "* יש להכניס סיסמא נוכחית")]
-        [DataType(DataType.Password)]
-        [Display(Name = "סיסמא נוכחית")]
-        public string OldPassword { get; set; }
 
         [Required(ErrorMessage = "* יש להכניס סיסמא חדשה")]
         [StringLength(100, ErrorMessage = "ה{0} חייבת להכיל {2} תווים לפחות.", MinimumLength = 6)]
@@ -59,8 +54,9 @@ namespace TeachMe.Models
 
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "* יש להכניס שם משתמש")]
-        [Display(Name = "שם משתמש")]
+        [Required(ErrorMessage = "* יש להכניס דוא\"ל")]
+        [Display(Name = "דוא\"ל")]
+        [EmailAddress(ErrorMessage = "דוא\"ל שגוי")]
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "* יש להכניס שם פרטי")]
@@ -70,11 +66,6 @@ namespace TeachMe.Models
         [Required(ErrorMessage = "* יש להכניס שם משפחה")]
         [Display(Name = "שם משפחה")]
         public string LastName { get; set; }
-
-        [Required(ErrorMessage = "* יש להכניס דוא\"ל")]
-        [Display(Name = "דוא\"ל")]
-        [EmailAddress(ErrorMessage = "דוא\"ל שגוי")]
-        public string Email { get; set; }
 
         [Required(ErrorMessage = "* יש להכניס סיסמא")]
         [StringLength(100, ErrorMessage = "ה{0} חייבת להכיל {2} תווים לפחות.", MinimumLength = 6)]
@@ -96,7 +87,6 @@ namespace TeachMe.Models
                 UserName = this.UserName,
                 FirstName = this.FirstName,
                 LastName = this.LastName,
-                Email = this.Email,
             };
             return user;
         }

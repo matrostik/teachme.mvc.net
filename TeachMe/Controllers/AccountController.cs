@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -10,7 +8,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using TeachMe.Models;
 using TeachMe.Helpers;
-using System.Data.Entity;
 
 namespace TeachMe.Controllers
 {
@@ -26,6 +23,8 @@ namespace TeachMe.Controllers
         public AccountController(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
+            // Allow email address as username
+            UserManager.UserValidator = new UserValidator<ApplicationUser>(UserManager) { AllowOnlyAlphanumericUserNames = false };
             Db = new ApplicationDbContext();
         }
 
@@ -84,45 +83,37 @@ namespace TeachMe.Controllers
             if (ModelState.IsValid)
             {
                 // Remove leading and trailing spaces 
-                model.Email = model.Email.Trim();
+                model.UserName = model.UserName.Trim();
                 // Check email
-                ApplicationUser user = Db.Users.SingleOrDefault(u => u.Email == model.Email);
+                ApplicationUser user = await UserManager.FindByNameAsync(model.UserName); ;
                 if (user != null)
-                    ModelState.AddModelError("Email", "דוא\"ל כבר קיים");
-                // Check username
-                user = Db.Users.SingleOrDefault(u => u.UserName == model.UserName);
-                if (user != null)
-                    ModelState.AddModelError("UserName", "שם משתמש כבר קיים");
+                    ModelState.AddModelError("UserName", "דוא\"ל כבר קיים");
                 // Display errors if has
                 if (!ModelState.IsValid)
                     return View(model);
 
-                // Attempt to register the user
+                // Create token and user
                 string confirmationToken = CreateConfirmationToken();
                 user = new ApplicationUser()
                 {
                     UserName = model.UserName,
-                    Email = model.Email,
                     ConfirmationToken = confirmationToken,
                     IsConfirmed = false
                 };
+                // Attempt to register the user
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     // User created send confirmation mail
-                    Email.Send(model.Email, model.UserName, confirmationToken,EmailTemplate.Registration);
-                    return RedirectToAction("Index","Result", new { Message = ResultMessageId.RegisterStepTwo });
+                    Email.Send(model.UserName, model.FirstName, confirmationToken, EmailTemplate.Registration);
+                    // Redirect to ResultController (show message)
+                    return RedirectToAction("Index", "Result", new { Message = ResultMessage.RegisterStepTwo });
                 }
                 else
                 {
+                    // Add error messages to model state
                     AddErrors(result);
                 }
-
-                #region default registration
-
-
-                //}
-                #endregion
             }
             // If we got this far, something failed, redisplay form
             return View(model);
@@ -135,9 +126,9 @@ namespace TeachMe.Controllers
         {
             if (await ConfirmAccount(Id))
             {
-                return RedirectToAction("Index", "Result", new { Message = ResultMessageId.ConfirmationSuccess });
+                return RedirectToAction("Index", "Result", new { Message = ResultMessage.ConfirmationSuccess });
             }
-            return RedirectToAction("Index", "Result", new { Message = ResultMessageId.ConfirmationFailure });
+            return RedirectToAction("Index", "Result", new { Message = ResultMessage.ConfirmationFailure });
         }
 
         //
@@ -220,7 +211,6 @@ namespace TeachMe.Controllers
                     }
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -239,8 +229,8 @@ namespace TeachMe.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
-            ApplicationDbContext context = new ApplicationDbContext();
-            ApplicationUser user = context.Users.SingleOrDefault(u => u.Email == model.Email);
+            //ApplicationDbContext context = new ApplicationDbContext();
+            ApplicationUser user = await UserManager.FindByNameAsync(model.UserName);
             if (user == null)// no such email
             {
                 return View(model);//error
@@ -250,13 +240,11 @@ namespace TeachMe.Controllers
                 // Update token
                 string confirmationToken = CreateConfirmationToken();
                 user.ConfirmationToken = confirmationToken;
-                DbSet<ApplicationUser> dbSet = context.Set<ApplicationUser>();
-                dbSet.Attach(user);
-                context.Entry(user).State = EntityState.Modified;
-                await context.SaveChangesAsync();
+                var result = await UserManager.UpdateAsync(user);
+
                 // Send reset password email
-                Email.Send(user.Email, user.UserName, confirmationToken, EmailTemplate.ResetPassword);
-                return RedirectToAction("Index", "Result", new { Message = ResultMessageId.ResetPasswordEmail, userName = user.Email });
+                Email.Send(user.UserName, "", confirmationToken, EmailTemplate.ResetPassword);
+                return RedirectToAction("Index", "Result", new { Message = ResultMessage.ResetPasswordEmail, userName = user.UserName });
             }
         }
 
@@ -265,8 +253,7 @@ namespace TeachMe.Controllers
         [AllowAnonymous]
         public ActionResult ResetPasswordStepTwo(string Id)
         {
-            ApplicationDbContext context = new ApplicationDbContext();
-            ApplicationUser user = context.Users.SingleOrDefault(u => u.ConfirmationToken == Id);
+            ApplicationUser user = Db.Users.SingleOrDefault(u => u.ConfirmationToken == Id);
             if (user != null)
             {
                 // Correct token 
@@ -275,7 +262,7 @@ namespace TeachMe.Controllers
                 return View(model);
             }
             // Wrong token dispaly error
-            return RedirectToAction("Index", "Result", new { Message = ResultMessageId.ResetPasswordTokenError });
+            return RedirectToAction("Index", "Result", new { Message = ResultMessage.ResetPasswordTokenError });
         }
 
         //
@@ -292,12 +279,12 @@ namespace TeachMe.Controllers
                 if (res2.Succeeded)
                 {
                     // Password changed
-                    return RedirectToAction("Index","Result", new { Message = ResultMessageId.ResetPasswordCompleted });
+                    return RedirectToAction("Index", "Result", new { Message = ResultMessage.ResetPasswordCompleted });
                 }
                 else
                 {
                     // Error
-                    return RedirectToAction("Index","Result", new { Message = ResultMessageId.Error });
+                    return RedirectToAction("Index", "Result", new { Message = ResultMessage.Error });
                 }
             }
             return View();
@@ -344,17 +331,14 @@ namespace TeachMe.Controllers
             else
             {
                 // Check if user already registered
-                ApplicationUser appuser = Db.Users.SingleOrDefault(u => u.Email == email);
+                ApplicationUser appuser = await UserManager.FindByNameAsync(email);
                 if (appuser != null)
                 {
                     if (!appuser.IsConfirmed)
                     {
                         // User account not confirmed
                         appuser.IsConfirmed = true;
-                        DbSet<ApplicationUser> dbSet = Db.Set<ApplicationUser>();
-                        dbSet.Attach(appuser);
-                        Db.Entry(appuser).State = EntityState.Modified;
-                        Db.SaveChanges();
+                        var res = UserManager.UpdateAsync(appuser);
                     }
                     // Add External login
                     var result = await UserManager.AddLoginAsync(appuser.Id, loginInfo.Login);
@@ -369,10 +353,10 @@ namespace TeachMe.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = loginInfo.DefaultUserName, Email = email });
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = email });
                 }
             }
-            return RedirectToAction("Index","Result", new { Message = ResultMessageId.Error });
+            return RedirectToAction("Index", "Result", new { Message = ResultMessage.Error });
         }
 
         //
@@ -423,7 +407,6 @@ namespace TeachMe.Controllers
                 var user = new ApplicationUser()
                 {
                     UserName = model.UserName,
-                    Email = model.Email,
                     ConfirmationToken = "0",
                     IsConfirmed = true
                 };
@@ -516,7 +499,7 @@ namespace TeachMe.Controllers
             if (!rm.RoleExists("User"))
                 rm.Create(new IdentityRole("User"));
 
-            if (user.UserName.Equals("Ros"))
+            if (user.UserName.Equals("matrostik@gmail.com"))
             {
                 await UserManager.AddToRoleAsync(user.Id, "Admin");
                 await UserManager.AddToRoleAsync(user.Id, "Moder");
@@ -531,35 +514,22 @@ namespace TeachMe.Controllers
         /// <returns>true or false</returns>
         private async Task<bool> ConfirmAccount(string confirmationToken)
         {
+            // Get user by token
             ApplicationUser user = Db.Users.SingleOrDefault(u => u.ConfirmationToken == confirmationToken);
             if (user != null && !user.IsConfirmed)
             {
+                // Activate user account 
                 user.IsConfirmed = true;
-                DbSet<ApplicationUser> dbSet = Db.Set<ApplicationUser>();
-                dbSet.Attach(user);
-                Db.Entry(user).State = EntityState.Modified;
-                Db.SaveChanges();
-                // Add roles
+                var result = await UserManager.UpdateAsync(user);
+                // Create roles and set specials users to roles
                 await AddUserToRole(user);
-
+                // Add user to roles
                 await UserManager.AddToRoleAsync(user.Id, "User");
                 await SignInAsync(user, isPersistent: false);
                 return true;
             }
             return false;
         }
-
-        public enum ResultMessageId
-        {
-            RegisterStepTwo,
-            ConfirmationSuccess,
-            ConfirmationFailure,
-            ResetPasswordEmail,
-            ResetPasswordCompleted,
-            ResetPasswordTokenError,
-            Error
-        }
-
 
         #region Helpers
         // Used for XSRF protection when adding external logins

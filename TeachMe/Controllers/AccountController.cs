@@ -96,6 +96,8 @@ namespace TeachMe.Controllers
                 string confirmationToken = CreateConfirmationToken();
                 user = new ApplicationUser()
                 {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
                     UserName = model.UserName,
                     ConfirmationToken = confirmationToken,
                     IsConfirmed = false
@@ -471,8 +473,6 @@ namespace TeachMe.Controllers
             base.Dispose(disposing);
         }
 
-
-
         /// <summary>
         /// Create token 
         /// </summary>
@@ -496,8 +496,6 @@ namespace TeachMe.Controllers
                 rm.Create(new IdentityRole("Moder"));
             if (!rm.RoleExists("Tutor"))
                 rm.Create(new IdentityRole("Tutor"));
-            if (!rm.RoleExists("User"))
-                rm.Create(new IdentityRole("User"));
 
             if (user.UserName.Equals("matrostik@gmail.com"))
             {
@@ -524,7 +522,7 @@ namespace TeachMe.Controllers
                 // Create roles and set specials users to roles
                 await AddUserToRole(user);
                 // Add user to roles
-                await UserManager.AddToRoleAsync(user.Id, "User");
+                await UserManager.AddToRoleAsync(user.Id, "Tutor");
                 await SignInAsync(user, isPersistent: false);
                 return true;
             }

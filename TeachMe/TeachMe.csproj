@@ -204,6 +204,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Facebook.png" />
+    <Content Include="Images\Google.png" />
     <Content Include="Images\logo_no_bg.png" />
     <Content Include="Images\profile-icon.png" />
     <Content Include="Images\teachme.jpg" />

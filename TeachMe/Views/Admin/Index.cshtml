@@ -1,7 +1,50 @@
-﻿
+﻿@model TeachMe.Models.AdminIndexViewModel
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Admin";
 }
 
-<h2>Index</h2>
+<h2>Admin panel</h2>
+
+<div>
+    <h4>Statistics</h4>
+    <div class="row">
+        <div class="col-md-12">
+            @Html.ActionLink("Index", "Index", new { /* id = Model.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Index")
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-8">
+            <div class="well well-lg">
+                Some related information postetd here. ex: popular search....
+            </div>
+        </div>
+        <div class="col-md-4">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div>
+                        <span>מספר משתמשים:&nbsp;&nbsp;</span>
+                        <span style="float:left" class="badge">@Model.UsersCount</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div>
+                        <span> משתמשים לא מאושרים:&nbsp;&nbsp;</span>
+                        <span style="float:left" class="badge">@Model.GetUncofirmedUsers</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div>
+                        <span>Dummy label: &nbsp;&nbsp;</span>
+                        <span style="float:left" class="badge">666</span>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
 

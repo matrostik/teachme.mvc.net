@@ -3,16 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TeachMe.Models;
 
 namespace TeachMe.Controllers
 {
     public class AdminController : Controller
     {
+        public ApplicationDbContext Db { get; private set; }
+
+        public AdminController()
+        {
+            Db = new ApplicationDbContext();
+        }
+
         //
         // GET: /Admin/
         public ActionResult Index()
         {
-            return View();
+            AdminIndexViewModel model = new AdminIndexViewModel();
+            model.Users = Db.Users.ToList();
+
+            return View(model);
         }
 
         //

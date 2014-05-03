@@ -22,7 +22,8 @@
                 <p>
                 @foreach (AuthenticationDescription p in loginProviders)
                 {
-                    <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
+                    String image = @p.Caption + ".png";
+                    <button class="btn-link" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="התחבר דרך חשבון ה- @p.Caption שלך"><img src="/Images/@image" width="70" height="70" style="" /></button>
                 }
                 </p>
             </div>

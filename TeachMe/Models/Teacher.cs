@@ -13,6 +13,8 @@ namespace TeachMe.Models
         
         public int Id { get; set; }
 
+        public bool ViewOn { get; set; }
+
         public string FirstName { get; set; }
        
         public string LastName{ get; set; }

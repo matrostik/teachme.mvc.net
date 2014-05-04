@@ -13,6 +13,9 @@ namespace TeachMe.Models
         
         public int Id { get; set; }
 
+        //switch on/off for profile
+        public bool isActivated { get; set; } 
+
         public string FirstName { get; set; }
        
         public string LastName{ get; set; }
@@ -27,6 +30,7 @@ namespace TeachMe.Models
 
         public int HomeNum { get; set; }
 
+        // subject to teach
         public string Category { get; set; }
 
         public int LessonPrice{ get; set; }

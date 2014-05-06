@@ -1,0 +1,53 @@
+﻿@model TeachMe.Models.AdminUsersViewModel
+@{
+    ViewBag.Title = "משתמשים";
+}
+
+<h2>משתמשים</h2>
+
+<p>
+    @Html.ActionLink("משתשמש חדש", "UserCreate")
+</p>
+<div class="row" style="margin-right:10px">
+    מיין תוצאות לפי: |
+    @Html.ActionLink("שם פרטי", "Index", new { sortOrder = "firstName" }) |
+    @Html.ActionLink("שם משפחה", "Index", new { sortOrder = "lastName" }) |
+</div>
+<table class="table" dir="rtl">
+    <tr>
+        <th style="text-align:right">
+            שם פרטי
+        </th>
+        <th style="text-align:right">
+            @Html.DisplayName("שם משפחה")
+        </th>
+        <th style="text-align:right">
+            @Html.DisplayName("מייל")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Users)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td style="text-align:right">
+                <div dir="ltr">
+                    @Html.ActionLink("פרטים", "UserDetails", new { id = item.Id }, new { @class = "label label-success" }) |
+                    @Html.ActionLink("עריכה", "UserDetails", new { id = item.Id }, new { @class = "label label-warning" }) |
+                    @Html.ActionLink("מחיקה", "UserDelete", new { id = item.Id }, new { @class = "label label-danger" })
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

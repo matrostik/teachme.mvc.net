@@ -21,7 +21,7 @@ namespace TeachMe.Models
         /// Unconfirmed users count
         /// </summary>
         /// <returns></returns>
-        public int GetUncofirmedUsers
+        public int GetUncofirmedUsersCount
         {
             get
             {
@@ -29,5 +29,27 @@ namespace TeachMe.Models
             }
         }
 
+    }
+
+    public class AdminUsersViewModel
+    {
+        /// <summary>
+        /// List of all Users
+        /// </summary>
+        public List<ApplicationUser> Users { get; set; }
+
+        public string SortParm { get; set; }
+    }
+
+    public class AdminUserDetailsViewModel
+    {
+        public ApplicationUser User { get; set; }
+        public string Roles
+        {
+            get
+            {
+                return string.Join(",", User.Roles.Select(x => x.Role.Name));
+            }
+        }
     }
 }

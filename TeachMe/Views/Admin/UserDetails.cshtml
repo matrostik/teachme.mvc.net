@@ -1,0 +1,81 @@
+﻿@model TeachMe.Models.AdminUserDetailsViewModel
+@{
+    ViewBag.Title = "פרטי משתמש";
+}
+
+<h2>פרטי משתמש</h2>
+
+<div>
+    <h4>@Model.User.FirstName @Model.User.LastName</h4>
+    <hr />
+
+    <div class="row">
+
+        <div class="list-group-item">
+            <div class="row">
+
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" disabled="" value="@Model.User.FirstName">
+                        </div>
+                        <label for="inputEmail" class="col-lg-2 control-label">שם פרטי</label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" disabled="" value="@Model.User.LastName">
+                        </div>
+                        <label for="inputPassword" class="col-lg-2 control-label">שם משפחה</label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-10">
+                            <input disabled="disabled" class="check-box" type="checkbox" checked="@Model.User.IsConfirmed">
+                        </div>
+                        <label for="inputEmail" class="col-lg-2 control-label">מאושר</label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" disabled="" value="@Model.User.UserName">
+                        </div>
+                        <label for="inputPassword" class="col-lg-2 control-label">מייל</label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" disabled="" value="@Model.Roles">
+                        </div>
+                        <label for="inputPassword" class="col-lg-2 control-label">תפקידים</label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-10" style="border:1px solid red; text-align:left">
+                            <br />
+                            <a class="btn btn-default" href="#">פרופיל המלא &raquo;</a>
+                            @Html.ActionLink("Show on map", "Geo", new { id = @Model.User.Id }, new { @class = "btn btn-default" })
+                        </div>
+                       
+                    </div>
+
+                        </div>
+
+                        <div class="col-md-3" style="padding: 0 20px 0 0;">
+                            <div class="well" style="padding: 10px;">
+                                <a href="#">
+                                    <span>
+                                        <img src="~/Images/profile-icon.png" class="img-responsive" />
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</div>
+
+</div>
+<p>
+    @Html.ActionLink("עריכה", "UserDetails", new { id = Model.User.Id }) |
+    @Html.ActionLink("חזרה לרשימה", "Users", new { id = "all" })
+</p>

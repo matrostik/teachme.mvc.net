@@ -28,12 +28,14 @@
                         <span>מספר משתמשים:&nbsp;&nbsp;</span>
                         <span style="float:left" class="badge">@Model.UsersCount</span>
                     </div>
+                    @Html.ActionLink("לרשימה", "Users", new { filter = "all" })
                 </li>
                 <li class="list-group-item">
                     <div>
                         <span> משתמשים לא מאושרים:&nbsp;&nbsp;</span>
-                        <span style="float:left" class="badge">@Model.GetUncofirmedUsers</span>
+                        <span style="float:left" class="badge">@Model.GetUncofirmedUsersCount</span>
                     </div>
+                    @Html.ActionLink("לרשימה", "Users", new { filter = "unconfirmed" })
                 </li>
                 <li class="list-group-item">
                     <div>

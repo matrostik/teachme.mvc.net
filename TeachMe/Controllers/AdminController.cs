@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -27,11 +28,51 @@ namespace TeachMe.Controllers
         }
 
         //
-        // GET: /Admin/Details/5
-        public ActionResult Details(int id)
+        // GET: /Admin/Users/
+        public ActionResult Users(string filter, string sortOrder, int? page)
         {
-            return View();
+            
+            AdminUsersViewModel model = new AdminUsersViewModel();
+
+            if (string.IsNullOrEmpty(filter) || filter.Equals("all"))
+                model.Users = Db.Users.ToList();
+            else
+                model.Users = Db.Users.Where(x => !x.IsConfirmed).ToList();
+
+            if (!string.IsNullOrEmpty(sortOrder))
+            {
+                model.SortParm = sortOrder;
+                switch (sortOrder)
+                {
+                    case "firstName":
+                        model.Users = model.Users.OrderBy(t => t.FirstName).ToList();
+                        break;
+                    case "lastName":
+                        model.Users = model.Users.OrderBy(t => t.LastName).ToList();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            //int pageSize = 10;
+            //int pageNumber = (page ?? 1);
+            //ViewBag.Count = list.Count;
+            //ViewBag.Result = list.ToPagedList(pageNumber, pageSize);
+            return View(model);
         }
+
+        //
+        // GET: /Admin/UserDetails/5
+        public ActionResult UserDetails(string id)
+        {
+            ApplicationUser u = Db.Users.Include(r => r.Roles).FirstOrDefault(x => x.Id == id);
+            AdminUserDetailsViewModel model = new AdminUserDetailsViewModel();
+            model.User = u;
+
+            return View(model);
+        }
+
+
 
         //
         // GET: /Admin/Create

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -9,9 +7,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using TeachMe.Models;
+using TeachMe.Helpers;
 
 namespace TeachMe.Controllers
 {
+
     [Authorize]
     public class AccountController : Controller
     {
@@ -23,9 +23,14 @@ namespace TeachMe.Controllers
         public AccountController(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
+            // Allow email address as username
+            UserManager.UserValidator = new UserValidator<ApplicationUser>(UserManager) { AllowOnlyAlphanumericUserNames = false };
+            Db = new ApplicationDbContext();
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
+        public ApplicationDbContext Db { get; private set; }
+
 
         //
         // GET: /Account/Login
@@ -46,17 +51,16 @@ namespace TeachMe.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindAsync(model.UserName, model.Password);
-                if (user != null)
+                if (user != null && user.IsConfirmed)
                 {
                     await SignInAsync(user, model.RememberMe);
                     return RedirectToLocal(returnUrl);
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    ModelState.AddModelError("", "שם משתמש או סיסמא שגויים.");
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -78,21 +82,55 @@ namespace TeachMe.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = model.GetUser();//new ApplicationUser() { UserName = model.UserName };
+                // Remove leading and trailing spaces 
+                model.UserName = model.UserName.Trim();
+                // Check email
+                ApplicationUser user = await UserManager.FindByNameAsync(model.UserName); ;
+                if (user != null)
+                    ModelState.AddModelError("UserName", "דוא\"ל כבר קיים");
+                // Display errors if has
+                if (!ModelState.IsValid)
+                    return View(model);
+
+                // Create token and user
+                string confirmationToken = CreateConfirmationToken();
+                user = new ApplicationUser()
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    UserName = model.UserName,
+                    ConfirmationToken = confirmationToken,
+                    IsConfirmed = false
+                };
+                // Attempt to register the user
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    // User created send confirmation mail
+                    Email.Send(model.UserName, model.FirstName, confirmationToken, EmailTemplate.Registration);
+                    // Redirect to ResultController (show message)
+                    return RedirectToAction("Index", "Result", new { Message = ResultMessage.RegisterStepTwo });
                 }
                 else
                 {
+                    // Add error messages to model state
                     AddErrors(result);
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        //
+        // GET: /Account/RegisterConfirmation
+        [AllowAnonymous]
+        public async Task<ActionResult> RegisterConfirmation(string Id)
+        {
+            if (await ConfirmAccount(Id))
+            {
+                return RedirectToAction("Index", "Result", new { Message = ResultMessage.ConfirmationSuccess });
+            }
+            return RedirectToAction("Index", "Result", new { Message = ResultMessage.ConfirmationFailure });
         }
 
         //
@@ -119,10 +157,10 @@ namespace TeachMe.Controllers
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : message == ManageMessageId.Error ? "An error has occurred."
+                message == ManageMessageId.ChangePasswordSuccess ? "הסיסמא שונתה בהצלחה."
+                : message == ManageMessageId.SetPasswordSuccess ? "הסיסמא עודכנה."
+                : message == ManageMessageId.RemoveLoginSuccess ? "ההתחברות החיצונית הוסרה בהצלחה."
+                : message == ManageMessageId.Error ? "שגיאה."
                 : "";
             ViewBag.HasLocalPassword = HasPassword();
             ViewBag.ReturnUrl = Url.Action("Manage");
@@ -175,9 +213,83 @@ namespace TeachMe.Controllers
                     }
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        //
+        // GET: /Account/ResetPassword
+        [AllowAnonymous]
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Account/ResetPassword
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            //ApplicationDbContext context = new ApplicationDbContext();
+            ApplicationUser user = await UserManager.FindByNameAsync(model.UserName);
+            if (user == null)// no such email
+            {
+                return View(model);//error
+            }
+            else// user found send reset password email
+            {
+                // Update token
+                string confirmationToken = CreateConfirmationToken();
+                user.ConfirmationToken = confirmationToken;
+                var result = await UserManager.UpdateAsync(user);
+
+                // Send reset password email
+                Email.Send(user.UserName, "", confirmationToken, EmailTemplate.ResetPassword);
+                return RedirectToAction("Index", "Result", new { Message = ResultMessage.ResetPasswordEmail, userName = user.UserName });
+            }
+        }
+
+        //
+        // GET: /Account/ResetPasswordStepTwo
+        [AllowAnonymous]
+        public ActionResult ResetPasswordStepTwo(string Id)
+        {
+            ApplicationUser user = Db.Users.SingleOrDefault(u => u.ConfirmationToken == Id);
+            if (user != null)
+            {
+                // Correct token 
+                ResetPasswordStepTwoViewModel model = new ResetPasswordStepTwoViewModel();
+                model.UserId = user.Id;
+                return View(model);
+            }
+            // Wrong token dispaly error
+            return RedirectToAction("Index", "Result", new { Message = ResultMessage.ResetPasswordTokenError });
+        }
+
+        //
+        // POST: /Account/ResetPasswordStepTwo
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetPasswordStepTwo(ResetPasswordStepTwoViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var res1 = UserManager.RemovePassword(model.UserId);
+                var res2 = UserManager.AddPassword(model.UserId, model.NewPassword);
+                if (res2.Succeeded)
+                {
+                    // Password changed
+                    return RedirectToAction("Index", "Result", new { Message = ResultMessage.ResetPasswordCompleted });
+                }
+                else
+                {
+                    // Error
+                    return RedirectToAction("Index", "Result", new { Message = ResultMessage.Error });
+                }
+            }
+            return View();
         }
 
         //
@@ -201,6 +313,15 @@ namespace TeachMe.Controllers
             {
                 return RedirectToAction("Login");
             }
+            //Get user email
+            var externalIdentity = await AuthenticationManager
+           .GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
+
+            var emailClaim = externalIdentity.Claims.FirstOrDefault(x => x.Type.Equals(
+                    "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
+                    StringComparison.OrdinalIgnoreCase));
+
+            var email = emailClaim != null ? emailClaim.Value : null;
 
             // Sign in the user with this external login provider if the user already has a login
             var user = await UserManager.FindAsync(loginInfo.Login);
@@ -211,11 +332,33 @@ namespace TeachMe.Controllers
             }
             else
             {
-                // If the user does not have an account, then prompt the user to create an account
-                ViewBag.ReturnUrl = returnUrl;
-                ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = loginInfo.DefaultUserName });
+                // Check if user already registered
+                ApplicationUser appuser = await UserManager.FindByNameAsync(email);
+                if (appuser != null)
+                {
+                    if (!appuser.IsConfirmed)
+                    {
+                        // User account not confirmed
+                        appuser.IsConfirmed = true;
+                        var res = UserManager.UpdateAsync(appuser);
+                    }
+                    // Add External login
+                    var result = await UserManager.AddLoginAsync(appuser.Id, loginInfo.Login);
+                    if (result.Succeeded)
+                    {
+                        await SignInAsync(appuser, isPersistent: false);
+                        return RedirectToLocal(returnUrl);
+                    }
+                }
+                else
+                {
+                    // If the user does not have an account, then prompt the user to create an account
+                    ViewBag.ReturnUrl = returnUrl;
+                    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = email });
+                }
             }
+            return RedirectToAction("Index", "Result", new { Message = ResultMessage.Error });
         }
 
         //
@@ -237,6 +380,7 @@ namespace TeachMe.Controllers
             {
                 return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
             }
+            // !!!! must check if exist
             var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
             if (result.Succeeded)
             {
@@ -253,32 +397,42 @@ namespace TeachMe.Controllers
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
-            {
                 return RedirectToAction("Manage");
-            }
 
             if (ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
                 if (info == null)
-                {
                     return View("ExternalLoginFailure");
-                }
-                var user = new ApplicationUser() { UserName = model.UserName };
-                var result = await UserManager.CreateAsync(user);
-                if (result.Succeeded)
+
+                var user = new ApplicationUser()
                 {
-                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
+                    UserName = model.UserName,
+                    ConfirmationToken = "0",
+                    IsConfirmed = true
+                };
+                try
+                {
+                    // Create new user
+                    var result = await UserManager.CreateAsync(user);
                     if (result.Succeeded)
                     {
-                        await SignInAsync(user, isPersistent: false);
-                        return RedirectToLocal(returnUrl);
+                        // create user external login
+                        result = await UserManager.AddLoginAsync(user.Id, info.Login);
+                        if (result.Succeeded)
+                        {
+                            await SignInAsync(user, isPersistent: false);
+                            return RedirectToLocal(returnUrl);
+                        }
                     }
+                    AddErrors(result);
                 }
-                AddErrors(result);
-            }
+                catch (Exception)
+                {
+                }
 
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
@@ -317,6 +471,62 @@ namespace TeachMe.Controllers
                 UserManager = null;
             }
             base.Dispose(disposing);
+        }
+
+        /// <summary>
+        /// Create token 
+        /// </summary>
+        /// <returns>string token</returns>
+        private string CreateConfirmationToken()
+        {
+            return ShortGuid.NewGuid();
+        }
+
+        /// <summary>
+        /// Add roles and add user to role
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        private async Task AddUserToRole(ApplicationUser user)
+        {
+            var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(Db));
+            if (!rm.RoleExists("Admin"))
+                rm.Create(new IdentityRole("Admin"));
+            if (!rm.RoleExists("Moder"))
+                rm.Create(new IdentityRole("Moder"));
+            if (!rm.RoleExists("Tutor"))
+                rm.Create(new IdentityRole("Tutor"));
+
+            if (user.UserName.Equals("matrostik@gmail.com"))
+            {
+                await UserManager.AddToRoleAsync(user.Id, "Admin");
+                await UserManager.AddToRoleAsync(user.Id, "Moder");
+                await UserManager.AddToRoleAsync(user.Id, "Tutor");
+            }
+        }
+
+        /// <summary>
+        /// Confirm account
+        /// </summary>
+        /// <param name="confirmationToken">token</param>
+        /// <returns>true or false</returns>
+        private async Task<bool> ConfirmAccount(string confirmationToken)
+        {
+            // Get user by token
+            ApplicationUser user = Db.Users.SingleOrDefault(u => u.ConfirmationToken == confirmationToken);
+            if (user != null && !user.IsConfirmed)
+            {
+                // Activate user account 
+                user.IsConfirmed = true;
+                var result = await UserManager.UpdateAsync(user);
+                // Create roles and set specials users to roles
+                await AddUserToRole(user);
+                // Add user to roles
+                await UserManager.AddToRoleAsync(user.Id, "Tutor");
+                await SignInAsync(user, isPersistent: false);
+                return true;
+            }
+            return false;
         }
 
         #region Helpers
@@ -378,7 +588,8 @@ namespace TeachMe.Controllers
 
         private class ChallengeResult : HttpUnauthorizedResult
         {
-            public ChallengeResult(string provider, string redirectUri) : this(provider, redirectUri, null)
+            public ChallengeResult(string provider, string redirectUri)
+                : this(provider, redirectUri, null)
             {
             }
 
@@ -404,5 +615,7 @@ namespace TeachMe.Controllers
             }
         }
         #endregion
+
+        public string UserName { get; set; }
     }
 }

@@ -178,6 +178,7 @@
     <Compile Include="Helpers\ActionLinkHelper.cs" />
     <Compile Include="Helpers\Email.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
+    <Compile Include="Helpers\ShortGuid.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -203,6 +204,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Facebook.png" />
+    <Content Include="Images\Google.png" />
     <Content Include="Images\logo_no_bg.png" />
     <Content Include="Images\map-marker.png" />
     <Content Include="Images\profile-icon.png" />
@@ -258,6 +261,8 @@
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Search\Geo.cshtml" />
     <Content Include="Views\Search\Map.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordStepTwo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

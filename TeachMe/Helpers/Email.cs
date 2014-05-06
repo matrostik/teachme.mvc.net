@@ -19,14 +19,14 @@ namespace TeachMe.Helpers
         /// Send email
         /// </summary>
         /// <param name="to">email to</param>
-        /// <param name="username">to username</param>
+        /// <param name="name">to username</param>
         /// <param name="confirmationToken">token</param>
         /// <param name="emailForm">email form view</param>
         /// /// <param name="hostUrl">host url</param>
-        public static void Send(string to, string username, string confirmationToken, EmailTemplate template)
+        public static void Send(string to, string name, string confirmationToken, EmailTemplate template)
         {
             var hostUrl = HttpContext.Current.Request.Url.Host;
-            Thread thread = new Thread(() => SendEmailInBackground(to, username, "", "", confirmationToken, template, hostUrl));
+            Thread thread = new Thread(() => SendEmailInBackground(to, name, "", "", confirmationToken, template, hostUrl));
             thread.Start();
 
             //dynamic email = new Email(emailForm);

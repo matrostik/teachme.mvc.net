@@ -7,8 +7,7 @@
     if (loginProviders.Count() == 0)
     {
         <div>
-            <p>There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=313242">this article</a>
-            for details on setting up this ASP.NET application to support logging in via external services.</p>
+            <p>אין כרגע אפשרות להתחבר דרך רשתות חברתיות, אנא נסה שוב במועד מאוחר יותר</p>
         </div>
     }
     else
@@ -22,7 +21,8 @@
                 <p>
                 @foreach (AuthenticationDescription p in loginProviders)
                 {
-                    <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
+                    String image = @p.Caption + ".png";
+                    <button class="btn-link" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="התחבר דרך חשבון ה- @p.Caption שלך"><img src="/Images/@image" width="70" height="70" style="" /></button>
                 }
                 </p>
             </div>

@@ -100,8 +100,8 @@ namespace TeachMe.Controllers
             }
 
             // data
-            model.Teachers = teachers;
-            model.ResultCount = teachers.Count;
+            model.Teachers = SearchInRadius(teachers, model, distance);
+            model.ResultCount = model.Teachers.Count;
             // pass model to view
             return View(model);
         }
@@ -182,6 +182,23 @@ namespace TeachMe.Controllers
                 return null;
             }
 
+        }
+
+
+        public List<Teacher> SearchInRadius(List<Teacher> teachers, MapSearchViewModel model, string distance)
+        {
+            List<Teacher> searchList = teachers.ToList();
+            foreach (var t in searchList)
+            {
+                double lat = System.Math.Pow(System.Convert.ToSingle(t.GeoLocation.Latitude) - System.Convert.ToSingle(model.MapCenter.Latitude), 2);
+                double lng = System.Math.Pow(System.Convert.ToSingle(t.GeoLocation.Longitude) - System.Convert.ToSingle(model.MapCenter.Longitude), 2);
+                double teacherDistance = System.Math.Sqrt(lat + lng) % 33;
+                if ((teacherDistance) * 100 > System.Convert.ToSingle(distance))
+                {
+                    teachers.Remove(t);
+                }
+            }
+            return teachers;
         }
     }
 }

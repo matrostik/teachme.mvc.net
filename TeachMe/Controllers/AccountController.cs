@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using TeachMe.Models;
 using TeachMe.Helpers;
+using System.Security.Claims;
 
 namespace TeachMe.Controllers
 {
@@ -317,10 +318,23 @@ namespace TeachMe.Controllers
             var externalIdentity = await AuthenticationManager
            .GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
 
+            // facebook fullname
+            var nameClaim = externalIdentity.Claims.FirstOrDefault(c => c.Type == "urn:facebook:name");
+            var fName = nameClaim != null ? nameClaim.Value : null;
+
+            // google name
+            nameClaim = externalIdentity.Claims.FirstOrDefault(c => c.Type.Equals(
+                    "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+                    StringComparison.OrdinalIgnoreCase));
+            var gName = nameClaim != null ? nameClaim.Value : null;
+            //split name
+            var name = string.IsNullOrEmpty(fName) ? gName : fName;
+            //var st  = name.Split(' ',2);
+
+            // get email, same for fb and google
             var emailClaim = externalIdentity.Claims.FirstOrDefault(x => x.Type.Equals(
                     "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
                     StringComparison.OrdinalIgnoreCase));
-
             var email = emailClaim != null ? emailClaim.Value : null;
 
             // Sign in the user with this external login provider if the user already has a login
@@ -355,7 +369,7 @@ namespace TeachMe.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = email });
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = email, FirstName="",LastName="" });
                 }
             }
             return RedirectToAction("Index", "Result", new { Message = ResultMessage.Error });
@@ -545,6 +559,9 @@ namespace TeachMe.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+            // Add user claims
+            identity.AddClaim(new Claim("FirstName", user.FirstName != null ? user.FirstName : ""));
+            identity.AddClaim(new Claim("LastName", user.LastName != null ? user.LastName : ""));
             AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
         }
 

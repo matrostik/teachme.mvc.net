@@ -10,11 +10,12 @@ namespace TeachMe.Controllers
 {
     public class AdminController : Controller
     {
-        public ApplicationDbContext Db { get; private set; }
+        public TeachMeDBContext Db { get; private set; }
 
         public AdminController()
         {
-            Db = new ApplicationDbContext();
+            Db = new TeachMeDBContext();
+            //TeachDb = new TeachMeDBContext();
         }
 
         //
@@ -23,7 +24,8 @@ namespace TeachMe.Controllers
         {
             AdminIndexViewModel model = new AdminIndexViewModel();
             model.Users = Db.Users.ToList();
-
+            var t = Db.Teachers.ToList();
+            
             return View(model);
         }
 

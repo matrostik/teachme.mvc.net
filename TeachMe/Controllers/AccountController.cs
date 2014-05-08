@@ -16,7 +16,7 @@ namespace TeachMe.Controllers
     public class AccountController : Controller
     {
         public AccountController()
-            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
+            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new TeachMeDBContext())))
         {
         }
 
@@ -25,11 +25,11 @@ namespace TeachMe.Controllers
             UserManager = userManager;
             // Allow email address as username
             UserManager.UserValidator = new UserValidator<ApplicationUser>(UserManager) { AllowOnlyAlphanumericUserNames = false };
-            Db = new ApplicationDbContext();
+            Db = new TeachMeDBContext();
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
-        public ApplicationDbContext Db { get; private set; }
+        public TeachMeDBContext Db { get; private set; }
 
 
         //

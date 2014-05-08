@@ -19,11 +19,11 @@ namespace TeachMe.Controllers
 
             List<Teacher> list = new List<Teacher>();
             if (!string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName))
-                list = (list.Union<Teacher>(FakeDB.Teachers.Where(t => t.FirstName.Contains(firstName) && t.LastName.Contains(lastName)))).ToList();
+                list = (list.Union<Teacher>(FakeDB.Teachers.Where(t => t.User.FirstName.Contains(firstName) && t.User.LastName.Contains(lastName)))).ToList();
             else if (!string.IsNullOrEmpty(firstName))
-                list = (list.Union<Teacher>(FakeDB.Teachers.Where(t => t.FirstName.Contains(firstName)))).ToList();
+                list = (list.Union<Teacher>(FakeDB.Teachers.Where(t => t.User.FirstName.Contains(firstName)))).ToList();
             else if (!string.IsNullOrEmpty(lastName))
-                list = (list.Union<Teacher>(FakeDB.Teachers.Where(t => t.LastName.Contains(lastName)))).ToList();
+                list = (list.Union<Teacher>(FakeDB.Teachers.Where(t => t.User.LastName.Contains(lastName)))).ToList();
 
             if (string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
                 list = FakeDB.Teachers;
@@ -35,10 +35,10 @@ namespace TeachMe.Controllers
                 switch (sortOrder)
                 {
                     case "firstName":
-                        list = list.OrderBy(t => t.FirstName).ToList();
+                        list = list.OrderBy(t => t.User.FirstName).ToList();
                         break;
                     case "lastName":
-                        list = list.OrderBy(t => t.LastName).ToList();
+                        list = list.OrderBy(t => t.User.LastName).ToList();
                         break;
                     case "priceUp":
                         list = list.OrderBy(t => t.LessonPrice).ToList();
@@ -95,7 +95,6 @@ namespace TeachMe.Controllers
             {
                 // get geo by address
                 var geo = GetLongitudeAndLatitude(t.GetAddressForMap());
-                geo.TeacherId = t.Id;
                 t.GeoLocation = geo;
             }
 
@@ -112,7 +111,7 @@ namespace TeachMe.Controllers
         public ActionResult Geo(string id, string address, List<Geo> geos)
         {
             // get teacher
-            var teacher = FakeDB.Teachers.FirstOrDefault(t => t.Id == int.Parse(id));
+            var teacher = FakeDB.Teachers.FirstOrDefault(t => t.UserId == id);
 
             //get teacher address
             if (teacher != null)

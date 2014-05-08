@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 
 namespace TeachMe.Models
 {
@@ -18,20 +19,12 @@ namespace TeachMe.Models
         public string ConfirmationToken { get; set; }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-    {
-        public ApplicationDbContext()
-            : base("DefaultConnection")
-        {
-        }
-    }
-
     public class IdentityManager
     {
         public bool RoleExists(string name)
         {
             var rm = new RoleManager<IdentityRole>(
-                new RoleStore<IdentityRole>(new ApplicationDbContext()));
+                new RoleStore<IdentityRole>(new TeachMeDBContext()));
             return rm.RoleExists(name);
         }
 
@@ -39,7 +32,7 @@ namespace TeachMe.Models
         public bool CreateRole(string name)
         {
             var rm = new RoleManager<IdentityRole>(
-                new RoleStore<IdentityRole>(new ApplicationDbContext()));
+                new RoleStore<IdentityRole>(new TeachMeDBContext()));
             var idResult = rm.Create(new IdentityRole(name));
             return idResult.Succeeded;
         }
@@ -48,7 +41,7 @@ namespace TeachMe.Models
         public bool CreateUser(ApplicationUser user, string password)
         {
             var um = new UserManager<ApplicationUser>(
-                new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                new UserStore<ApplicationUser>(new TeachMeDBContext()));
             var idResult = um.Create(user, password);
             return idResult.Succeeded;
         }
@@ -57,7 +50,7 @@ namespace TeachMe.Models
         public bool AddUserToRole(string userId, string roleName)
         {
             var um = new UserManager<ApplicationUser>(
-                new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                new UserStore<ApplicationUser>(new TeachMeDBContext()));
             var idResult = um.AddToRole(userId, roleName);
             return idResult.Succeeded;
         }
@@ -66,7 +59,7 @@ namespace TeachMe.Models
         public void ClearUserRoles(string userId)
         {
             var um = new UserManager<ApplicationUser>(
-                new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                new UserStore<ApplicationUser>(new TeachMeDBContext()));
             var user = um.FindById(userId);
             var currentRoles = new List<IdentityUserRole>();
             currentRoles.AddRange(user.Roles);

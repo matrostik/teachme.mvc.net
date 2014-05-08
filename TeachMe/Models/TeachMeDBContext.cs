@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace TeachMe.Models
     /// TeachMeDBContext connection
     /// used to work with database
     /// </summary>
-    public class TeachMeDBContext : DbContext
+    public class TeachMeDBContext : IdentityDbContext<ApplicationUser>
     {
         public TeachMeDBContext()
             : base("DefaultConnection")
@@ -18,5 +19,12 @@ namespace TeachMe.Models
         }
 
         public DbSet<Teacher> Teachers { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<City> Cities { get; set; }
+
+        public DbSet<Subject> Subjects { get; set; }
     }
+    
 }

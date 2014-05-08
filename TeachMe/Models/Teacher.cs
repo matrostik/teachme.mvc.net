@@ -13,10 +13,6 @@ namespace TeachMe.Models
         
         public int Id { get; set; }
 
-        public string FirstName { get; set; }
-       
-        public string LastName{ get; set; }
-
         public string PictureUrl { get; set; }
 
         public int Age{ get; set; }
@@ -37,18 +33,19 @@ namespace TeachMe.Models
 
         public string About { get; set; }
 
-        public string Raters { get; set; }
+        public int Raters { get; set; }
 
-        public decimal Rating { get; set; }
+        public int Rating { get; set; }
 
+        public string UserId { get; set; }
 
+        public int GeoLocationId { get; set; }
 
+        public virtual ApplicationUser User { get; set; }
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}", HtmlEncode = true, ApplyFormatInEditMode = true)]
-        public DateTime RegistrationDate { get; set; }
+        public virtual GeoLocation GeoLocation { get; set; }
 
-        public GeoLocation GeoLocation { get; set; }
+        public virtual List<Comment> Comments { get; set; }
 
         #endregion
 
@@ -72,7 +69,7 @@ namespace TeachMe.Models
         /// <returns></returns>
         public string GetFullName()
         {
-            return FirstName + " " + LastName;
+            return User.FirstName + " " + User.LastName;
         }
 
         /// <summary>

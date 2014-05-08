@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using TeachMe.Models;
 using TeachMe.Helpers;
+using System.Security.Claims;
 
 namespace TeachMe.Controllers
 {
@@ -545,6 +546,9 @@ namespace TeachMe.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+            // Add user claims
+            identity.AddClaim(new Claim("FirstName", user.FirstName != null ? user.FirstName : ""));
+            identity.AddClaim(new Claim("LastName", user.LastName != null ? user.LastName : ""));
             AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
         }
 

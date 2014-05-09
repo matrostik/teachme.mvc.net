@@ -100,7 +100,14 @@ namespace TeachMe.Controllers
             }
 
             // data
-            model.Teachers = SearchInRadius(teachers, model, distance);
+            if(!string.IsNullOrEmpty(distance))
+            {
+                model.Teachers = SearchInRadius(teachers, model, distance);
+            }
+            else
+            {
+                 model.Teachers = teachers;
+            }
             model.ResultCount = model.Teachers.Count;
             // pass model to view
             return View(model);

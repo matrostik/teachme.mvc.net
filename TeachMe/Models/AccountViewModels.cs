@@ -6,6 +6,14 @@ namespace TeachMe.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
+        [Required(ErrorMessage = "* יש להכניס שם פרטי")]
+        [Display(Name = "שם פרטי")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "* יש להכניס שם משפחה")]
+        [Display(Name = "שם משפחה")]
+        public string LastName { get; set; }
+
         [Required]
         [Display(Name = "דוא\"ל")]
         [EmailAddress(ErrorMessage = "דוא\"ל שגוי")]

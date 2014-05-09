@@ -35,6 +35,8 @@ namespace TeachMe.Models
 
         public int LessonPrice{ get; set; }
 
+        public int LessonTime { get; set; }
+
         public string Phone{ get; set; }
 
         public string Education { get; set; }

@@ -25,7 +25,7 @@ namespace TeachMe.Controllers
                     model.Text = "הייתה שגיאה באישור הדוא\"ל שלך, אנא נסה שוב.";
                     break;
                 case ResultMessage.ResetPasswordEmail:
-                    model.Title = "שחזור סיסמא דוא\"ל נשלח ל " + userName;
+                    model.Title = "בקשת שחזור סיסמא נשלחה לכתובת הדוא\"ל " + userName;
                     model.Text = "אם אינך רואה הודעה זו בתיבת הדואר הנכנס שלך בתוך 15 דקות, חפש אותו בתיקיית דואר זבל שלך. אם אתה מוצא אותו שם, נא סמן אותה כ-לא זבל. ";
                     break;
                 case ResultMessage.ResetPasswordCompleted:

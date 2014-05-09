@@ -18,6 +18,20 @@
     </p>
     <div class="form-group">
         <div class="col-md-11">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control"})
+            @Html.ValidationMessageFor(m => m.FirstName)
+        </div>
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-1 control-label" })
+    </div>
+    <div class="form-group">
+        <div class="col-md-11">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.LastName)
+        </div>
+        @Html.LabelFor(m => m.LastName, new { @class = "col-md-1 control-label" })
+    </div>
+    <div class="form-group">
+        <div class="col-md-11">
             @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @readonly="true" })
             @Html.ValidationMessageFor(m => m.UserName)
         </div>

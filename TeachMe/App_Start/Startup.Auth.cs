@@ -32,7 +32,7 @@ namespace TeachMe
             var facebookAuthenticationOptions = new FacebookAuthenticationOptions()
             {
                 AppId = "223991224464933",
-                AppSecret = "5d551070b83a0628c3dbb98b61168a72"
+                AppSecret = "57f42ea8491e04c5748e326eb6c05892"
             };
             facebookAuthenticationOptions.Scope.Add("email");
             app.UseFacebookAuthentication(facebookAuthenticationOptions);

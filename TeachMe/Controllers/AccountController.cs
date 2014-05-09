@@ -105,6 +105,7 @@ namespace TeachMe.Controllers
                 };
                 // Attempt to register the user
                 var result = await UserManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
                     // User created send confirmation mail
@@ -329,7 +330,10 @@ namespace TeachMe.Controllers
             var gName = nameClaim != null ? nameClaim.Value : null;
             //split name
             var name = string.IsNullOrEmpty(fName) ? gName : fName;
-            //var st  = name.Split(' ',2);
+            var st = name.Split(new char[] { ' ' }, 2);
+
+            string firstName = st.Count() > 0 ? st[0] : string.Empty;
+            string lastName = st.Count() > 1 ? st[1] : string.Empty;
 
             // get email, same for fb and google
             var emailClaim = externalIdentity.Claims.FirstOrDefault(x => x.Type.Equals(
@@ -369,7 +373,7 @@ namespace TeachMe.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = email, FirstName="",LastName="" });
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = email, FirstName = firstName, LastName = lastName });
                 }
             }
             return RedirectToAction("Index", "Result", new { Message = ResultMessage.Error });
@@ -422,6 +426,8 @@ namespace TeachMe.Controllers
 
                 var user = new ApplicationUser()
                 {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
                     UserName = model.UserName,
                     ConfirmationToken = "0",
                     IsConfirmed = true
@@ -430,6 +436,10 @@ namespace TeachMe.Controllers
                 {
                     // Create new user
                     var result = await UserManager.CreateAsync(user);
+                    // Create roles and set specials users to roles
+                    await AddUserToRole(user,"User");
+                    await AddUserToRole(user, "Tutor");
+
                     if (result.Succeeded)
                     {
                         // create user external login
@@ -501,8 +511,9 @@ namespace TeachMe.Controllers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        private async Task AddUserToRole(ApplicationUser user)
+        private async Task AddUserToRole(ApplicationUser user, string roleName = "User")
         {
+            // Create roles must be executed only once
             var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(Db));
             if (!rm.RoleExists("Admin"))
                 rm.Create(new IdentityRole("Admin"));
@@ -510,13 +521,20 @@ namespace TeachMe.Controllers
                 rm.Create(new IdentityRole("Moder"));
             if (!rm.RoleExists("Tutor"))
                 rm.Create(new IdentityRole("Tutor"));
+            if (!rm.RoleExists("User"))
+                rm.Create(new IdentityRole("User"));
+            // end create roles
 
+            // Add users to special roles
             if (user.UserName.Equals("matrostik@gmail.com"))
             {
                 await UserManager.AddToRoleAsync(user.Id, "Admin");
                 await UserManager.AddToRoleAsync(user.Id, "Moder");
                 await UserManager.AddToRoleAsync(user.Id, "Tutor");
             }
+            // Set user to specified mail
+            else
+                await UserManager.AddToRoleAsync(user.Id, roleName);
         }
 
         /// <summary>
@@ -533,10 +551,9 @@ namespace TeachMe.Controllers
                 // Activate user account 
                 user.IsConfirmed = true;
                 var result = await UserManager.UpdateAsync(user);
-                // Create roles and set specials users to roles
-                await AddUserToRole(user);
-                // Add user to roles
-                await UserManager.AddToRoleAsync(user.Id, "Tutor");
+                // Add user to Tutor role
+                await AddUserToRole(user,"Tutor");
+
                 await SignInAsync(user, isPersistent: false);
                 return true;
             }

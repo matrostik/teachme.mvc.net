@@ -130,9 +130,8 @@ namespace TeachMe.Models
             // which the current user is a member:
             foreach (var userRole in user.Roles)
             {
-                var checkUserRole =
-                    this.Roles.Find(r => r.RoleName == userRole.Role.Name);
-                checkUserRole.Selected = true;
+                //var checkUserRole = this.Roles.Find(r => r.RoleName == userRole.Role.Name);
+                //checkUserRole.Selected = true;
             }
         }
 

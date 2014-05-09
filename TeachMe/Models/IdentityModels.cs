@@ -72,7 +72,7 @@ namespace TeachMe.Models
             currentRoles.AddRange(user.Roles);
             foreach (var role in currentRoles)
             {
-                um.RemoveFromRole(userId, role.Role.Name);
+                //um.RemoveFromRole(userId, role.Role.Name);
             }
         }
     }

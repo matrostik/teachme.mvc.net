@@ -1,23 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace TeachMe.Models
 {
-    public class City
+    public class Institution
     {
-
         #region Fields
 
         public int Id { get; set; }
 
         public string Name { get; set; }
 
-        public int GeoLocationId { get; set; }
-
-        public virtual GeoLocation GeoLocation { get; set; }
+        public string Type { get; set; }
 
         #endregion
-
     }
 }

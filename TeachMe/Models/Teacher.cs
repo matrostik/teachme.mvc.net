@@ -13,6 +13,8 @@ namespace TeachMe.Models
         
         public int Id { get; set; }
 
+        public bool isActive { get; set; }
+
         public string PictureUrl { get; set; }
 
         public int Age{ get; set; }
@@ -23,13 +25,16 @@ namespace TeachMe.Models
 
         public int HomeNum { get; set; }
 
-        public string Category { get; set; }
+        // Subjects to teach
+        public string SubjectsToTeach { get; set; }
 
         public int LessonPrice{ get; set; }
 
         public string Phone{ get; set; }
 
         public string Education { get; set; }
+
+        public string Institution { get; set; }
 
         public string About { get; set; }
 

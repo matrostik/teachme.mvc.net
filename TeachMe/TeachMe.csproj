@@ -187,6 +187,7 @@
     <Compile Include="Models\Geo.cs" />
     <Compile Include="Models\GeoLocation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Institution.cs" />
     <Compile Include="Models\MailModel.cs" />
     <Compile Include="Models\MapSearchViewModel.cs" />
     <Compile Include="Models\ResultViewModel.cs" />

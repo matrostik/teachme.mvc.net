@@ -17,6 +17,7 @@ namespace TeachMe.Models
         public bool IsConfirmed { get; set; }
 
         public string ConfirmationToken { get; set; }
+
     }
 
     public class IdentityManager

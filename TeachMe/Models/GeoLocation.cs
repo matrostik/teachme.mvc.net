@@ -9,7 +9,7 @@ namespace TeachMe.Models
     /// <summary>
     /// GeoLocation class that represent 
     /// geolocation coordinates of teachers
-    /// address
+    /// address or cities
     /// </summary>
     public class GeoLocation
     {

@@ -25,6 +25,8 @@ namespace TeachMe.Models
         public DbSet<City> Cities { get; set; }
 
         public DbSet<Subject> Subjects { get; set; }
+
+        public DbSet<Institution> Institutions { get; set; }
     }
     
 }

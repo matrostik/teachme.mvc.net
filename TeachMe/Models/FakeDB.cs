@@ -35,8 +35,8 @@ namespace TeachMe.Models
                 {
                     var temp = t.Split(' ');
                     var teacher = new Teacher();
-                    teacher.FirstName = temp[0];
-                    teacher.LastName = temp[1];
+                    teacher.User.FirstName = temp[0];
+                    teacher.User.LastName = temp[1];
                     teacher.Age = int.Parse(temp[2]);
                     teacher.City = temp[3];
                     teacher.Street = temp[4];
@@ -49,7 +49,7 @@ namespace TeachMe.Models
 
                 }
 
-                return teachers.OrderBy(o => o.FirstName).ToList();
+                return teachers.OrderBy(o => o.User.FirstName).ToList();
             }
         }
     }

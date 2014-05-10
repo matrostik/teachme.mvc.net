@@ -204,11 +204,13 @@
     <Compile Include="Models\Geo.cs" />
     <Compile Include="Models\GeoLocation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Institution.cs" />
     <Compile Include="Models\MailModel.cs" />
     <Compile Include="Models\MapSearchViewModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\ResultViewModel.cs" />
     <Compile Include="Models\Subject.cs" />
+    <Compile Include="Models\SubjectToTeach.cs" />
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\TeachMeDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

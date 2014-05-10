@@ -115,7 +115,7 @@ namespace TeachMe.Models
             this.FirstName = user.FirstName;
             this.LastName = user.LastName;
 
-            var Db = new ApplicationDbContext();
+            var Db = new TeachMeDBContext();
 
             // Add all available roles to the list of EditorViewModels:
             var allRoles = Db.Roles;

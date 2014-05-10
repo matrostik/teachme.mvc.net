@@ -6,22 +6,17 @@ using System.Web;
 namespace TeachMe.Models
 {
     /// <summary>
-    /// Subject  of study
+    /// Institution
     /// (general info)
     /// </summary>
-    public class Subject
+    public class Institution
     {
-
-        #region Fields
 
         public int Id { get; set; }
 
         public string Name { get; set; }
 
-        // maybe list of subtypes separated by coma for example
-        public string Description { get; set; }
-        
-        #endregion
+        public string Type { get; set; }
 
     }
 }

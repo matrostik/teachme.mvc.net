@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -14,11 +15,7 @@ namespace TeachMe.Models
         public int Id { get; set; }
 
         //switch on/off for profile
-        public bool isActivated { get; set; } 
-
-        public string FirstName { get; set; }
-       
-        public string LastName{ get; set; }
+        public bool isActive { get; set; } 
 
         public string PictureUrl { get; set; }
 
@@ -30,9 +27,6 @@ namespace TeachMe.Models
 
         public int HomeNum { get; set; }
 
-        // subject to teach
-        public string Category { get; set; }
-
         public int LessonPrice{ get; set; }
 
         public int LessonTime { get; set; }
@@ -41,20 +35,36 @@ namespace TeachMe.Models
 
         public string Education { get; set; }
 
+        public string Institution { get; set; }
+
+        /*  temporary object for subject to teach (for FakeDB) */
+        [NotMapped]
+        public string Category { get; set; }
+        /*  temporary object for subject to teach */
+
         public string About { get; set; }
 
-        public string Raters { get; set; }
+        public int Raters { get; set; }
 
-        public decimal Rating { get; set; }
-
-
-
+        public int Rating { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}", HtmlEncode = true, ApplyFormatInEditMode = true)]
         public DateTime RegistrationDate { get; set; }
 
-        public GeoLocation GeoLocation { get; set; }
+        public string UserId { get; set; }
+
+        public string SubjectToTeachId { get; set; }
+
+        public int GeoLocationId { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
+
+        public virtual List<SubjectToTeach> SubjectsToTeach { get; set; }
+
+        public virtual GeoLocation GeoLocation { get; set; }
+
+        public virtual List<Comment> Comments { get; set; }
 
         #endregion
 
@@ -78,7 +88,7 @@ namespace TeachMe.Models
         /// <returns></returns>
         public string GetFullName()
         {
-            return FirstName + " " + LastName;
+            return User.FirstName + " " + User.LastName;
         }
 
         /// <summary>

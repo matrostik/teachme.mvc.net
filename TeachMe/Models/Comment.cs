@@ -5,6 +5,9 @@ using System.Web;
 
 namespace TeachMe.Models
 {
+    /// <summary>
+    /// Comment for teacher profile
+    /// </summary>
     public class Comment
     {
         #region Fields

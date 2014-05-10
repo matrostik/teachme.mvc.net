@@ -83,11 +83,11 @@ namespace TeachMe.Controllers
             List<Teacher> teachers;
             // search for teachers
             if (!string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(category))
-                teachers = FakeDB.Teachers.Where(t => t.City.Contains(city) && t.SubjectsToTeach.Contains(category)).ToList();
+                teachers = FakeDB.Teachers.Where(t => t.City.Contains(city) && t.Category.Contains(category)).ToList();
             else if (!string.IsNullOrEmpty(city))
                 teachers = FakeDB.Teachers.Where(t => t.City.Contains(city)).ToList();
             else if (!string.IsNullOrEmpty(category))
-                teachers = FakeDB.Teachers.Where(t => t.SubjectsToTeach.Contains(category)).ToList();
+                teachers = FakeDB.Teachers.Where(t => t.Category.Contains(category)).ToList();
             else
                 teachers = new List<Teacher>();
 

@@ -26,7 +26,7 @@ namespace TeachMe.Models
         public int HomeNum { get; set; }
 
         // Subjects to teach
-        public string SubjectsToTeach { get; set; }
+        public string Category { get; set; }
 
         public int LessonPrice{ get; set; }
 

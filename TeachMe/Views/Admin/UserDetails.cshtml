@@ -5,77 +5,147 @@
 
 <h2>פרטי משתמש</h2>
 
-<div>
-    <h4>@Model.User.FirstName @Model.User.LastName</h4>
-    <hr />
 
-    <div class="row">
+<h4>@Model.User.FirstName @Model.User.LastName</h4>
+<hr />
+<p>
+    @Html.ActionLink("חזרה לרשימה", "Users", new { filter = "all" })
+</p>
 
+<div class="row">
+    <ul class="nav nav-tabs" style="margin-bottom: -3px; float:right" dir="ltr">
+        <li class=""><a href="#profile" data-toggle="tab">פרופיל</a></li>
+        <li class="active"><a href="#user" data-toggle="tab">משתשמש</a></li>
+    </ul>
+</div>
+<div class="row">
+    @using (Html.BeginForm("UserDetails", "Admin", new { id = Model.User.Id }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(m => m.User.Id)
         <div class="list-group-item">
-            <div class="row">
+            <div id="myTabContent" class="tab-content">
 
-                <div class="col-md-9">
-                    <div class="form-group">
-                        <div class="col-lg-10">
-                            <input type="text" class="form-control" disabled="" value="@Model.User.FirstName">
+                <div class="tab-pane fade active in" id="user">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <div class="col-lg-10">
+                                <input name="User.FirstName" type="text" class="form-control" @Model.Disabled value="@Model.User.FirstName">
+                                @Html.ValidationMessageFor(m => m.User.FirstName)
+                            </div>
+                            @Html.LabelFor(m => m.User.FirstName, new { @class = "col-lg-2 control-label" })
                         </div>
-                        <label for="inputEmail" class="col-lg-2 control-label">שם פרטי</label>
+
+                        <div class="form-group">
+                            <div class="col-lg-10">
+                                <input name="User.LastName" type="text" class="form-control" @Model.Disabled value="@Model.User.LastName">
+                                @Html.ValidationMessageFor(m => m.User.LastName)
+                            </div>
+                            @Html.LabelFor(m => m.User.LastName, new { @class = "col-lg-2 control-label" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-10">
+                                <input name="User.IsConfirmed" @Model.Disabled value="@Model.User.IsConfirmed" class="check-box" type="checkbox" @(Model.User.IsConfirmed ? "checked" : "")>
+                            </div>
+                            @Html.LabelFor(m => m.User.IsConfirmed, new { @class = "col-lg-2 control-label" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-10">
+                                <input name="User.UserName" type="text" class="form-control" @Model.Disabled value="@Model.User.UserName">
+                                @Html.ValidationMessageFor(m => m.User.UserName)
+                            </div>
+                            @Html.LabelFor(m => m.User.UserName, new { @class = "col-lg-2 control-label" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" disabled="" value="@Model.Roles">
+                            </div>
+                            @Html.LabelFor(m => m.Roles, new { @class = "col-lg-2 control-label" })
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <div class="col-lg-10">
-                            <input type="text" class="form-control" disabled="" value="@Model.User.LastName">
-                        </div>
-                        <label for="inputPassword" class="col-lg-2 control-label">שם משפחה</label>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-lg-10">
-                            <input disabled="disabled" class="check-box" type="checkbox" checked="@Model.User.IsConfirmed">
-                        </div>
-                        <label for="inputEmail" class="col-lg-2 control-label">מאושר</label>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-lg-10">
-                            <input type="text" class="form-control" disabled="" value="@Model.User.UserName">
-                        </div>
-                        <label for="inputPassword" class="col-lg-2 control-label">מייל</label>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-lg-10">
-                            <input type="text" class="form-control" disabled="" value="@Model.Roles">
-                        </div>
-                        <label for="inputPassword" class="col-lg-2 control-label">תפקידים</label>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-lg-10" style="border:1px solid red; text-align:left">
-                            <br />
-                            <a class="btn btn-default" href="#">פרופיל המלא &raquo;</a>
-                            @Html.ActionLink("Show on map", "Geo", new { id = @Model.User.Id }, new { @class = "btn btn-default" })
-                        </div>
-                       
-                    </div>
-
-                        </div>
-
-                        <div class="col-md-3" style="padding: 0 20px 0 0;">
-                            <div class="well" style="padding: 10px;">
+                    <div class="col-md-3" style="padding: 0 -5px 0 0; margin:0">
+                        <div class="well" style="padding: 5px;">
+                            <center>
                                 <a href="#">
                                     <span>
                                         <img src="~/Images/profile-icon.png" class="img-responsive" />
                                     </span>
                                 </a>
-                            </div>
+                            </center>
                         </div>
                     </div>
                 </div>
+
+                <div class="tab-pane fade" id="profile">
+                    @if (Model.Teacher != null)
+                    {
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="col-lg-10">
+                                    <input name="User.FirstName" type="text" class="form-control" @Model.Disabled value="@Model.Teacher.Age">
+                                    @Html.ValidationMessageFor(m => m.User.FirstName)
+                                </div>
+                                @Html.LabelFor(m => m.User.FirstName, new { @class = "col-lg-2 control-label" })
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-10">
+                                    <input name="User.LastName" type="text" class="form-control" @Model.Disabled value="@Model.Teacher.City">
+                                    @Html.ValidationMessageFor(m => m.Teacher.City)
+                                </div>
+                                @Html.LabelFor(m => m.Teacher.City, new { @class = "col-lg-2 control-label" })
+                            </div> 
+                            <div class="form-group">
+                                <div class="col-lg-10">
+                                    <input name="User.UserName" type="text" class="form-control" @Model.Disabled value="@Model.Teacher.Street">
+                                    @Html.ValidationMessageFor(m => m.Teacher.Street)
+                                </div>
+                                @Html.LabelFor(m => m.Teacher.Street, new { @class = "col-lg-2 control-label" })
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-10">
+                                    <input name="User.UserName" type="text" class="form-control" @Model.Disabled value="@Model.Teacher.HomeNum">
+                                    @Html.ValidationMessageFor(m => m.Teacher.HomeNum)
+                                </div>
+                                @Html.LabelFor(m => m.Teacher.HomeNum, new { @class = "col-lg-2 control-label" })
+                            </div>
+
+                        </div>
+                    }
+                    else
+                    {
+                        @Html.Label("", "משתמש עדיין לא סיים את הפרופיל שלו.", new { @class = "col-lg-12 control-label" })
+                    }
+
+                </div>
+
+                <div class="row" style="margin: 5px 0 5px 0">
+
+                    <div class="col-md-12">
+                        <center>
+                            @if (Model.InEditMode)
+                            {
+                                <input type="submit" class="btn btn-primary" value="שמירה" />
+                                @Html.ActionLink("ביטול", "UserDetails", new { id = @Model.User.Id }, new { @class = "btn btn-default" })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("עריכה", "UserDetails", new { id = @Model.User.Id, edit = 1 }, new { @class = "btn btn-default" })
+                            }
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
-</div>
+
+<br />
 <p>
-    @Html.ActionLink("עריכה", "UserDetails", new { id = Model.User.Id }) |
-    @Html.ActionLink("חזרה לרשימה", "Users", new { id = "all" })
+    @Html.ActionLink("חזרה לרשימה", "Users", new { filter = "all" })
 </p>

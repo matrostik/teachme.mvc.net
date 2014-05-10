@@ -85,7 +85,7 @@ namespace TeachMe.Controllers
                 // Remove leading and trailing spaces 
                 model.UserName = model.UserName.Trim();
                 // Check email
-                ApplicationUser user = await UserManager.FindByNameAsync(model.UserName); ;
+                ApplicationUser user = await UserManager.FindByNameAsync(model.UserName);
                 if (user != null)
                     ModelState.AddModelError("UserName", "דוא\"ל כבר קיים");
                 // Display errors if has

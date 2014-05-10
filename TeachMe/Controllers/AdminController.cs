@@ -5,6 +5,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TeachMe.Models;
+using PagedList;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Threading.Tasks;
 
 namespace TeachMe.Controllers
 {
@@ -15,17 +19,14 @@ namespace TeachMe.Controllers
         public AdminController()
         {
             Db = new TeachMeDBContext();
-            //TeachDb = new TeachMeDBContext();
         }
-
         //
         // GET: /Admin/
         public ActionResult Index()
         {
             AdminIndexViewModel model = new AdminIndexViewModel();
             model.Users = Db.Users.ToList();
-            var t = Db.Teachers.ToList();
-            
+
             return View(model);
         }
 
@@ -33,13 +34,13 @@ namespace TeachMe.Controllers
         // GET: /Admin/Users/
         public ActionResult Users(string filter, string sortOrder, int? page)
         {
-            
             AdminUsersViewModel model = new AdminUsersViewModel();
-
+            var list = new List<ApplicationUser>();
+            model.Filter = filter;
             if (string.IsNullOrEmpty(filter) || filter.Equals("all"))
-                model.Users = Db.Users.ToList();
+                list = Db.Users.ToList();
             else
-                model.Users = Db.Users.Where(x => !x.IsConfirmed).ToList();
+                list = Db.Users.Where(x => !x.IsConfirmed).ToList();
 
             if (!string.IsNullOrEmpty(sortOrder))
             {
@@ -47,33 +48,64 @@ namespace TeachMe.Controllers
                 switch (sortOrder)
                 {
                     case "firstName":
-                        model.Users = model.Users.OrderBy(t => t.FirstName).ToList();
+                        list = list.OrderBy(t => t.FirstName).ToList();
                         break;
                     case "lastName":
-                        model.Users = model.Users.OrderBy(t => t.LastName).ToList();
+                        list = list.OrderBy(t => t.LastName).ToList();
+                        break;
+                    case "email":
+                        list = list.OrderBy(t => t.UserName).ToList();
                         break;
                     default:
                         break;
                 }
             }
-            //int pageSize = 10;
-            //int pageNumber = (page ?? 1);
-            //ViewBag.Count = list.Count;
-            //ViewBag.Result = list.ToPagedList(pageNumber, pageSize);
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+            model.Users = list.ToPagedList(pageNumber, pageSize);
             return View(model);
         }
 
         //
         // GET: /Admin/UserDetails/5
-        public ActionResult UserDetails(string id)
+        public ActionResult UserDetails(string id, int? edit)
         {
-            ApplicationUser u = Db.Users.Include(r => r.Roles).FirstOrDefault(x => x.Id == id);
+            if (string.IsNullOrEmpty(id))
+                return RedirectToAction("Users");
+            var user = Db.Users.Include(r => r.Roles).FirstOrDefault(x => x.Id == id);
+            var teacher = Db.Teachers.FirstOrDefault(x => x.UserId == id);
             AdminUserDetailsViewModel model = new AdminUserDetailsViewModel();
-            model.User = u;
-
+            model.User = user;
+            model.Teacher = teacher;
+            if (edit != null && edit == 1)
+                model.InEditMode = true;
             return View(model);
         }
 
+         //
+        // POST: /Admin/UserDetails/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UserDetails(AdminUserDetailsViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = Db.Users.SingleOrDefault(u => u.Id == model.User.Id);
+                user.FirstName = model.User.FirstName;
+                user.LastName = model.User.LastName;
+                user.UserName = model.User.UserName;
+                user.IsConfirmed = model.User.IsConfirmed;
+
+                Db.Entry(user).State = EntityState.Modified;
+                Db.SaveChanges();
+
+                return RedirectToAction("UserDetails", new { id  = user.Id });
+            }
+            model.InEditMode = true;
+            return View(model);
+        }
 
 
         //

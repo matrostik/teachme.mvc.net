@@ -1,4 +1,5 @@
 ﻿@model TeachMe.Models.AdminUsersViewModel
+@using PagedList.Mvc
 @{
     ViewBag.Title = "משתמשים";
 }
@@ -10,10 +11,11 @@
 </p>
 <div class="row" style="margin-right:10px">
     מיין תוצאות לפי: |
-    @Html.ActionLink("שם פרטי", "Index", new { sortOrder = "firstName" }) |
-    @Html.ActionLink("שם משפחה", "Index", new { sortOrder = "lastName" }) |
+    @Html.ActionLink("שם פרטי", "Users", new { sortOrder = "firstName", filter = Model.Filter }) |
+    @Html.ActionLink("שם משפחה", "Users", new { sortOrder = "lastName", filter = Model.Filter }) |
+    @Html.ActionLink("מייל", "Users", new { sortOrder = "email", filter = Model.Filter }) |
 </div>
-<table class="table" dir="rtl">
+<table class="table  table-striped" dir="rtl">
     <tr>
         <th style="text-align:right">
             שם פרטי
@@ -42,12 +44,25 @@
             </td>
             <td style="text-align:right">
                 <div dir="ltr">
-                    @Html.ActionLink("פרטים", "UserDetails", new { id = item.Id }, new { @class = "label label-success" }) |
-                    @Html.ActionLink("עריכה", "UserDetails", new { id = item.Id }, new { @class = "label label-warning" }) |
-                    @Html.ActionLink("מחיקה", "UserDelete", new { id = item.Id }, new { @class = "label label-danger" })
+                    @Html.ActionLink("פרטים", "UserDetails", new { id = item.Id, filter = Model.Filter }, new { @class = "label label-success" }) |
+                    @Html.ActionLink("עריכה", "UserDetails", new { id = item.Id, filter = Model.Filter, edit = 1 }, new { @class = "label label-warning" }) |
+                    @Html.ActionLink("מחיקה", "UserDelete", new { id = item.Id, filter = Model.Filter }, new { @class = "label label-danger" })
                 </div>
             </td>
         </tr>
     }
 
 </table>
+<hr />
+<div class="row">
+    @{
+        var list = Model.Users;
+        if (list.PageCount > 1)
+        {
+            <span style="margin-right:20px">עמוד @(list.PageCount < list.PageNumber ? 0 : list.PageNumber) מתוך @list.PageCount </span>
+        }
+    }
+    <center dir="ltr">
+        @Html.PagedListPager(list, page => Url.Action("Users", new { page, firstName = Model.Filter, sortOrder = Model.SortParm }))
+    </center>
+</div>

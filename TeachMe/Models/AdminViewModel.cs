@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +13,8 @@ namespace TeachMe.Models
         /// List of all Users
         /// </summary>
         public List<ApplicationUser> Users { get; set; }
+
+
 
         /// <summary>
         /// Total users count
@@ -36,14 +40,20 @@ namespace TeachMe.Models
         /// <summary>
         /// List of all Users
         /// </summary>
-        public List<ApplicationUser> Users { get; set; }
+        public IPagedList<ApplicationUser> Users { get; set; }
 
         public string SortParm { get; set; }
+
+        public string Filter { get; set; }
     }
 
     public class AdminUserDetailsViewModel
     {
         public ApplicationUser User { get; set; }
+
+        public Teacher Teacher { get; set; }
+
+        [Display(Name = "תפקידים")]
         public string Roles
         {
             get
@@ -51,5 +61,15 @@ namespace TeachMe.Models
                 return string.Join(",", User.Roles.Select(x => x.Role.Name));
             }
         }
+
+        /// <summary>
+        /// Set edit mode
+        /// </summary>
+        public bool InEditMode { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Disabled { get { return InEditMode ? "" : "disabled"; } }
     }
 }

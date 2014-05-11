@@ -20,14 +20,14 @@
             <div class="panel-body">
                 <div class="form-group">
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Age, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.Age, new { @class = "form-control", @placeholder = "Enter age" })
                         @Html.ValidationMessageFor(m => m.Age)
                     </div>
                     @Html.LabelFor(m => m.Age, new { @class = "col-md-2 control-label" })
                 </div>
                 <div class="form-group">
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeholder = "Enter phone" })
                         @Html.ValidationMessageFor(m => m.Phone)
                     </div>
                     @Html.LabelFor(m => m.Phone, new { @class = "col-md-2 control-label" })
@@ -47,7 +47,7 @@
 
                 <div class="form-group">
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Street, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.Street, new { @class = "form-control", @placeholder = "Enter street" })
                         @Html.ValidationMessageFor(m => m.Street)
                     </div>
                     @Html.LabelFor(m => m.Street, new { @class = "col-md-2 control-label" })
@@ -55,7 +55,7 @@
 
                 <div class="form-group">
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.HomeNum, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.HomeNum, new { @class = "form-control", @placeholder = "Enter house" })
                         @Html.ValidationMessageFor(m => m.HomeNum)
                     </div>
                     @Html.LabelFor(m => m.HomeNum, new { @class = "col-md-2 control-label" })
@@ -74,7 +74,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.LessonPrice, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.LessonPrice, new { @class = "form-control", @placeholder = "Enter price" })
                         @Html.ValidationMessageFor(m => m.LessonPrice)
                     </div>
                     @Html.LabelFor(m => m.LessonPrice, new { @class = "col-md-2 control-label" })
@@ -94,7 +94,7 @@
             <div class="panel-body">
                 <div class="form-group">
                     <div class="col-lg-10">
-                        @Html.TextAreaFor(m => m.Education, new { @class = "form-control", @rows = 2 })
+                        @Html.TextAreaFor(m => m.Education, new { @class = "form-control", @rows = 2, @placeholder = "Enter Education" })
                         @Html.ValidationMessageFor(model => model.Education)
                     </div>
                     <label class="col-lg-2 control-label" for="textArea"> השכלה</label>
@@ -102,7 +102,7 @@
 
                 <div class="form-group">
                     <div class="col-lg-10">
-                        @Html.TextAreaFor(m => m.About, new { @class = "form-control", @rows = 4 })
+                        @Html.TextAreaFor(m => m.About, new { @class = "form-control", @rows = 4, @placeholder = "Enter About" })
                         @Html.ValidationMessageFor(model => model.About)
                     </div>
                     <label class="col-lg-2 control-label" for="textArea">על עצמי...</label>

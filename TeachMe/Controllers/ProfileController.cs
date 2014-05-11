@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TeachMe.Models;
+using TeachMe.Helpers;
+using Microsoft.AspNet.Identity;
 
 namespace TeachMe.Controllers
 {
@@ -20,7 +22,14 @@ namespace TeachMe.Controllers
         // GET: /Profile/
         public ActionResult Index(int? id)
         {
-            var t = Db.Teachers.FirstOrDefault(x => x.Id == id);
+            Teacher t;
+            if (User.Identity.IsAuthenticated)
+            {
+                var id1 = User.Identity.GetUserId();
+                t = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId ==id1 );
+            }
+            else
+                t = Db.Teachers.FirstOrDefault(x => x.Id == id);
             return View(t);
         }
 
@@ -88,6 +97,8 @@ namespace TeachMe.Controllers
                 t.Phone = model.Phone;
 
                 t.GeoLocation = new GeoLocation(t.GetAddressForMap());
+                if (User.Identity.IsAuthenticated)
+                    t.ApplicationUserId = User.Identity.GetUserId();
 
                 Db.Teachers.Add(t);
                 Db.SaveChanges();

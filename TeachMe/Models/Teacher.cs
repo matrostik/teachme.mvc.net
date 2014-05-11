@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace TeachMe.Models
 {
@@ -48,13 +44,7 @@ namespace TeachMe.Models
 
         public int Rating { get; set; }
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}", HtmlEncode = true, ApplyFormatInEditMode = true)]
-        public DateTime RegistrationDate { get; set; }
-
         public string UserId { get; set; }
-
-        public string SubjectToTeachId { get; set; }
 
         public int GeoLocationId { get; set; }
 

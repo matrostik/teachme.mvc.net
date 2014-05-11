@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-
+﻿
 namespace TeachMe.Models
 {
     /// <summary>
@@ -20,6 +17,15 @@ namespace TeachMe.Models
 
         public virtual GeoLocation GeoLocation { get; set; }
 
+        #endregion
+
+        #region Methods
+
+        public override string ToString()
+        {
+            string geo = GeoLocation != null ? GeoLocation.Latitude + " " + GeoLocation.Longitude : "";
+            return Name + " " + geo;
+        }
         #endregion
 
     }

@@ -1,16 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml;
 using TeachMe.Helpers;
 using TeachMe.Models;
+using System.Threading.Tasks;
 
 namespace TeachMe.Controllers
 {
+
     public class HomeController : Controller
     {
+        public TeachMeDBContext Db { get; private set; }
+
+        public HomeController()
+        {
+            Db = new TeachMeDBContext();
+        }
+
         public ActionResult Index()
         {
             var cats = FakeDB.Cat;
@@ -71,7 +82,7 @@ namespace TeachMe.Controllers
                 try
                 {
                     string to = "matrostik@gmail.com,kobieliasi@gmail.com,anttross@gmail.com,ahuvabloy@gmail.com";
-                    Email.Send(to, mail.From, "Feedback",mail.Body, EmailTemplate.Feedback);
+                    Email.Send(to, mail.From, "Feedback", mail.Body, EmailTemplate.Feedback);
                     ViewBag.Result = "Success";
                     return RedirectToAction("Index", "Result", new { Message = ResultMessage.FeedbackSend });
                 }

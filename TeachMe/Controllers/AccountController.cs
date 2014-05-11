@@ -9,6 +9,7 @@ using Microsoft.Owin.Security;
 using TeachMe.Models;
 using TeachMe.Helpers;
 using System.Security.Claims;
+using System.Data.Entity;
 
 namespace TeachMe.Controllers
 {
@@ -52,7 +53,7 @@ namespace TeachMe.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindAsync(model.UserName, model.Password);
-                if (user != null && user.IsConfirmed)
+                if (user != null && user.EmailConfirmed)
                 {
                     await SignInAsync(user, model.RememberMe);
                     return RedirectToLocal(returnUrl);
@@ -101,13 +102,15 @@ namespace TeachMe.Controllers
                     LastName = model.LastName,
                     UserName = model.UserName,
                     ConfirmationToken = confirmationToken,
-                    IsConfirmed = false
+                    EmailConfirmed = false,
+                    RegistrationDate = DateTime.Today
                 };
                 // Attempt to register the user
                 var result = await UserManager.CreateAsync(user, model.Password);
-
                 if (result.Succeeded)
                 {
+                    // Add user to Tutor role
+                    await AddUserToRole(user, "Tutor");
                     // User created send confirmation mail
                     Email.Send(model.UserName, model.FirstName, confirmationToken, EmailTemplate.Registration);
                     // Redirect to ResultController (show message)
@@ -354,10 +357,10 @@ namespace TeachMe.Controllers
                 ApplicationUser appuser = await UserManager.FindByNameAsync(email);
                 if (appuser != null)
                 {
-                    if (!appuser.IsConfirmed)
+                    if (!appuser.EmailConfirmed)
                     {
                         // User account not confirmed
-                        appuser.IsConfirmed = true;
+                        appuser.EmailConfirmed = true;
                         var res = UserManager.UpdateAsync(appuser);
                     }
                     // Add External login
@@ -430,14 +433,15 @@ namespace TeachMe.Controllers
                     LastName = model.LastName,
                     UserName = model.UserName,
                     ConfirmationToken = "0",
-                    IsConfirmed = true
+                    EmailConfirmed = true,
+                    RegistrationDate = DateTime.Today
                 };
                 try
                 {
                     // Create new user
                     var result = await UserManager.CreateAsync(user);
                     // Create roles and set specials users to roles
-                    await AddUserToRole(user,"User");
+                    await AddUserToRole(user, "User");
                     await AddUserToRole(user, "Tutor");
 
                     if (result.Succeeded)
@@ -546,14 +550,19 @@ namespace TeachMe.Controllers
         {
             // Get user by token
             ApplicationUser user = Db.Users.SingleOrDefault(u => u.ConfirmationToken == confirmationToken);
-            if (user != null && !user.IsConfirmed)
+            if (user != null && !user.EmailConfirmed)
             {
                 // Activate user account 
-                user.IsConfirmed = true;
-                var result = await UserManager.UpdateAsync(user);
-                // Add user to Tutor role
-                await AddUserToRole(user,"Tutor");
+                user.EmailConfirmed = true;
 
+                // Save changes to db
+                Db.Entry(user).State = EntityState.Modified;
+                int t = Db.SaveChanges();
+
+                // Add user to Tutor role
+                await AddUserToRole(user, "Tutor");
+
+                // Signin user
                 await SignInAsync(user, isPersistent: false);
                 return true;
             }
@@ -649,7 +658,5 @@ namespace TeachMe.Controllers
             }
         }
         #endregion
-
-        public string UserName { get; set; }
     }
 }

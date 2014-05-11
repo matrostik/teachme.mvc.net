@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -17,14 +18,18 @@ namespace TeachMe.Models
         public string LastName { get; set; }
 
         [Display(Name = "מאושר")]
-        public bool IsConfirmed { get; set; }
-
+        public override bool EmailConfirmed { get; set; }
+        
         public string ConfirmationToken { get; set; }
 
         [Required(ErrorMessage = "* יש להכניס דוא\"ל")]
         [Display(Name = "דוא\"ל")]
         [EmailAddress(ErrorMessage = "דוא\"ל שגוי")]
         public override string UserName { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}", HtmlEncode = true, ApplyFormatInEditMode = true)]
+        public DateTime RegistrationDate { get; set; }
     }
 
     public class IdentityManager

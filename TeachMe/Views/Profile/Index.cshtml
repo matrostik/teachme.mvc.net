@@ -1,154 +1,184 @@
 ﻿@model TeachMe.Models.Teacher
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "עמוד הפרופיל";
 }
 
-<h2>Index</h2>
+<h2>עמוד הפרופיל</h2>
 
 <div>
-    <h4>Teacher</h4>
-	<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.isActive)
-        </dt>
+    <h4>המורה</h4>
+    <hr />
+    <div class="col-md-2" style="padding: 0 5px 0 0;">
+        <div class="well" style="padding: 10px;">
+            <a href="#">
+                <span>
+                    <img src="~/Images/profile-icon.png" class="img-responsive" />
+                </span>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-5">
 
-        <dd>
-            @Html.DisplayFor(model => model.isActive)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PictureUrl)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PictureUrl)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Age)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Age)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.City)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Street)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Street)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HomeNum)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HomeNum)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LessonPrice)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LessonPrice)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LessonTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LessonTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Education)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Education)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Institution)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Institution)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Category)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.About)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.About)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Raters)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Raters)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Rating)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ApplicationUserId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ApplicationUserId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GeoLocationId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GeoLocationId)
-        </dd>
-
-    </dl>
+        <dl class=" dl-horizontal">
+            <dt>
+                @Html.DisplayFor(model => model.isActive)
+            </dt>
+            <dd>
+                החשבון פעיל
+            </dd>
+            @*  <dt>
+                    @Html.DisplayNameFor(model => model.PictureUrl)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.PictureUrl)
+                </dd> *@
+            @if (Model.Age != 0)
+            {
+                <dt>
+                    @Html.DisplayFor(model => model.Age)
+                </dt>
+                <dd>
+                    גיל
+                </dd>
+            }
+            @if (Model.City != null)
+            {
+                <dt>
+                    @Html.DisplayFor(model => model.City)
+                </dt>
+                <dd>
+                    עיר
+                </dd>
+            }
+            @if (Model.Street != null)
+            {
+                <dt>
+                    @Html.DisplayFor(model => model.Street)
+                </dt>
+                <dd>
+                    רחוב
+                </dd>
+            }
+            @if (Model.HomeNum != 0)
+            {
+                <dt>
+                    @Html.DisplayFor(model => model.HomeNum)
+                </dt>
+                <dd>
+                    בית
+                </dd>
+            }
+            @if (Model.LessonPrice != 0)
+            {
+                <dt>
+                    @Html.DisplayFor(model => model.LessonPrice)
+                </dt>
+                <dd>
+                    מחיר השיעור
+                </dd>
+            }
+            @if (Model.LessonTime != 0)
+            {
+                <dt>
+                    @Html.DisplayFor(model => model.LessonTime)
+                </dt>
+                <dd>
+                    משך השיעור
+                </dd>
+            }
+            @if (Model.Phone != null)
+            {
+                <dt>
+                    @Html.DisplayFor(model => model.Phone)
+                </dt>
+                <dd>
+                    טלפון
+                </dd>
+            }
+        </dl>
+    </div>
+    <div class="col-md-5">
+        <dl class="dl-horizontal">
+            @if (Model.Education != null)
+            {
+                <dt>
+                    @Html.DisplayFor(model => model.Education)
+                </dt>
+                <dd>
+                    השכלה
+                </dd>
+            }
+            @if (Model.Institution != null)
+            {
+                <dt>
+                    @Html.DisplayFor(model => model.Institution)
+                </dt>
+                <dd>
+                    מוסד אקדמי
+                </dd>
+            }
+            @if (Model.Category != null)
+            {
+                <dt>
+                    @Html.DisplayFor(model => model.Category)
+                </dt>
+                <dd>
+                    מקצוע
+                </dd>
+            }
+            @if (Model.About != null)
+            {
+                <dt>
+                    @Html.DisplayFor(model => model.About)
+                </dt>
+                <dd>
+                    הודות
+                </dd>
+            }
+            @if (Model.Raters != 0)
+            {
+                <dt>
+                    @Html.DisplayFor(model => model.Raters)
+                </dt>
+                <dd>
+                    המדרגים
+                </dd>
+            }
+            @if (Model.Rating != 0)
+            {
+                <dt>
+                    @Html.DisplayFor(model => model.Rating)
+                </dt>
+                <dd>
+                    דירוג
+                </dd>
+            }
+            @if (Model.ApplicationUserId != null)
+            {
+                <dt>
+                    @Html.DisplayFor(model => model.ApplicationUserId)
+                </dt>
+                <dd>
+                    ID
+                </dd>
+            }
+            @if (Model.GeoLocationId != null)
+            {
+                <dt>
+                    @Html.DisplayFor(model => model.GeoLocationId)
+                </dt>
+                <dd>
+                    מיקום
+                </dd>
+            }
+        </dl>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { @*id = Model.Id*@ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div class="col-md-12">
+    <hr />
+    <p>
+        @Html.ActionLink("ערוך", "Edit", new { @*id = Model.Id*@ }) |
+        @Html.ActionLink("חזור", "Index")
+    </p>
+</div>

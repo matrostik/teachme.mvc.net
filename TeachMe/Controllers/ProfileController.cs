@@ -22,11 +22,13 @@ namespace TeachMe.Controllers
         // GET: /Profile/
         public ActionResult Index(int? id)
         {
+
+            // temporary logic must be current user
             Teacher t;
             if (User.Identity.IsAuthenticated)
             {
                 var id1 = User.Identity.GetUserId();
-                t = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId ==id1 );
+                t = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id1);
             }
             else
                 t = Db.Teachers.FirstOrDefault(x => x.Id == id);
@@ -72,6 +74,17 @@ namespace TeachMe.Controllers
             items.Add(new SelectListItem() { Text = "120 דקות", Value = "120" });
             model.Time = items;
 
+
+            //model.Institutions = Db.Institutions.Select(x => new SelectListItem
+            //{
+            //    Text = x.Name,
+            //    Value = x.Name
+            //}).ToList();
+
+            List<GroupDropListItem> l = Db.Institutions.OrderBy(x=>x.Id).GroupBy(x => x.Type)
+                .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList()}).ToList();
+            model.Institutions = l;
+
             return View(model);
         }
 
@@ -93,6 +106,7 @@ namespace TeachMe.Controllers
                 t.LessonPrice = model.LessonPrice.Value;
                 t.LessonTime = int.Parse(model.LessonTime);
                 t.Education = model.Education;
+                t.Institution = "";
                 t.About = model.About;
                 t.Phone = model.Phone;
 
@@ -147,6 +161,10 @@ namespace TeachMe.Controllers
             items.Add(new SelectListItem() { Text = "100 דקות", Value = "100" });
             items.Add(new SelectListItem() { Text = "120 דקות", Value = "120" });
             model.Time = items;
+
+            List<GroupDropListItem> l = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
+                 .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
+            model.Institutions = l;
 
             return View(model);
         }

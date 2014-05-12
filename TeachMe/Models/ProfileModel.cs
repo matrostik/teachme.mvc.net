@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TeachMe.Helpers;
 
 
 namespace TeachMe.Models
@@ -12,7 +13,7 @@ namespace TeachMe.Models
     {
         [Required(ErrorMessage = "* יש להכניס גיל")]
         [Display(Name = "גיל")]
-        [Range(1, 120, ErrorMessage ="יש להכניס גיל")]
+        [Range(1, 120, ErrorMessage = "יש להכניס גיל")]
         public int? Age { get; set; }
 
         [Display(Name = "תמונת פרופיל")]
@@ -28,7 +29,7 @@ namespace TeachMe.Models
 
         [Required(ErrorMessage = "* יש להכניס מספר בית")]
         [Display(Name = "מספר בית")]
-        [Range(1, int.MaxValue, ErrorMessage="יש להכניס מספר בית")]
+        [Range(1, int.MaxValue, ErrorMessage = "יש להכניס מספר בית")]
         public int? HomeNum { get; set; }
 
         [Required(ErrorMessage = "* יש להכניס תחום לימוד")]
@@ -37,10 +38,10 @@ namespace TeachMe.Models
 
         [Required(ErrorMessage = "* יש להכניס מחיר לשיעור ")]
         [Display(Name = "מחיר לשיעור")]
-        [Range(1, 500, ErrorMessage="יש להכניס מחיר לשיעור")]
+        [Range(1, 500, ErrorMessage = "יש להכניס מחיר לשיעור")]
         public int? LessonPrice { get; set; }
 
-        [Range(30, 90, ErrorMessage="יש לבחור ערך")]
+        [Range(30, 90, ErrorMessage = "יש לבחור ערך")]
         [Required(ErrorMessage = "* יש להכניס את זמן השיעור  ")]
         [Display(Name = "זמן השיעור (בדקות)")]
         public string LessonTime { get; set; }
@@ -52,16 +53,30 @@ namespace TeachMe.Models
         [Display(Name = "השכלה ")]
         public string Education { get; set; }
 
+        [Display(Name = "מוסד לימודים")]
+        public string Institution { get; set; }
+
         [Display(Name = "על עצמי... ")]
         public string About { get; set; }
 
-
+        /// <summary>
+        /// List of cities
+        /// </summary>
         public List<SelectListItem> Cities { get; set; }
 
-
+        /// <summary>
+        /// List of subjects to teach
+        /// </summary>
         public List<SelectListItem> Cats { get; set; }
 
+        /// <summary>
+        /// List of lesson time
+        /// </summary>
         public List<SelectListItem> Time { get; set; }
 
+        /// <summary>
+        /// List of institutions
+        /// </summary>
+        public List<GroupDropListItem> Institutions { get; set; }
     }
 }

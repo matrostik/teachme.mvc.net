@@ -134,13 +134,22 @@
                 <div class="panel-body">
                     <div class="form-group">
                         <div class="col-md-11">
+                            @Html.LabelFor(m => m.Institution)
+                            @Html.GroupDropList("Institution", Model.Institutions, "", "בחר", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Institution)
+                        </div>
+                        <div class="col-md-1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-11">
                             @Html.LabelFor(m => m.Education)
                             @Html.TextAreaFor(m => m.Education, new { @class = "form-control", @rows = 2, @placeholder = "השכלה" })
                             @Html.ValidationMessageFor(model => model.Education)
                         </div>
                         <div class="col-md-1">
                         </div>
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div>
@@ -149,7 +158,9 @@
 
     <div class="form-group">
         <div class="col-md-offset-10 col-md-2">
-            <input type="submit" value="צור פרופיל" class="btn btn-default"/>
+            <button type="submit" class="btn btn-default">@*// create ButtonHelper with icon  *@
+                <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;צור פרופיל
+            </button>
         </div>
     </div>
 }

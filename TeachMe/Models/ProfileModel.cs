@@ -15,6 +15,9 @@ namespace TeachMe.Models
         [Range(1, 120, ErrorMessage ="יש להכניס גיל")]
         public int? Age { get; set; }
 
+        [Display(Name = "תמונת פרופיל")]
+        public string PictureUrl { get; set; }
+
         [Required(ErrorMessage = "* יש להכניס עיר")]
         [Display(Name = "עיר")]
         public string City { get; set; }

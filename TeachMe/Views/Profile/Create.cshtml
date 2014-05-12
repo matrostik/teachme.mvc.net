@@ -16,104 +16,140 @@
         <hr />
         @Html.ValidationSummary(true)
 
-        <div class="panel panel-default" style="margin-bottom:0px;">
+        <div class="panel panel-default">
+            <div class="panel-heading">פרטים אישיים</div>
             <div class="panel-body">
                 <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Age, new { @class = "form-control", @placeholder = "Enter age" })
+
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m.PictureUrl)
+                        @Html.TextBoxFor(m => m.PictureUrl, new { @class = "form-control", @type = "file", @placeholder = "גיל" })
+                    </div>
+                    <div class="col-md-1">
+                        @Html.LabelFor(m => m.Age)
+                        @Html.TextBoxFor(m => m.Age, new { @class = "form-control", @placeholder = "גיל" })
                         @Html.ValidationMessageFor(m => m.Age)
                     </div>
-                    @Html.LabelFor(m => m.Age, new { @class = "col-md-2 control-label" })
-                </div>
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeholder = "Enter phone" })
+
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m.Phone)
+                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeholder = "מספר טלפון" })
                         @Html.ValidationMessageFor(m => m.Phone)
                     </div>
-                    @Html.LabelFor(m => m.Phone, new { @class = "col-md-2 control-label" })
-                </div>
-            </div>
-        </div>
 
-        <div class="panel panel-default" style="margin-bottom:0px;">
-            <div class="panel-body">
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(m => m.City, Model.Cities, "בחר עיר", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.City)
+                    <div class="col-md-1">
                     </div>
-                    @Html.Label("עיר", new { @class = "col-md-2 control-label" })
-                </div>
 
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Street, new { @class = "form-control", @placeholder = "Enter street" })
-                        @Html.ValidationMessageFor(m => m.Street)
-                    </div>
-                    @Html.LabelFor(m => m.Street, new { @class = "col-md-2 control-label" })
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.HomeNum, new { @class = "form-control", @placeholder = "Enter house" })
-                        @Html.ValidationMessageFor(m => m.HomeNum)
-                    </div>
-                    @Html.LabelFor(m => m.HomeNum, new { @class = "col-md-2 control-label" })
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-default" style="margin-bottom:0px;">
-            <div class="panel-body">
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(m => m.Category, Model.Cats, "בחר מקצוע", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Category)
-                    </div>
-                    @Html.Label("מקצוע", new { @class = "col-md-2 control-label" })
-                </div>
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.LessonPrice, new { @class = "form-control", @placeholder = "Enter price" })
-                        @Html.ValidationMessageFor(m => m.LessonPrice)
-                    </div>
-                    @Html.LabelFor(m => m.LessonPrice, new { @class = "col-md-2 control-label" })
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(m => m.LessonTime, Model.Time, "בחר", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.LessonTime)
-                    </div>
-                    <label class="col-lg-2 control-label" for="select">זמן השיעור</label>
                 </div>
             </div>
         </div>
 
         <div class="panel panel-default">
+            <div class="panel-heading">כתובת</div>
             <div class="panel-body">
                 <div class="form-group">
-                    <div class="col-lg-10">
-                        @Html.TextAreaFor(m => m.Education, new { @class = "form-control", @rows = 2, @placeholder = "Enter Education" })
-                        @Html.ValidationMessageFor(model => model.Education)
+                    <div class="col-md-5">
                     </div>
-                    <label class="col-lg-2 control-label" for="textArea"> השכלה</label>
+
+                    <div class="col-md-2">
+                        @Html.LabelFor(m => m.City)
+                        @Html.DropDownListFor(m => m.City, Model.Cities, "בחר עיר", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.City)
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m.Street)
+                        @Html.TextBoxFor(m => m.Street, new { @class = "form-control", @placeholder = "שם רחוב" })
+                        @Html.ValidationMessageFor(m => m.Street)
+                    </div>
+
+                    <div class="col-md-1">
+                        @Html.LabelFor(m => m.HomeNum)
+                        @Html.TextBoxFor(m => m.HomeNum, new { @class = "form-control", @placeholder = "מספר בית" })
+                        @Html.ValidationMessageFor(m => m.HomeNum)
+                    </div>
+
+                    <div class="col-md-1">
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="col-lg-10">
-                        @Html.TextAreaFor(m => m.About, new { @class = "form-control", @rows = 4, @placeholder = "Enter About" })
-                        @Html.ValidationMessageFor(model => model.About)
-                    </div>
-                    <label class="col-lg-2 control-label" for="textArea">על עצמי...</label>
-                </div>
+            </div>
+        </div>
 
+        <div class="panel panel-default">
+            <div class="panel-heading">פרטי השיעור</div>
+            <div class="panel-body">
                 <div class="form-group">
-                    <div class="col-md-offset-8 col-md-2">
-                        <input type="submit" value="צור פרופיל" class="btn btn-default" />
+
+                    <div class="col-md-5">
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(m => m.Category)
+                        @Html.DropDownListFor(m => m.Category, Model.Cats, "בחר מקצוע", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Category)
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(m => m.LessonPrice)
+                        <div class="input-group" dir="ltr">
+                            <span class="input-group-addon">₪</span>
+                            @Html.TextBoxFor(m => m.LessonPrice, new { @class = "form-control", @placeholder = "מחיר לשיעור", @dir = "rtl" })
+                        </div>
+                        @Html.ValidationMessageFor(m => m.LessonPrice)
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(m => m.LessonTime)
+                        @Html.DropDownListFor(m => m.LessonTime, Model.Time, "בחר", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.LessonTime)
+                    </div>
+                    <div class="col-md-1">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class=" panel-heading">אחר</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-md-11">
+                            @Html.LabelFor(m => m.About)
+                            @Html.TextAreaFor(m => m.About, new { @class = "form-control", @rows = 5, @placeholder = "תיאור המורה" })
+                            @Html.ValidationMessageFor(model => model.About)
+                        </div>
+                        <div class="col-md-1">
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class=" panel-heading">השכלה</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-md-11">
+                            @Html.LabelFor(m => m.Education)
+                            @Html.TextAreaFor(m => m.Education, new { @class = "form-control", @rows = 2, @placeholder = "השכלה" })
+                            @Html.ValidationMessageFor(model => model.Education)
+                        </div>
+                        <div class="col-md-1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="form-group">
+        <div class="col-md-offset-10 col-md-2">
+            <input type="submit" value="צור פרופיל" class="btn btn-default"/>
         </div>
     </div>
 }
@@ -121,3 +157,5 @@
 <div>
     @Html.ActionLink("חזרה לדף הבית", "Index", "Home")
 </div>
+
+

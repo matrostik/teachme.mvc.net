@@ -35,6 +35,7 @@ namespace TeachMe.Models
                 {
                     var temp = t.Split(' ');
                     var teacher = new Teacher();
+                    teacher.User = new ApplicationUser();
                     teacher.User.FirstName = temp[0];
                     teacher.User.LastName = temp[1];
                     teacher.Age = int.Parse(temp[2]);

@@ -32,6 +32,9 @@ namespace TeachMe.Controllers
             }
             else
                 t = Db.Teachers.FirstOrDefault(x => x.Id == id);
+            if (t == null)
+                t = Db.Teachers.FirstOrDefault();
+
             return View(t);
         }
 

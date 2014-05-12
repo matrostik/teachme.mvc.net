@@ -5,26 +5,77 @@
 }
 
 <h2>@ViewBag.Title</h2>
-@Html.ActionLink("צור פרופיל מורה", "Create", "Profile")
+
+
 <p class="text-success">@ViewBag.StatusMessage</p>
 
 <div class="row">
-    <div class="col-md-12">
-        @if (ViewBag.HasLocalPassword)
-        {
-            @Html.Partial("_ChangePasswordPartial")
-        }
-        else
-        {
-            @Html.Partial("_SetPasswordPartial")
-        }
+    <ul class="nav nav-tabs" style="margin-bottom: 10px; float:right" dir="ltr">
+        @*<li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                Dropdown <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="#dropdown1" data-toggle="tab">Action</a></li>
+                <li class="divider"></li>
+                <li><a href="#dropdown2" data-toggle="tab">Another action</a></li>
+            </ul>
+        </li>*@
+        @*<li class="disabled"><a>Disabled</a></li>*@
+        <li><a href="#social" data-toggle="tab">Social</a></li>
+        <li><a href="#password" data-toggle="tab">Password</a></li>
+        <li class="active"><a href="#navigation" data-toggle="tab">Navigation</a></li>
+    </ul>
+</div>
+<div class="row">
+    <div id="myTabContent" class="tab-content">
 
-        <section id="externalLogins">
-            @Html.Action("RemoveAccountList")
-            @Html.Partial("_ExternalLoginsListPartial", new { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })
-        </section>
+        <div class="tab-pane fade active in" id="navigation">
+            <div class="panel panel-default" style="margin-bottom:0px;">
+                <div class="panel-body">
+                    @Html.ActionLink("צור פרופיל מורה", "Create", "Profile")
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="password">
+            <div class="panel panel-default" style="margin-bottom:0px;">
+                <div class="panel-body">
+                    @if (ViewBag.HasLocalPassword)
+                    {
+                        @Html.Partial("_ChangePasswordPartial")
+                    }
+                    else
+                    {
+                        @Html.Partial("_SetPasswordPartial")
+                    }
+                </div>
+            </div>
+
+        </div>
+
+        <div class="tab-pane fade" id="social">
+            <div class="panel panel-default" style="margin-bottom:0px;">
+                <div class="panel-body">
+                    <section id="externalLogins">
+                        @Html.Action("RemoveAccountList")
+                        @Html.Partial("_ExternalLoginsListPartial", new { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="dropdown1">
+            <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
+        </div>
+
+        <div class="tab-pane fade" id="dropdown2">
+            <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater.</p>
+        </div>
+
     </div>
 </div>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

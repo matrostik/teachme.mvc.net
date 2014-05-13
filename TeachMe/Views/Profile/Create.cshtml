@@ -21,11 +21,11 @@
             <div class="panel-body">
                 <div class="form-group">
 
-                    <div class="col-md-4">
-                    </div>
                     <div class="col-md-3">
-                        @Html.LabelFor(m => m.PictureUrl)
-                        @Html.TextBoxFor(m => m.PictureUrl, new { @class = "form-control", @type = "file", @placeholder = "גיל" })
+
+                    </div>
+                    <div class="col-md-4">
+
                     </div>
                     <div class="col-md-1">
                         @Html.LabelFor(m => m.Age)
@@ -45,6 +45,36 @@
                 </div>
             </div>
         </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">תמונת פרופיל</div>
+            <div class="panel-body">
+                <div class="span12 pagination-centered">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-3">
+                            <img id="ProfileFoto" src="~/Images/profile-icon.png" alt="פרופיל" class="img-thumbnail" style="display:none">
+                        </div>
+
+                        <div class="col-md-2">
+                            <p class="text-center"><a href="javascript:sendUrl('PictureUrl');" class="btn btn-default" dir="rtl">(2) העלה תמונה</a></p>
+                        </div>
+
+                        <div class="col-md-4">
+                            @*@Html.LabelFor(m => m.PictureUrl)*@
+                            @*@Html.TextBoxFor(m => m.PictureUrl, new { @type = "file", @placeholder = "גיל", @title="בחר תמונה", @data-filename-placement="inside"})*@
+                            <input data-name="PictureUrl" type="file" title="(1) בחר תמונה" class="form-control" data-filename-placement="inside">
+                            <span class="field-validation-error" id="ProfileFotoError"></span>
+                        </div>
+                        <div class="col-md-1">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="panel panel-default">
             <div class="panel-heading">כתובת</div>
@@ -149,16 +179,17 @@
                         </div>
                         <div class="col-md-1">
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
 
     <div class="form-group">
         <div class="col-md-offset-10 col-md-2">
-            <button type="submit" class="btn btn-default">@*// create ButtonHelper with icon  *@
+            <button type="submit" class="btn btn-default">
+                @*// create ButtonHelper with icon  *@
                 <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;צור פרופיל
             </button>
         </div>
@@ -169,4 +200,38 @@
     @Html.ActionLink("חזרה לדף הבית", "Index", "Home")
 </div>
 
+@section Scripts {
+    @Scripts.Render("~/bundles/fileinput")
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input[type=file]').bootstrapFileInput();
+
+
+        });
+
+
+        function sendUrl(elementId) {
+            // Check if file selected
+            if (!$('#' + elementId).length) {
+                $('#ProfileFotoError').text('* לא בחרת תמונה');
+                return;
+            }
+            var imgUrlInput = $('#' + elementId);
+
+            var eId = imgUrlInput.attr('id');
+            var path = imgUrlInput.val();
+            var url = "/Profile/UploadImage/?path=" + path;
+            // Do post
+            $.post(url, function (data) {
+                // Get answer
+                if (data) {
+                    $('#ProfileFoto').attr("src", data);
+                    $('#ProfileFoto').attr("style", "");
+                } else {
+                    // callback to show error/permission
+                }
+            });
+        }
+    </script>
+}

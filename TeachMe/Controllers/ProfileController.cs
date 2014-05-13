@@ -6,6 +6,9 @@ using System.Web.Mvc;
 using TeachMe.Models;
 using TeachMe.Helpers;
 using Microsoft.AspNet.Identity;
+using System.Net;
+using System.Xml.Linq;
+using System.Text;
 
 namespace TeachMe.Controllers
 {
@@ -171,5 +174,36 @@ namespace TeachMe.Controllers
 
             return View(model);
         }
+
+        [HttpPost]
+        public string UploadImage(string path)
+        {
+            //http://aspzone.com/tech/jquery-file-upload-in-asp-net-mvc-without-using-flash/
+            string pic = System.IO.Path.GetFileName(path);
+            string url = UploadImageToImgur(path);
+            return url;
+        }
+        string ClientId = "6b18f55eeee07f1";
+        public string UploadImageToImgur(string image)
+        {
+            WebClient w = new WebClient();
+            w.Headers.Add("Authorization", "Client-ID " + ClientId);
+            System.Collections.Specialized.NameValueCollection Keys = new System.Collections.Specialized.NameValueCollection();
+            try
+            {
+                Keys.Add("image", Convert.ToBase64String(System.IO.File.ReadAllBytes(image)));
+                byte[] responseArray = w.UploadValues("https://api.imgur.com/3/image.xml", Keys);
+                dynamic result = Encoding.ASCII.GetString(responseArray);
+                XDocument xml = XDocument.Parse(result);
+                var i = xml.Root.Element("link").Value;
+                return i;
+            }
+            catch (Exception s)
+            {
+                //MessageBox.Show("Something went wrong. " + s.Message);
+                return "Failed!";
+            }
+        }
+
     }
 }

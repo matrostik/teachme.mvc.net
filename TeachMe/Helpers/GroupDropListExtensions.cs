@@ -46,7 +46,9 @@ namespace TeachMe.Helpers
                 groupTag.InnerHtml = optHtml.ToString();
                 optgroupHtml.AppendLine(groupTag.ToString(TagRenderMode.Normal));
             }
+            // set default option
             var optionDefault = new TagBuilder("option");
+            optionDefault.Attributes.Add("value", "");
             optionDefault.InnerHtml = helper.Encode(optionLabel);
             select.InnerHtml = optionDefault.ToString() + optgroupHtml.ToString();
             return MvcHtmlString.Create(select.ToString(TagRenderMode.Normal));

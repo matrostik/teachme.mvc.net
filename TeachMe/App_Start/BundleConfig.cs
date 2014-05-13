@@ -26,6 +26,10 @@ namespace TeachMe
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/amelia.css",
                       "~/Content/site.css"));
+
+            //Twitter Bootstrap File Input http://gregpike.net/demos/bootstrap-file-input/demo.html
+            bundles.Add(new ScriptBundle("~/bundles/fileinput").Include(
+                      "~/Scripts/bootstrap.file-input.js"));
         }
     }
 }

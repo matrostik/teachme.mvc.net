@@ -18,7 +18,6 @@ namespace TeachMe
 
         public MapSearchViewModel Model()
         {
-            //string adr = "תל אביב,שושנה פרסיץ 7 ";
             model.MapCenter = new GeoLocation();
             model.MapCenter.Latitude = "32.134360";
             model.MapCenter.Longitude = "34.796590";
@@ -52,13 +51,6 @@ namespace TeachMe
                 teacher.Id = id++;
                 teachers.Add(teacher);
             }
-
-            //foreach (var t in teachers)
-            //{
-            //    // get geo by address
-            //    var geo = Controller.GetLongitudeAndLatitude(t.GetAddressForMap());
-            //    t.GeoLocation = geo;
-            //}
 
             return teachers;
         }

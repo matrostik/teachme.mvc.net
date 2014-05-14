@@ -27,9 +27,11 @@ namespace TeachMe
                       "~/Content/amelia.css",
                       "~/Content/site.css"));
 
-            //Twitter Bootstrap File Input http://gregpike.net/demos/bootstrap-file-input/demo.html
-            bundles.Add(new ScriptBundle("~/bundles/fileinput").Include(
-                      "~/Scripts/bootstrap.file-input.js"));
+            bundles.Add(new ScriptBundle("~/bundles/fileupload").Include(
+                     "~/Scripts/jquery.fileupload.js",
+                     "~/Scripts/jquery.ui.widget.js"));
+            bundles.Add(new StyleBundle("~/Content/fileupload").Include(
+                    "~/Content/jquery.fileupload.css"));
         }
     }
 }

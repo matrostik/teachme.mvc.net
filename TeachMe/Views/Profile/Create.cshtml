@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "יצירת פרופיל";
 }
-
+@Styles.Render("~/Content/fileupload")
 <h2>@ViewBag.Title</h2>
 
 
@@ -51,21 +51,29 @@
             <div class="panel-body">
                 <div class="span12 pagination-centered">
                     <div class="form-group">
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                         </div>
                         <div class="col-md-3">
+                            <div class="file_name"></div>
+                            <div class="file_type"></div>
+                            <div class="file_size"></div>
+                            <div class="file_url"></div>
+                        </div>
+
+                        <div class="col-md-3">
                             <img id="ProfileFoto" src="~/Images/profile-icon.png" alt="פרופיל" class="img-thumbnail" style="display:none">
+                            @Html.HiddenFor(m => m.PictureUrl)
                         </div>
 
                         <div class="col-md-2">
-                            <p class="text-center"><a href="javascript:sendUrl('PictureUrl');" class="btn btn-default" dir="rtl">(2) העלה תמונה</a></p>
-                        </div>
 
-                        <div class="col-md-4">
-                            @*@Html.LabelFor(m => m.PictureUrl)*@
-                            @*@Html.TextBoxFor(m => m.PictureUrl, new { @type = "file", @placeholder = "גיל", @title="בחר תמונה", @data-filename-placement="inside"})*@
-                            <input data-name="PictureUrl" type="file" title="(1) בחר תמונה" class="form-control" data-filename-placement="inside">
+                            <span class="btn btn-default fileinput-button">
+                                <span>הוספת תמונת פרופיל</span>
+                                <i class="glyphicon glyphicon-user"></i>
+                                <input id="fileupload" type="file" name="file" accept="image/x-png, image/gif, image/jpeg">
+                            </span>
                             <span class="field-validation-error" id="ProfileFotoError"></span>
+
                         </div>
                         <div class="col-md-1">
                         </div>
@@ -202,36 +210,28 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/fileinput")
+    @Scripts.Render("~/bundles/fileupload")
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('input[type=file]').bootstrapFileInput();
-
-
-        });
-
-
-        function sendUrl(elementId) {
-            // Check if file selected
-            if (!$('#' + elementId).length) {
-                $('#ProfileFotoError').text('* לא בחרת תמונה');
-                return;
-            }
-            var imgUrlInput = $('#' + elementId);
-
-            var eId = imgUrlInput.attr('id');
-            var path = imgUrlInput.val();
-            var url = "/Profile/UploadImage/?path=" + path;
-            // Do post
-            $.post(url, function (data) {
-                // Get answer
-                if (data) {
-                    $('#ProfileFoto').attr("src", data);
+            $('#fileupload').fileupload({
+                dataType: 'json',
+                url: '/Profile/UploadImage',
+                autoUpload: true,
+                done: function (e, data) {
+                    $('.file_name').html(data.result.name);
+                    $('.file_type').html(data.result.type);
+                    $('.file_size').html(data.result.size);
+                    $('.file_url').html(data.result.url);
+                    $('#ProfileFoto').attr("src", data.result.url);
                     $('#ProfileFoto').attr("style", "");
-                } else {
-                    // callback to show error/permission
+                    $('#PictureUrl').attr("value", data.result.url);
+                    //$('#ProfileFotoError').text('* לא בחרת תמונה');
                 }
+            }).on('fileuploadprogressall', function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('.progress .progress-bar').css('width', progress + '%');
             });
-        }
+        });
     </script>
 }

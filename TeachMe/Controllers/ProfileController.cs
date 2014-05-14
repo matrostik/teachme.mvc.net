@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using System.Net;
 using System.Xml.Linq;
 using System.Text;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace TeachMe.Controllers
 {
@@ -128,7 +130,8 @@ namespace TeachMe.Controllers
             }
             else
             {
-                if (ModelState["HomeNum"].Errors.Count > 0 && ModelState["HomeNum"].Errors.FirstOrDefault().ErrorMessage.Contains("is not valid"))
+                if (ModelState["HomeNum"].Errors.Count > 0 
+                    && ModelState["HomeNum"].Errors.FirstOrDefault().ErrorMessage.Contains("is not valid"))
                 {
                     ModelState["HomeNum"].Errors.Clear();
                     ModelState.AddModelError("HomeNum", "* רק מספרים");
@@ -169,40 +172,38 @@ namespace TeachMe.Controllers
             model.Time = items;
 
             List<GroupDropListItem> l = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
-                 .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
+                 .Select(g => new GroupDropListItem 
+                 { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name })
+                     .ToList() }).ToList();
             model.Institutions = l;
 
             return View(model);
         }
 
         [HttpPost]
-        public string UploadImage(string path)
+        public ContentResult UploadImage(HttpPostedFileBase file)
         {
-            //http://aspzone.com/tech/jquery-file-upload-in-asp-net-mvc-without-using-flash/
-            string pic = System.IO.Path.GetFileName(path);
-            string url = UploadImageToImgur(path);
-            return url;
-        }
-        string ClientId = "6b18f55eeee07f1";
-        public string UploadImageToImgur(string image)
-        {
-            WebClient w = new WebClient();
-            w.Headers.Add("Authorization", "Client-ID " + ClientId);
-            System.Collections.Specialized.NameValueCollection Keys = new System.Collections.Specialized.NameValueCollection();
-            try
+            string imgurl = string.Empty;
+            if (file != null && file.ContentLength > 0)
             {
-                Keys.Add("image", Convert.ToBase64String(System.IO.File.ReadAllBytes(image)));
-                byte[] responseArray = w.UploadValues("https://api.imgur.com/3/image.xml", Keys);
-                dynamic result = Encoding.ASCII.GetString(responseArray);
-                XDocument xml = XDocument.Parse(result);
-                var i = xml.Root.Element("link").Value;
-                return i;
+                string pic = System.IO.Path.GetFileName(file.FileName);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    file.InputStream.CopyTo(ms);
+                    byte[] array = ms.GetBuffer();
+                    imgurl = Utils.UploadImageToImgur(array);
+                }
             }
-            catch (Exception s)
+            var res = new UploadFilesResult()
             {
-                //MessageBox.Show("Something went wrong. " + s.Message);
-                return "Failed!";
-            }
+                name = file.FileName,
+                size = file.ContentLength,
+                type = file.ContentType,
+                url = imgurl
+            };
+
+            string json = JsonConvert.SerializeObject(res);
+            return Content(json, "application/json");
         }
 
     }

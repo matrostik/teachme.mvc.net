@@ -19,7 +19,9 @@
                             <div>
                                 @Html.Hidden("loginProvider", account.LoginProvider)
                                 @Html.Hidden("providerKey", account.ProviderKey)
-                                <input type="submit" class="btn btn-primary" value="לחץ להסרה" title="הסר את חשבון ה- @account.LoginProvider מרשימת ההתחברות לאתר" />
+                                <button type="submit" class="btn btn-primary" title="הסר את חשבון ה- @account.LoginProvider מרשימת ההתחברות לאתר">
+                                    <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;לחץ להסרה
+                                </button>
                             </div>
                             }
                         }

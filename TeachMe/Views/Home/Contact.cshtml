@@ -33,7 +33,7 @@
                 @Html.TextBoxFor(m => m.To, new { @class = "form-control", @id = "inputDefault" })
             </p>*@
         <p>
-            נושא (חובה): 
+            נושא (חובה):
             @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @id = "inputDefault" })
             @Html.ValidationMessageFor(model => model.Subject)
         </p>
@@ -42,7 +42,9 @@
             @Html.TextAreaFor(m => m.Body, new { @class = "form-control", @rows = "5", @id = "inputDefault" })
             @Html.ValidationMessageFor(model => model.Body)
         </p>
-        <input type="submit" value="שלח" class="btn btn-default" />
+        <button type="submit" class="btn btn-default">
+            <span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;שלח
+        </button>
         <span class="label label-info">@ViewBag.Result</span>
     }
 </fieldset>

@@ -15,6 +15,7 @@ using System.Drawing;
 
 namespace TeachMe.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         public TeachMeDBContext Db { get; private set; }
@@ -25,25 +26,15 @@ namespace TeachMe.Controllers
         }
 
         //
-        // GET: /Profile/
+        // GET: /Profile/Index
         public ActionResult Index(int? id)
         {
-
-            // temporary logic must be current user
-            Teacher t;
-            if (User.Identity.IsAuthenticated)
-            {
-                var id1 = User.Identity.GetUserId();
-                t = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id1);
-            }
-            else
-                t = Db.Teachers.FirstOrDefault(x => x.Id == id);
+            var id1 = User.Identity.GetUserId();
+            Teacher t = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id1);
             if (t == null)
-                t = Db.Teachers.FirstOrDefault();
-
+                return RedirectToAction("Create");
             return View(t);
         }
-
 
         //
         // GET: /Create/
@@ -62,17 +53,11 @@ namespace TeachMe.Controllers
             }
             model.Cats = items;
 
-            var cities = FakeDB.Cities;
-            items = new List<SelectListItem>();
-            for (int i = 0; i < cities.Count; i++)
+            model.Cities = Db.Cities.Select(x => new SelectListItem
             {
-                items.Add(new SelectListItem
-                {
-                    Text = cities[i],
-                    Value = cities[i]
-                });
-            }
-            model.Cities = items;
+                Text = x.Name,
+                Value = x.Name
+            }).ToList();
 
             items = new List<SelectListItem>();
             items.Add(new SelectListItem() { Text = "30 דקות", Value = "30" });
@@ -83,16 +68,8 @@ namespace TeachMe.Controllers
             items.Add(new SelectListItem() { Text = "120 דקות", Value = "120" });
             model.Time = items;
 
-
-            //model.Institutions = Db.Institutions.Select(x => new SelectListItem
-            //{
-            //    Text = x.Name,
-            //    Value = x.Name
-            //}).ToList();
-
-            List<GroupDropListItem> l = Db.Institutions.OrderBy(x=>x.Id).GroupBy(x => x.Type)
-                .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList()}).ToList();
-            model.Institutions = l;
+            model.Institutions = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
+                .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
 
             return View(model);
         }
@@ -151,17 +128,11 @@ namespace TeachMe.Controllers
             }
             model.Cats = items;
 
-            var cities = FakeDB.Cities;
-            items = new List<SelectListItem>();
-            for (int i = 0; i < cities.Count; i++)
+            model.Cities = Db.Cities.Select(x => new SelectListItem
             {
-                items.Add(new SelectListItem
-                {
-                    Text = cities[i],
-                    Value = cities[i]
-                });
-            }
-            model.Cities = items;
+                Text = x.Name,
+                Value = x.Name
+            }).ToList();
 
             items = new List<SelectListItem>();
             items.Add(new SelectListItem() { Text = "30 דקות", Value = "30" });
@@ -172,11 +143,8 @@ namespace TeachMe.Controllers
             items.Add(new SelectListItem() { Text = "120 דקות", Value = "120" });
             model.Time = items;
 
-            List<GroupDropListItem> l = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
-                 .Select(g => new GroupDropListItem 
-                 { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name })
-                     .ToList() }).ToList();
-            model.Institutions = l;
+            model.Institutions = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
+                 .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
 
             return View(model);
         }

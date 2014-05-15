@@ -12,15 +12,15 @@
 <div class="row">
     <ul class="nav nav-tabs" style="margin: 0 3px -2px 0; float:right" dir="ltr">
         @*<li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                Dropdown <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="#dropdown1" data-toggle="tab">Action</a></li>
-                <li class="divider"></li>
-                <li><a href="#dropdown2" data-toggle="tab">Another action</a></li>
-            </ul>
-        </li>*@
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Dropdown <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#dropdown1" data-toggle="tab">Action</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#dropdown2" data-toggle="tab">Another action</a></li>
+                </ul>
+            </li>*@
         @*<li class="disabled"><a>Disabled</a></li>*@
         <li><a href="#social" data-toggle="tab">ניהול התחברויות</a></li>
         <li><a href="#password" data-toggle="tab">ניהול סיסמא</a></li>
@@ -33,7 +33,14 @@
         <div class="tab-pane fade active in" id="navigation">
             <div class="panel panel-default" style="margin-bottom:0px;">
                 <div class="panel-body">
-                    @Html.ActionLinkIcon("צור פרופיל מורה", "Create", "Profile", "glyphicon glyphicon-user", new { @class = "btn btn-default" })
+                    @if (!ViewBag.HasProfile)
+                    {
+                        @Html.ActionLinkIcon("צור פרופיל מורה", "Create", "Profile", "glyphicon glyphicon-user", new { @class = "btn btn-default" })
+                    }
+                    else
+                    {
+                        @Html.ActionLinkIcon("זפה בפרופיל מורה", "Index", "Profile", "glyphicon glyphicon-eye-open", new { @class = "btn btn-default" })
+                    }
                 </div>
             </div>
         </div>

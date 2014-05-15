@@ -92,7 +92,6 @@
             </div>
         </div>
 
-
         <div class="panel panel-default">
             <div class="panel-heading">כתובת</div>
             <div class="panel-body">
@@ -166,7 +165,7 @@
                     <div class="form-group">
                         <div class="col-md-11">
                             @Html.LabelFor(m => m.About)
-                            @Html.TextAreaFor(m => m.About, new { @class = "form-control", @rows = 5, @placeholder = "תיאור המורה" })
+                            @Html.TextAreaFor(m => m.About, new { @class = "form-control", @rows = 6, @placeholder = "תיאור המורה" })
                             @Html.ValidationMessageFor(model => model.About)
                         </div>
                         <div class="col-md-1">

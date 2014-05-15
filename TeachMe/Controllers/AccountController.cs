@@ -169,6 +169,10 @@ namespace TeachMe.Controllers
                 : "";
             ViewBag.HasLocalPassword = HasPassword();
             ViewBag.ReturnUrl = Url.Action("Manage");
+
+             var id1 = User.Identity.GetUserId();
+            Teacher t = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id1);
+            ViewBag.HasProfile = t != null;
             return View();
         }
 

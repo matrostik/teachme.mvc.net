@@ -197,6 +197,7 @@
     <Compile Include="Helpers\GenericPrincipalExtensions.cs" />
     <Compile Include="Helpers\GroupDropListExtensions.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
+    <Compile Include="Helpers\ImageUtils.cs" />
     <Compile Include="Helpers\ShortGuid.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -231,6 +232,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\busy.gif" />
     <Content Include="Images\Facebook.png" />
     <Content Include="Images\Google.png" />
     <Content Include="Images\logo_no_bg.png" />

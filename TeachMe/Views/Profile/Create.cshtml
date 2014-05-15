@@ -51,7 +51,7 @@
             <div class="panel-body">
                 <div class="span12 pagination-centered">
                     <div class="form-group">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                         </div>
                         <div class="col-md-3">
                             <div class="file_name"></div>
@@ -61,19 +61,28 @@
                         </div>
 
                         <div class="col-md-3">
-                            <img id="ProfileFoto" src="~/Images/profile-icon.png" alt="פרופיל" class="img-thumbnail" style="display:none">
+                            <a href="#" class="img-thumbnail">
+                                <img id="ProfileFoto" src="" alt="תמונת פרופיל" class="">
+                            </a>
                             @Html.HiddenFor(m => m.PictureUrl)
                         </div>
 
                         <div class="col-md-2">
 
                             <span class="btn btn-default fileinput-button">
+                                <img id="file_busy" src="~/Images/busy.gif" alt="busy" style="display: none">
                                 <span>הוספת תמונת פרופיל</span>
                                 <i class="glyphicon glyphicon-user"></i>
                                 <input id="fileupload" type="file" name="file" accept="image/x-png, image/gif, image/jpeg">
                             </span>
                             <span class="field-validation-error" id="ProfileFotoError"></span>
-
+                            <p>
+                                <div class="progress progress-striped active">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                        <span class="sr-only">0% complete</span>
+                                    </div>
+                                </div>
+                            </p>
                         </div>
                         <div class="col-md-1">
                         </div>
@@ -218,6 +227,10 @@
                 dataType: 'json',
                 url: '/Profile/UploadImage',
                 autoUpload: true,
+                add: function (e, data) {
+                    $('#file_busy').attr("style", "");
+                    data.submit();
+                },
                 done: function (e, data) {
                     $('.file_name').html(data.result.name);
                     $('.file_type').html(data.result.type);
@@ -227,6 +240,8 @@
                     $('#ProfileFoto').attr("style", "");
                     $('#PictureUrl').attr("value", data.result.url);
                     //$('#ProfileFotoError').text('* לא בחרת תמונה');
+                    $('#file_busy').attr("style", "display:none");
+                    $('.progress .progress-bar').css('width', '0%');
                 }
             }).on('fileuploadprogressall', function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100, 10);

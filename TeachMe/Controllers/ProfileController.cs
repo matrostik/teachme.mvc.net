@@ -11,6 +11,7 @@ using System.Xml.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using System.IO;
+using System.Drawing;
 
 namespace TeachMe.Controllers
 {
@@ -190,8 +191,13 @@ namespace TeachMe.Controllers
                 using (MemoryStream ms = new MemoryStream())
                 {
                     file.InputStream.CopyTo(ms);
-                    byte[] array = ms.GetBuffer();
-                    imgurl = Utils.UploadImageToImgur(array);
+                    // get image and resize it
+                    Image image = Image.FromStream(ms);
+                    Image resized = ImageUtils.ResizeImageFixedWidth(image, 300);
+                    byte[] imageByte = ImageUtils.ImageToByteArraybyMemoryStream(resized);
+                    //byte[] array = ms.GetBuffer();
+                    // upload image to imgur.com
+                    imgurl = Utils.UploadImageToImgur(imageByte);
                 }
             }
             var res = new UploadFilesResult()

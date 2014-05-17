@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Net.Mail;
-using System.Web;
 using System.Web.Mvc;
-using System.Xml;
 using TeachMe.Helpers;
 using TeachMe.Models;
-using System.Threading.Tasks;
 
 namespace TeachMe.Controllers
 {
@@ -24,44 +19,28 @@ namespace TeachMe.Controllers
 
         public ActionResult Index()
         {
-            var cats = FakeDB.Cat;
-            List<SelectListItem> items = new List<SelectListItem>();
-            for (int i = 0; i < cats.Count; i++)
+            var model = new HomeViewModel();
+            model.Cities = Db.Cities.Select(x => new SelectListItem
             {
-                items.Add(new SelectListItem
-                {
-                    Text = cats[i],
-                    Value = cats[i]
-                });
-            }
-            ViewBag.Cats = items;
-
-
-            var cities = FakeDB.Cities;
-            items = new List<SelectListItem>();
-            for (int i = 0; i < cities.Count; i++)
+                Text = x.Name,
+                Value = x.Name
+            }).ToList();
+            model.Subjects = Db.Subjects.Select(x => new SelectListItem
             {
-                items.Add(new SelectListItem
-                {
-                    Text = cities[i],
-                    Value = cities[i]
-                });
-            }
-            ViewBag.Cities = items;
-
-            var numbers = new List<string>();
-            var list = new List<SelectListItem>();
+                Text = x.Name,
+                Value = x.Name
+            }).ToList();
+            var distances = new List<SelectListItem>();
             for (double i = 2.5; i < 50; i += 2.5)
             {
-                list.Add(new SelectListItem
+                distances.Add(new SelectListItem
                 {
                     Text = i.ToString(),
                     Value = i.ToString()
                 });
             }
-            ViewBag.Numbers = list;
-
-            return View();
+            model.Distances = distances;
+            return View(model);
         }
 
         public ActionResult About()

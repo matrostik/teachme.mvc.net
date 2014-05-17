@@ -34,7 +34,7 @@ namespace TeachMe.Models
 
         [Required(ErrorMessage = "* יש להכניס תחום לימוד")]
         [Display(Name = "תחום הלימוד")]
-        public string Category { get; set; }
+        public string Subject { get; set; }
 
         [Required(ErrorMessage = "* יש להכניס מחיר לשיעור ")]
         [Display(Name = "מחיר לשיעור")]
@@ -67,7 +67,7 @@ namespace TeachMe.Models
         /// <summary>
         /// List of subjects to teach
         /// </summary>
-        public List<SelectListItem> Cats { get; set; }
+        public List<SelectListItem> Subjects { get; set; }
 
         /// <summary>
         /// List of lesson time

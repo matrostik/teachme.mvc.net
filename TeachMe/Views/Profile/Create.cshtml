@@ -132,9 +132,9 @@
                     <div class="col-md-5">
                     </div>
                     <div class="col-md-2">
-                        @Html.LabelFor(m => m.Category)
-                        @Html.DropDownListFor(m => m.Category, Model.Cats, "בחר מקצוע", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Category)
+                        @Html.LabelFor(m => m.Subject)
+                        @Html.DropDownListFor(m => m.Subject, Model.Subjects, "בחר מקצוע", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Subject)
                     </div>
                     <div class="col-md-2">
                         @Html.LabelFor(m => m.LessonPrice)

@@ -206,6 +206,7 @@
     <Compile Include="Models\FakeDB.cs" />
     <Compile Include="Models\Geo.cs" />
     <Compile Include="Models\GeoLocation.cs" />
+    <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Institution.cs" />
     <Compile Include="Models\MailModel.cs" />

@@ -41,17 +41,11 @@ namespace TeachMe.Controllers
         public ActionResult Create()
         {
             var model = new CreateProfileViewModel();
-            var cats = FakeDB.Cat;
-            List<SelectListItem> items = new List<SelectListItem>();
-            for (int i = 0; i < cats.Count; i++)
+            model.Subjects = Db.Subjects.Select(x => new SelectListItem
             {
-                items.Add(new SelectListItem
-                {
-                    Text = cats[i],
-                    Value = cats[i]
-                });
-            }
-            model.Cats = items;
+                Text = x.Name,
+                Value = x.Name
+            }).ToList();
 
             model.Cities = Db.Cities.Select(x => new SelectListItem
             {
@@ -59,7 +53,7 @@ namespace TeachMe.Controllers
                 Value = x.Name
             }).ToList();
 
-            items = new List<SelectListItem>();
+            var items = new List<SelectListItem>();
             items.Add(new SelectListItem() { Text = "30 דקות", Value = "30" });
             items.Add(new SelectListItem() { Text = "45 דקות", Value = "45" });
             items.Add(new SelectListItem() { Text = "60 דקות", Value = "60" });
@@ -88,7 +82,7 @@ namespace TeachMe.Controllers
                 t.City = model.City;
                 t.Street = model.Street;
                 t.HomeNum = model.HomeNum.Value;
-                t.Category = model.Category;
+                t.Category = model.Subject;
                 t.LessonPrice = model.LessonPrice.Value;
                 t.LessonTime = int.Parse(model.LessonTime);
                 t.Education = model.Education;
@@ -126,7 +120,7 @@ namespace TeachMe.Controllers
                     Value = cats[i]
                 });
             }
-            model.Cats = items;
+            model.Subjects = items;
 
             model.Cities = Db.Cities.Select(x => new SelectListItem
             {

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model TeachMe.Models.HomeViewModel
+@{
     ViewBag.Title = "TeachMe";
 }
 
@@ -45,18 +46,18 @@
                         </div>
                         <div class="col-md-4">
                             @Html.Label("עיר", new { @class = "control-label" })
-                            @Html.DropDownList("city", (List<SelectListItem>)@ViewBag.Cities, "בחר עיר", new { @class = "form-control" })
+                            @Html.DropDownList("city", @Model.Cities, "בחר עיר", new { @class = "form-control" })
                         </div>
 
                     </div>
                     <div class="row" style="margin-top:10px">
                         <div class="col-md-8">
                             @Html.Label(" 3)בחר מקצוע", new { @class = "text-muted" })
-                            @Html.DropDownList("category", (List<SelectListItem>)@ViewBag.Cats, "בחר תחום", new { @class = "form-control" })
+                            @Html.DropDownList("category", @Model.Subjects, "בחר תחום", new { @class = "form-control" })
                         </div>
                         <div class="col-md-4">
                             @Html.Label(" 2) הכנס טווח חיפוש בק\"מ", new { @class = "text-muted" })
-                            @Html.DropDownList("distance", (List<SelectListItem>)@ViewBag.Numbers, "בחר טווח", new { @class = "form-control", @style = "width:100px" })
+                            @Html.DropDownList("distance", @Model.Distances, "בחר טווח", new { @class = "form-control", @style = "width:100px" })
                         </div>
                     </div>
                     <br />

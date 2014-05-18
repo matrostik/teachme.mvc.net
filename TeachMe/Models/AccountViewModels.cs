@@ -160,17 +160,18 @@ namespace TeachMe.Models
     {
         public string Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "יש להכניס סיסמא נוכחית")]
         [DataType(DataType.Password)]
-        [Display(Name = "יש להכניס סיסמא נוכחית")]
+        [Display(Name = "סיסמא נוכחית")]
         public string OldPassword { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage ="ה{0} חייבת להכיל {2} תווים לפחות.", MinimumLength = 6)]
+        [Required(ErrorMessage = "יש להכניס סיסמא חדשה")]
+        [StringLength(100, ErrorMessage = "ה{0} חייבת להכיל {2} תווים לפחות.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name ="יש להכניס סיסמא חדשה")]
+        [Display(Name ="סיסמא חדשה")]
         public string NewPassword { get; set; }
 
+        [Required(ErrorMessage = "יש להכניס סיסמא חדשה שנית")]
         [DataType(DataType.Password)]
         [Display(Name = "אימות סיסמא")]
         [Compare("NewPassword", ErrorMessage = "הסיסמא החדשה ואימות הסיסמא החדשה לא תואמים.")]

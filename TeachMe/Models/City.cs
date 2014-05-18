@@ -29,4 +29,21 @@ namespace TeachMe.Models
         #endregion
 
     }
+
+    public class Street
+    {
+        public Street()
+        {
+        }
+
+        public Street(string name)
+        {
+            this.Name = name;
+        }
+
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+    }
 }

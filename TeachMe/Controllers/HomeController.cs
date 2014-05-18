@@ -43,6 +43,14 @@ namespace TeachMe.Controllers
             return View(model);
         }
 
+        public ActionResult AutocompleteStreet(string term)
+        {
+            var filteredItems = Db.Streets.Where(item => item.Name.StartsWith(term)).Distinct().ToList();
+            List<string> res = filteredItems.Select(x => x.Name).Take(20).ToList();
+            return Json(res, JsonRequestBehavior.AllowGet);
+
+        }
+
         public ActionResult About()
         {
             return View();

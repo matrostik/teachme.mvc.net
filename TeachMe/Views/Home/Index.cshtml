@@ -42,7 +42,7 @@
                         </div>
                         <div class="col-md-6">
                             @Html.Label("רחוב", new { @class = "control-label" })
-                            @Html.TextBox("streetName", "", new { @class = "form-control", @id = "inputDefault" })
+                            @Html.TextBox("streetName", "", new { @class = "form-control", @id = "streetName" })
                         </div>
                         <div class="col-md-4">
                             @Html.Label("עיר", new { @class = "control-label" })
@@ -148,9 +148,19 @@
         </div>*@
 </div>
 
+@Styles.Render("~/Content/jqueryui")
 @section Scripts {
+    @Scripts.Render("~/bundles/jqueryui")
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGG8Hq0jur-Ca6QtjQ0iQFQ3TJG9WzEA8&v=3.exp&sensor=true&language=he" type="text/javascript"></script>
     <script language="javascript" type="text/javascript">
+
+        $(document).ready(function () {
+            $("#streetName").autocomplete({
+                position: { my: "right top", at: "right bottom", collision: "none" },
+                source: '@Url.Action("AutocompleteStreet")'
+            });
+        });
+
         //Allow only numbers to be typed in a textbox
         function isNumber(evt) {
             evt = (evt) ? evt : window.event;
@@ -169,35 +179,6 @@
 
             return true;
         }
-        //$(function () {
-        //    navigator.geolocation.getCurrentPosition(showPosition, positionError);
-
-        //    function showPosition(position) {
-        //        var coordinates = position.coords;
-        //        $("#lat").val(coordinates.latitude);
-        //        $("#lon").val(coordinates.longitude);
-
-        //        var latlng = new google.maps.LatLng(coordinates.latitude, coordinates.longitude);
-        //        var geocoder = new google.maps.Geocoder();
-        //        geocoder.geocode({ 'latLng': latlng }, function (results, status) {
-        //            if (status !== google.maps.GeocoderStatus.OK) {
-        //                alert(status);
-        //            }
-        //            // This is checking to see if the Geoeode Status is OK before proceeding
-        //            if (status == google.maps.GeocoderStatus.OK) {
-        //                console.log(results);
-        //                var address = (results[0].formatted_address);
-        //                alert(address);
-        //                // create the Marker where the address variable is valid
-        //                //var marker = createMarker(point, "Marker 1", point + "<br> Closest Matching Address:" + address)
-        //            }
-        //        });
-        //    }
-
-        //    function positionError(position) {
-        //        alert("" + position.code);
-        //    }
-
-        //});
+       
     </script>
 }

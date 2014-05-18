@@ -30,6 +30,11 @@ namespace TeachMe.Models
         public DbSet<City> Cities { get; set; }
 
         /// <summary>
+        /// List strreets of Israel
+        /// </summary>
+        public DbSet<Street> Streets { get; set; }
+
+        /// <summary>
         /// List of existing subjects to study
         /// </summary>
         public DbSet<Subject> Subjects { get; set; }

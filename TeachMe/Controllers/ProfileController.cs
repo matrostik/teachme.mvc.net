@@ -44,7 +44,7 @@ namespace TeachMe.Controllers
             model.Subjects = Db.Subjects.Select(x => new SelectListItem
             {
                 Text = x.Name,
-                Value = x.Name
+                Value = x.Id.ToString()
             }).ToList();
 
             model.Cities = Db.Cities.Select(x => new SelectListItem
@@ -82,7 +82,10 @@ namespace TeachMe.Controllers
                 t.City = model.City;
                 t.Street = model.Street;
                 t.HomeNum = model.HomeNum.Value;
-                t.Category = model.Subject;
+                // ids of subjects (find subject by and add to SubjectsToTeach )
+                // t.SubjectsToTeach.Add(subject)
+                // Category not exist in DB just for fakeDB
+                t.Category = string.Join(",", model.SubjectsId);
                 t.LessonPrice = model.LessonPrice.Value;
                 t.LessonTime = int.Parse(model.LessonTime);
                 t.Education = model.Education;
@@ -90,11 +93,14 @@ namespace TeachMe.Controllers
                 t.About = model.About;
                 t.Phone = model.Phone;
 
+                // get user geolocation by address
                 t.GeoLocation = new GeoLocation(t.GetAddressForMap());
                 if (User.Identity.IsAuthenticated)
                     t.ApplicationUserId = User.Identity.GetUserId();
 
+                // add teacher to collection
                 Db.Teachers.Add(t);
+                // save changes to db
                 Db.SaveChanges();
 
                 return RedirectToAction("Index", "Profile", new { id = t.Id });
@@ -141,6 +147,14 @@ namespace TeachMe.Controllers
                  .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
 
             return View(model);
+        }
+
+        public ActionResult AutocompleteStreet(string term)
+        {
+            var filteredItems = Db.Streets.Where(item => item.Name.StartsWith(term)).Distinct().ToList();
+            List<string> res = filteredItems.Select(x => x.Name).Take(20).ToList();
+            return Json(res, JsonRequestBehavior.AllowGet);
+
         }
 
         [HttpPost]

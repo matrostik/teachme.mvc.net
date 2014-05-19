@@ -37,6 +37,11 @@ namespace TeachMe
                      "~/Scripts/jquery.ui.widget.js"));
             bundles.Add(new StyleBundle("~/Content/fileupload").Include(
                     "~/Content/jquery.fileupload.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/multiselect").Include(
+   "~/Scripts/jquery.multi-select.js"));
+            bundles.Add(new StyleBundle("~/Content/multiselect").Include(
+                     "~/Content/multi-select.css"));
         }
     }
 }

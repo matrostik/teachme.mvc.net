@@ -132,9 +132,9 @@
                     <div class="col-md-5">
                     </div>
                     <div class="col-md-2">
-                        @Html.LabelFor(m => m.Subject)
-                        @Html.DropDownListFor(m => m.Subject, Model.Subjects, "בחר מקצוע", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Subject)
+                        @Html.LabelFor(m => m.SubjectsId)
+                        @Html.ListBoxFor(m => m.SubjectsId, Model.Subjects, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.SubjectsId)
                     </div>
                     <div class="col-md-2">
                         @Html.LabelFor(m => m.LessonPrice)
@@ -216,12 +216,21 @@
     @Html.ActionLink("חזרה לדף הבית", "Index", "Home")
 </div>
 
+@Styles.Render("~/Content/multiselect")
+@Styles.Render("~/Content/jqueryui")
 @section Scripts {
-    @Scripts.Render("~/bundles/fileinput")
     @Scripts.Render("~/bundles/fileupload")
+@Scripts.Render("~/bundles/multiselect")
+@Scripts.Render("~/bundles/jqueryui")
 
     <script type="text/javascript">
+        $('#SubjectsId').multiSelect()
         $(document).ready(function () {
+
+            $("#Street").autocomplete({
+                source: '@Url.Action("AutocompleteStreet")'
+            });
+
             $('#fileupload').fileupload({
                 dataType: 'json',
                 url: '/Profile/UploadImage',

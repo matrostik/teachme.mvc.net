@@ -58,12 +58,12 @@ namespace TeachMe.Controllers
             items.Add(new SelectListItem() { Text = "45 דקות", Value = "45" });
             items.Add(new SelectListItem() { Text = "60 דקות", Value = "60" });
             items.Add(new SelectListItem() { Text = "90 דקות", Value = "90" });
-            items.Add(new SelectListItem() { Text = "100 דקות", Value = "100" });
-            items.Add(new SelectListItem() { Text = "120 דקות", Value = "120" });
             model.Time = items;
 
             model.Institutions = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
                 .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
+
+
 
             return View(model);
         }
@@ -82,16 +82,23 @@ namespace TeachMe.Controllers
                 t.City = model.City;
                 t.Street = model.Street;
                 t.HomeNum = model.HomeNum.Value;
-                // ids of subjects (find subject by and add to SubjectsToTeach )
-                // t.SubjectsToTeach.Add(subject)
-                // Category not exist in DB just for fakeDB
-                t.Category = string.Join(",", model.SubjectsId);
                 t.LessonPrice = model.LessonPrice.Value;
                 t.LessonTime = int.Parse(model.LessonTime);
                 t.Education = model.Education;
-                t.Institution = "";
+                t.Institution = model.Institution;
                 t.About = model.About;
                 t.Phone = model.Phone;
+                t.PictureUrl = model.PictureUrl;
+
+                t.SubjectsToTeach = new List<SubjectToTeach>();
+                foreach (var idx in model.SubjectsId)
+                {
+                    int i = int.Parse(idx);
+                    var subj = Db.Subjects.FirstOrDefault(x => x.Id == i);
+                    SubjectToTeach stt = new SubjectToTeach();
+                    stt.Name = subj.Name;
+                    t.SubjectsToTeach.Add(stt);
+                }
 
                 // get user geolocation by address
                 t.GeoLocation = new GeoLocation(t.GetAddressForMap());

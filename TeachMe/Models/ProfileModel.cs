@@ -59,6 +59,7 @@ namespace TeachMe.Models
         [Display(Name = "על עצמי... ")]
         public string About { get; set; }
 
+
         /// <summary>
         /// List of cities
         /// </summary>
@@ -78,5 +79,8 @@ namespace TeachMe.Models
         /// List of institutions
         /// </summary>
         public List<GroupDropListItem> Institutions { get; set; }
+
+        public ApplicationUser User { get; set; }
+
     }
 }

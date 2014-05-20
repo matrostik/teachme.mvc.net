@@ -5,21 +5,22 @@
 }
 
 <h2>עמוד הפרופיל</h2>
+
 <div class="list-group" style="margin-right:15px">
     <div class="list-group-item">
         <div class="row">
-         
-                <font size=" 3">
-                        <div class="col-md-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">המורה-פרטים אישיים</div>
-                                <div class="panel-body">
+            <font size=" 3">
+                <div class="col-md-12">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">המורה-פרטים אישיים</div>
+                        <div class="panel-body">
 
                                     <div class="col-md-3" style="padding: 0 5px 0 0;">
-                                        <div class="well" style="padding: 10px;">
+                                        <div style="padding: 10px;">
                                             <a href="#">
                                                 <span>
-                                                    <img src="~/Images/profile-icon.png" class="img-responsive" align="left" />
+                                                    <img src="@Model.PictureUrl" class="img-thumbnail" align="left" />
                                                 </span>
                                             </a>
                                         </div>
@@ -36,6 +37,9 @@
                                     </dd>
                                     <dd>
                                         <b>טלפון:</b> @Html.DisplayFor(model => model.Phone)
+                                    </dd>
+                                    <dd>
+                                        <b>אימייל:</b> @Html.DisplayFor(model => model.User.UserName)
                                     </dd>
                                     <dd>
                                         <b>עיר:</b> @Html.DisplayFor(model => model.City)
@@ -59,7 +63,7 @@
                                     </dd>
 
                                     <dd>
-                                        <b>מוסד אקדמי:</b> @Html.DisplayFor(model => model.Institution)
+                                        <b>מוסד אקדמי:</b> @Html.Raw(@Model.Institution)
                                     </dd>
 
                                     <dd>
@@ -73,7 +77,7 @@
                                 <div class="panel-body">
 
                                     <dd>
-                                        <b>מקצוע:</b> @Html.DisplayFor(model => model.Category)
+                                        <b>מקצוע:</b> @Html.Label("",@Model.GetSubjects())
                                     </dd>
 
                                     <dd>
@@ -83,10 +87,8 @@
                                     <dd>
                                         <b>מחיר השיעור:</b> @Html.DisplayFor(model => model.LessonPrice) ש"ח
                                     </dd>
-
                                 </div>
                             </div>
-
 
                             <div class="panel panel-default">
                                 <div class="panel-heading">המלצות</div>
@@ -100,21 +102,17 @@
                                     </dd>
                                 </div>
                             </div>
-                        </div>
-                        </div>
-</font>
-          
-</div>
+                </div>
+            </font>
+        </div>
     </div>
 </div>
 
-
-            <div class="col-md-12">
-                <hr />
-
-                <p>
-                    @Html.ActionLink("ערוך", "Edit", new
-   { @*id = Model.Id*@ }) |
-                    @Html.ActionLink("חזור", "Index")
-                </p>
-            </div>
+<div class="col-md-12">
+    <div class="col-md-4">
+    </div>
+    <p>
+          @Html.ActionLink("ערוך", "Edit", new{ @*id = Model.Id*@ }) |
+          @Html.ActionLink("חזור", "Index")
+    </p>
+</div>

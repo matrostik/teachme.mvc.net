@@ -63,7 +63,8 @@ namespace TeachMe.Controllers
             model.Institutions = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
                 .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
 
-
+            var id = User.Identity.GetUserId();
+            model.User = Db.Users.FirstOrDefault(x => x.Id == id);
 
             return View(model);
         }
@@ -146,8 +147,7 @@ namespace TeachMe.Controllers
             items.Add(new SelectListItem() { Text = "45 דקות", Value = "45" });
             items.Add(new SelectListItem() { Text = "60 דקות", Value = "60" });
             items.Add(new SelectListItem() { Text = "90 דקות", Value = "90" });
-            items.Add(new SelectListItem() { Text = "100 דקות", Value = "100" });
-            items.Add(new SelectListItem() { Text = "120 דקות", Value = "120" });
+            
             model.Time = items;
 
             model.Institutions = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
@@ -162,6 +162,53 @@ namespace TeachMe.Controllers
             List<string> res = filteredItems.Select(x => x.Name).Take(20).ToList();
             return Json(res, JsonRequestBehavior.AllowGet);
 
+        }
+
+
+        public ActionResult Edit()
+        {
+            EditProfileViewModel model = new EditProfileViewModel();
+            model.Subjects = Db.Subjects.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
+
+            model.Cities = Db.Cities.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Name
+            }).ToList();
+
+            var items = new List<SelectListItem>();
+            items.Add(new SelectListItem() { Text = "30 דקות", Value = "30" });
+            items.Add(new SelectListItem() { Text = "45 דקות", Value = "45" });
+            items.Add(new SelectListItem() { Text = "60 דקות", Value = "60" });
+            items.Add(new SelectListItem() { Text = "90 דקות", Value = "90" });
+            model.Time = items;
+
+            model.Institutions = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
+                .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
+
+            var id = User.Identity.GetUserId();
+
+            model.teacher = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(EditProfileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                //save logic
+                Db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            return View(model);
         }
 
         [HttpPost]

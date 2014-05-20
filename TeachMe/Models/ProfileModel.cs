@@ -16,6 +16,7 @@ namespace TeachMe.Models
         [Range(1, 120, ErrorMessage = "יש להכניס גיל")]
         public int? Age { get; set; }
 
+        [Required(ErrorMessage = "* יש להכניס תמונה")]
         [Display(Name = "תמונת פרופיל")]
         public string PictureUrl { get; set; }
 
@@ -82,5 +83,35 @@ namespace TeachMe.Models
 
         public ApplicationUser User { get; set; }
 
+    }
+
+    public class EditProfileViewModel
+    {
+        public Teacher teacher { get; set; }
+
+        [Required(ErrorMessage = "* יש להכניס תחום לימוד")]
+        [Display(Name = "תחום הלימוד")]
+        public List<string> SubjectsId { get; set; }
+        /// <summary>
+        /// List of cities
+        /// </summary>
+        public List<SelectListItem> Cities { get; set; }
+
+        /// <summary>
+        /// List of subjects to teach
+        /// </summary>
+        public List<SelectListItem> Subjects { get; set; }
+
+        /// <summary>
+        /// List of lesson time
+        /// </summary>
+        public List<SelectListItem> Time { get; set; }
+
+        /// <summary>
+        /// List of institutions
+        /// </summary>
+        public List<GroupDropListItem> Institutions { get; set; }
+
+       
     }
 }

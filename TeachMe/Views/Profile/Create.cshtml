@@ -21,14 +21,9 @@
                     <div class="panel-body">
                         <div class="form-group">
 
-                            <div class="col-md-">
+                            <div class="col-md-4">
                             </div>
-
-
-                         
-
-                            <div class="col-md-2">
-
+                            <div class="col-md-1">
                                 @Html.LabelFor(m => m.Age)
                                 @Html.TextBoxFor(m => m.Age, new { @class = "form-control", @placeholder = "גיל" })
                                 @Html.ValidationMessageFor(m => m.Age)
@@ -42,14 +37,13 @@
 
                             <div class="col-md-2">
                                 @Html.LabelFor(m => m.User.LastName)
-                                @Html.TextBoxFor(m => m.User.LastName, new { @class = "form-control", @placeholder = "שם משפחה", @id = "inputDefult" })
+                                @Html.TextBoxFor(m => m.User.LastName, new { @class = "form-control", @disabled = "" })
                             </div>
 
                             <div class="col-md-2">
                                 @Html.LabelFor(m => m.User.FirstName)
-                                @Html.TextBoxFor(m => m.User.FirstName, new { @class = "form-control", @placeholder = "שם פרטי", @id = "inputDefult" })
+                                @Html.TextBoxFor(m => m.User.FirstName, new { @class = "form-control", @disabled = "" })
                             </div>
-
                             <div class="col-md-1">
                             </div>
 
@@ -113,7 +107,7 @@
 
                             <div class="col-md-1">
                                 @Html.LabelFor(m => m.HomeNum)
-                                @Html.TextBoxFor(m => m.HomeNum, new { @class = "form-control", @placeholder = "מספר בית" })
+                                @Html.TextBoxFor(m => m.HomeNum, new { @class = "form-control", @placeholder = "בית"})
                                 @Html.ValidationMessageFor(m => m.HomeNum)
                             </div>
 

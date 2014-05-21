@@ -222,10 +222,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-TeachMe-20140310100512.mdf" />
-    <Content Include="App_Data\aspnet-TeachMe-20140310100512_log.ldf">
-      <DependentUpon>aspnet-TeachMe-20140310100512.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\amelia.css" />
     <Content Include="Content\bootstrap-switch.css" />
     <Content Include="Content\bootstrap-theme.css" />

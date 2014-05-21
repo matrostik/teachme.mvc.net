@@ -188,8 +188,9 @@ namespace TeachMe.Controllers
                 .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
 
             var id = User.Identity.GetUserId();
-
-            model.teacher = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id);
+            var teacher =  Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id);
+            model.Teacher = teacher;
+            model.SubjectsId = teacher.SubjectsToTeach.Select(x => x.Id.ToString()).ToList();
 
             return View(model);
         }
@@ -199,12 +200,59 @@ namespace TeachMe.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 //save logic
-                Db.SaveChanges();
+                var teacher = Db.Teachers.FirstOrDefault(x => x.Id == model.Teacher.Id);
+                teacher.About = model.Teacher.About;
+                teacher.Age = model.Teacher.Age;
+                teacher.Category = model.Teacher.Category;
+                teacher.City = model.Teacher.City;
+                teacher.Education = model.Teacher.Education;
+                teacher.HomeNum = model.Teacher.HomeNum;
+                teacher.Institution = model.Teacher.Institution;
+                teacher.isActive = model.Teacher.isActive;
+                teacher.LessonPrice = model.Teacher.LessonPrice;
+                teacher.LessonTime = model.Teacher.LessonTime;
+                teacher.Phone = model.Teacher.Phone;
+                teacher.PictureUrl = model.Teacher.PictureUrl;
+                teacher.Street = model.Teacher.Street;
+                teacher.SubjectsToTeach = new List<SubjectToTeach>();
+                foreach (var idx in model.SubjectsId)
+                {
+                    int i = int.Parse(idx);
+                    var subj = Db.Subjects.FirstOrDefault(x => x.Id == i);
+                    SubjectToTeach stt = new SubjectToTeach();
+                    stt.Name = subj.Name;
+                    teacher.SubjectsToTeach.Add(stt);
+                }
+                model.Teacher.GeoLocation = new GeoLocation(model.Teacher.GetAddressForMap());
+            
+                //Db.SaveChanges();
 
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
             }
+
+            model.Subjects = Db.Subjects.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
+
+            model.Cities = Db.Cities.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Name
+            }).ToList();
+
+            var items = new List<SelectListItem>();
+            items.Add(new SelectListItem() { Text = "30 דקות", Value = "30" });
+            items.Add(new SelectListItem() { Text = "45 דקות", Value = "45" });
+            items.Add(new SelectListItem() { Text = "60 דקות", Value = "60" });
+            items.Add(new SelectListItem() { Text = "90 דקות", Value = "90" });
+            model.Time = items;
+
+            model.Institutions = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
+                .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
+
             return View(model);
         }
 

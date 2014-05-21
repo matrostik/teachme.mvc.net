@@ -1,0 +1,115 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using TeachMe.Models;
+using TeachMe.Helpers;
+using Microsoft.AspNet.Identity;
+using System.Net;
+using System.Xml.Linq;
+using System.Text;
+using Newtonsoft.Json;
+using System.IO;
+using System.Drawing;
+
+namespace TeachMe.Controllers
+{
+    [Authorize]
+    public class ProfileController : Controller
+    {
+        public TeachMeDBContext Db { get; private set; }
+
+        public ProfileController()
+        {
+            Db = new TeachMeDBContext();
+        }
+
+        //
+        // GET: /Profile/Index
+        public ActionResult Index(int? id)
+        {
+            var id1 = User.Identity.GetUserId();
+            Teacher t = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id1);
+            if (t == null)
+                return RedirectToAction("Create");
+            return View(t);
+        }
+
+        //
+        // GET: /Create/
+        public ActionResult Create()
+        {
+            var model = new CreateProfileViewModel();
+            model.Subjects = Db.Subjects.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
+
+            model.Cities = Db.Cities.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Name
+            }).ToList();
+
+            var items = new List<SelectListItem>();
+            items.Add(new SelectListItem() { Text = "30 דקות", Value = "30" });
+            items.Add(new SelectListItem() { Text = "45 דקות", Value = "45" });
+            items.Add(new SelectListItem() { Text = "60 דקות", Value = "60" });
+            items.Add(new SelectListItem() { Text = "90 דקות", Value = "90" });
+            model.Time = items;
+
+            model.Institutions = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
+                .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
+
+            var id = User.Identity.GetUserId();
+            model.User = Db.Users.FirstOrDefault(x => x.Id == id);
+
+            return View(model);
+        }
+
+        //
+        // Post: /Create/
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(CreateProfileViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                Teacher t = new Teacher();
+                t.Age = model.Age.Value;
+                t.City = model.City;
+                t.Street = model.Street;
+                t.HomeNum = model.HomeNum.Value;
+                t.LessonPrice = model.LessonPrice.Value;
+                t.LessonTime = int.Parse(model.LessonTime);
+                t.Education = model.Education;
+                t.Institution = model.Institution;
+                t.About = model.About;
+                t.Phone = model.Phone;
+                t.PictureUrl = model.PictureUrl;
+                t.isActive = model.isActive;
+                // take care of subjects
+                t.SubjectsToTeach = new List<SubjectToTeach>();
+                foreach (var idx in model.SubjectsId)
+                {
+                    int i = int.Parse(idx);
+                    var subj = Db.Subjects.FirstOrDefault(x => x.Id == i);
+                    SubjectToTeach stt = new SubjectToTeach();
+                    stt.Name = subj.Name;
+                    t.SubjectsToTeach.Add(stt);
+                }
+
+                // get user geolocation by address
+                t.GeoLocation = new GeoLocation(t.GetAddressForMap());
+                if (User.Identity.IsAuthenticated)
+                    t.ApplicationUserId = User.Identity.GetUserId();
+
+                // add teacher to collection
+                Db.Teachers.Add(t);
+                // save changes to db
+                Db.SaveChanges();
+
+                return RedirectToAction("Index", "Profile", new { i

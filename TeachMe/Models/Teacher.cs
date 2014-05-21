@@ -12,35 +12,49 @@ namespace TeachMe.Models
         
         public int Id { get; set; }
 
-        //switch on/off for profile
+        [Display(Name = "הפעל פרופיל")]
         public bool isActive { get; set; }
 
         [Required(ErrorMessage = "* יש להכניס תמונה")]
+        [Display(Name = "תמונת פרופיל")]
         public string PictureUrl { get; set; }
 
         [Required(ErrorMessage = "* יש להכניס גיל")]
+        [Range(1, 120, ErrorMessage = "יש להכניס גיל")]
+        [Display(Name = "גיל")]
         public int Age{ get; set; }
 
         [Required(ErrorMessage = "* יש להכניס עיר")]
+        [Display(Name = "עיר")]
         public string City{ get; set; }
 
         [Required(ErrorMessage = "* יש להכניס רחוב")]
+        [Display(Name = "רחוב")]
         public string Street{ get; set; }
 
         [Required(ErrorMessage = "* יש להכניס מספר בית")]
+        [Range(1, int.MaxValue, ErrorMessage = "יש להכניס מספר בית")]
+        [Display(Name = "מספר בית")]
         public int HomeNum { get; set; }
 
         [Required(ErrorMessage = "* יש להכניס מחיר")]
+        [Range(1, 500, ErrorMessage = "יש להכניס מחיר לשיעור")]
+        [Display(Name = "מחיר לשיעור")]
         public int LessonPrice{ get; set; }
 
-        [Required(ErrorMessage = "* יש להכניס זמן השיעור")]
+        [Range(30, 90, ErrorMessage = "יש לבחור ערך")]
+        [Required(ErrorMessage = "* יש להכניס את זמן השיעור  ")]
+        [Display(Name = "זמן השיעור (בדקות)")]
         public int LessonTime { get; set; }
 
-        [Required(ErrorMessage = "* יש להכניס טלפון")]
+        [Required(ErrorMessage = "* יש להכניס טלפון  ")]
+        [Display(Name = "טלפון ")]
         public string Phone{ get; set; }
 
+        [Display(Name = "השכלה ")]
         public string Education { get; set; }
 
+        [Display(Name = "מוסד לימודים")]
         public string Institution { get; set; }
 
         /*  temporary object for subject to teach (for FakeDB) */
@@ -48,6 +62,7 @@ namespace TeachMe.Models
         public string Category { get; set; }
         /*  temporary object for subject to teach */
 
+        [Display(Name = "על עצמי... ")]
         public string About { get; set; }
 
         public int Raters { get; set; }
@@ -60,7 +75,6 @@ namespace TeachMe.Models
 
         public virtual ApplicationUser User { get; set; }
 
-        [Required(ErrorMessage = "* יש להכניס מקצוע לימוד ")]
         public virtual List<SubjectToTeach> SubjectsToTeach { get; set; }
 
         public virtual GeoLocation GeoLocation { get; set; }

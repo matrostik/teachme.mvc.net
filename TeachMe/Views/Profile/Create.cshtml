@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "פרופיל מורה";
 }
-@Styles.Render("~/Content/fileupload")
+
 <h2>@ViewBag.Title</h2>
 
 
@@ -46,7 +46,6 @@
                     </div>
                     <div class="col-md-1">
                     </div>
-
 
                 </div>
             </div>
@@ -141,7 +140,7 @@
                     </div>
                     <div class="col-md-2">
                         @Html.LabelFor(m => m.SubjectsId)
-                        @Html.ListBoxFor(m => m.SubjectsId, Model.Subjects, new { @class = "form-control" })
+                        @Html.ListBoxFor(m => m.SubjectsId, Model.Subjects, new { @style = "display:none" })
                         @Html.ValidationMessageFor(m => m.SubjectsId)
                     </div>
                     <div class="col-md-2">
@@ -164,79 +163,79 @@
             </div>
         </div>
 
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class=" panel-heading">אחר</div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <div class="col-md-11">
-                            @Html.LabelFor(m => m.About)
-                            @Html.TextAreaFor(m => m.About, new { @class = "form-control", @rows = 6, @placeholder = "תיאור המורה" })
-                            @Html.ValidationMessageFor(model => model.About)
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class=" panel-heading">אחר</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-11">
+                                @Html.LabelFor(m => m.About)
+                                @Html.TextAreaFor(m => m.About, new { @class = "form-control", @rows = 6, @placeholder = "תיאור המורה" })
+                                @Html.ValidationMessageFor(model => model.About)
+                            </div>
+                            <div class="col-md-1">
+                            </div>
                         </div>
-                        <div class="col-md-1">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class=" panel-heading">השכלה</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-11">
+                                @Html.LabelFor(m => m.Institution)
+                                @Html.GroupDropList("Institution", Model.Institutions, Model.Institution, "בחר", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Institution)
+                            </div>
+                            <div class="col-md-1">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-11">
+                                @Html.LabelFor(m => m.Education)
+                                @Html.TextAreaFor(m => m.Education, new { @class = "form-control", @rows = 2, @placeholder = "השכלה" })
+                                @Html.ValidationMessageFor(model => model.Education)
+                            </div>
+                            <div class="col-md-1">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class=" panel-heading">השכלה</div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <div class="col-md-11">
-                            @Html.LabelFor(m => m.Institution)
-                            @Html.GroupDropList("Institution", Model.Institutions, "", "בחר", new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Institution)
-                        </div>
-                        <div class="col-md-1">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">מצב הפרופיל</div>
+            <div class="panel-body">
+                <div class="form-group">
+
+                    <div class="col-md-10">
+                    </div>
+                    <div class="col-md-1">
+                        <div class="row" dir="ltr">
+                            <input type="checkbox" name="Example" id="switch-isActive" data-on-color="success" data-off-color="danger" data-on-text="פעיל" data-off-text="כבוי">
+                            @Html.Hidden("isActive", true)
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-11">
-                            @Html.LabelFor(m => m.Education)
-                            @Html.TextAreaFor(m => m.Education, new { @class = "form-control", @rows = 2, @placeholder = "השכלה" })
-                            @Html.ValidationMessageFor(model => model.Education)
-                        </div>
-                        <div class="col-md-1">
-                        </div>
+                    <div class="col-md-1">
                     </div>
+
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">מצב הפרופיל</div>
-        <div class="panel-body">
-            <div class="form-group">
-
-                <div class="col-md-10">
-                </div>
-                <div class="col-md-1">
-                    <div class="row" dir="ltr">
-                        <input type="checkbox" name="Example" id="switch-isActive" dir="rtl" data-on-color="success" data-off-color="danger" data-on-text="פעיל" data-off-text="מוקפא">
-                        @Html.Hidden("isActive", true)
-                    </div>
-                </div>
-                <div class="col-md-1">
-                </div>
-
+        <div class="form-group">
+            <div class="col-md-offset-10 col-md-2">
+                <button type="submit" class="btn btn-default">
+                    @*// create ButtonHelper with icon  *@
+                    <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;צור פרופיל
+                </button>
             </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-10 col-md-2">
-            <button type="submit" class="btn btn-default">
-                @*// create ButtonHelper with icon  *@
-                <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;צור פרופיל
-            </button>
-        </div>
     </div>
 }
 
@@ -244,6 +243,7 @@
     @Html.ActionLink("חזרה לדף הבית", "Index", "Home")
 </div>
 
+@Styles.Render("~/Content/fileupload")
 @Styles.Render("~/Content/multiselect")
 @Styles.Render("~/Content/jqueryui")
 @Styles.Render("~/Content/bootstrapswitch")

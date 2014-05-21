@@ -89,7 +89,7 @@ namespace TeachMe.Models
 
     public class EditProfileViewModel
     {
-        public Teacher teacher { get; set; }
+        public Teacher Teacher { get; set; }
 
         [Required(ErrorMessage = "* יש להכניס תחום לימוד")]
         [Display(Name = "תחום הלימוד")]

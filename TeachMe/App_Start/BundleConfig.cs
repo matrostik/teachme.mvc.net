@@ -9,7 +9,7 @@ namespace TeachMe
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                       "~/Scripts/jquery-1.11.1.js")); // "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                          "~/Scripts/jquery-ui-{version}.js"));
@@ -42,6 +42,11 @@ namespace TeachMe
    "~/Scripts/jquery.multi-select.js"));
             bundles.Add(new StyleBundle("~/Content/multiselect").Include(
                      "~/Content/multi-select.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/bootstrapswitch").Include(
+        "~/Scripts/bootstrap-switch.js"));
+            bundles.Add(new StyleBundle("~/Content/bootstrapswitch").Include(
+                     "~/Content/bootstrap-switch.css"));
         }
     }
 }

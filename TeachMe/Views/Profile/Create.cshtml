@@ -108,7 +108,7 @@
 
                     <div class="col-md-1">
                         @Html.LabelFor(m => m.HomeNum)
-                        @Html.TextBoxFor(m => m.HomeNum, new { @class = "form-control", @placeholder = "בית"})
+                        @Html.TextBoxFor(m => m.HomeNum, new { @class = "form-control", @placeholder = "בית" })
                         @Html.ValidationMessageFor(m => m.HomeNum)
                     </div>
 
@@ -218,8 +218,10 @@
                 <div class="col-md-10">
                 </div>
                 <div class="col-md-1">
-                    @Html.LabelFor(m => m.isActive)
-                    @Html.CheckBoxFor(m => m.isActive, new { @class = "form-control" })
+                    <div class="row" dir="ltr">
+                        <input type="checkbox" name="Example" id="switch-isActive" dir="rtl" data-on-color="success" data-off-color="danger" data-on-text="פעיל" data-off-text="מוקפא">
+                        @Html.Hidden("isActive", true)
+                    </div>
                 </div>
                 <div class="col-md-1">
                 </div>
@@ -244,13 +246,21 @@
 
 @Styles.Render("~/Content/multiselect")
 @Styles.Render("~/Content/jqueryui")
+@Styles.Render("~/Content/bootstrapswitch")
 @section Scripts {
     @Scripts.Render("~/bundles/fileupload")
     @Scripts.Render("~/bundles/multiselect")
     @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/bootstrapswitch")
 
     <script type="text/javascript">
         $('#SubjectsId').multiSelect()
+
+        $('#switch-isActive').bootstrapSwitch();
+        $('#switch-isActive').on('switchChange.bootstrapSwitch', function (event, state) {
+            $("#isActive").val(state);
+        });
+
         $(document).ready(function () {
 
             $("#Street").autocomplete({

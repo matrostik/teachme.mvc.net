@@ -90,7 +90,8 @@ namespace TeachMe.Controllers
                 t.About = model.About;
                 t.Phone = model.Phone;
                 t.PictureUrl = model.PictureUrl;
-
+                t.isActive = model.isActive;
+                // take care of subjects
                 t.SubjectsToTeach = new List<SubjectToTeach>();
                 foreach (var idx in model.SubjectsId)
                 {
@@ -116,6 +117,7 @@ namespace TeachMe.Controllers
             }
             else
             {
+                // ovverride not number message
                 if (ModelState["HomeNum"].Errors.Count > 0 
                     && ModelState["HomeNum"].Errors.FirstOrDefault().ErrorMessage.Contains("is not valid"))
                 {
@@ -123,18 +125,12 @@ namespace TeachMe.Controllers
                     ModelState.AddModelError("HomeNum", "* רק מספרים");
                 }
             }
-
-            var cats = FakeDB.Cat;
-            List<SelectListItem> items = new List<SelectListItem>();
-            for (int i = 0; i < cats.Count; i++)
+            // model not valid get data again and return to page
+            model.Subjects = Db.Subjects.Select(x => new SelectListItem
             {
-                items.Add(new SelectListItem
-                {
-                    Text = cats[i],
-                    Value = cats[i]
-                });
-            }
-            model.Subjects = items;
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
 
             model.Cities = Db.Cities.Select(x => new SelectListItem
             {
@@ -142,16 +138,18 @@ namespace TeachMe.Controllers
                 Value = x.Name
             }).ToList();
 
-            items = new List<SelectListItem>();
+            var items = new List<SelectListItem>();
             items.Add(new SelectListItem() { Text = "30 דקות", Value = "30" });
             items.Add(new SelectListItem() { Text = "45 דקות", Value = "45" });
             items.Add(new SelectListItem() { Text = "60 דקות", Value = "60" });
             items.Add(new SelectListItem() { Text = "90 דקות", Value = "90" });
-            
             model.Time = items;
 
             model.Institutions = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
                  .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
+
+            var id = User.Identity.GetUserId();
+            model.User = Db.Users.FirstOrDefault(x => x.Id == id);
 
             return View(model);
         }
@@ -161,7 +159,6 @@ namespace TeachMe.Controllers
             var filteredItems = Db.Streets.Where(item => item.Name.StartsWith(term)).Distinct().ToList();
             List<string> res = filteredItems.Select(x => x.Name).Take(20).ToList();
             return Json(res, JsonRequestBehavior.AllowGet);
-
         }
 
 

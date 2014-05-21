@@ -60,6 +60,8 @@ namespace TeachMe.Models
         [Display(Name = "על עצמי... ")]
         public string About { get; set; }
 
+        [Display(Name = "הפעל פרופיל")]
+        public bool isActive { get; set; }
 
         /// <summary>
         /// List of cities

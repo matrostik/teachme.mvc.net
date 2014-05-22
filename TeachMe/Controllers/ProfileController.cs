@@ -27,7 +27,7 @@ namespace TeachMe.Controllers
 
         //
         // GET: /Profile/Index
-        public ActionResult Index(int? id)
+        public ActionResult Index()
         {
             var id1 = User.Identity.GetUserId();
             Teacher t = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id1);
@@ -37,7 +37,7 @@ namespace TeachMe.Controllers
         }
 
         //
-        // GET: /Create/
+        // GET: /Profile/Create/
         public ActionResult Create()
         {
             var model = new CreateProfileViewModel();
@@ -70,7 +70,7 @@ namespace TeachMe.Controllers
         }
 
         //
-        // Post: /Create/
+        // Post: /Profile/Create/
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreateProfileViewModel model)
@@ -92,12 +92,12 @@ namespace TeachMe.Controllers
                 t.PictureUrl = model.PictureUrl;
                 t.isActive = model.isActive;
                 // take care of subjects
-                t.SubjectsToTeach = new List<SubjectToTeach>();
                 foreach (var idx in model.SubjectsId)
                 {
                     int i = int.Parse(idx);
                     var subj = Db.Subjects.FirstOrDefault(x => x.Id == i);
                     SubjectToTeach stt = new SubjectToTeach();
+                    stt.SubjectId = int.Parse(idx);
                     stt.Name = subj.Name;
                     t.SubjectsToTeach.Add(stt);
                 }
@@ -112,7 +112,7 @@ namespace TeachMe.Controllers
                 // save changes to db
                 Db.SaveChanges();
 
-                return RedirectToAction("Index", "Profile", new { id = t.Id });
+                return RedirectToAction("Index", "Profile");
 
             }
             else
@@ -154,6 +154,8 @@ namespace TeachMe.Controllers
             return View(model);
         }
 
+        //
+        // GET: /Profile/AutocompleteStreet/
         public ActionResult AutocompleteStreet(string term)
         {
             var filteredItems = Db.Streets.Where(item => item.Name.StartsWith(term)).Distinct().ToList();
@@ -161,7 +163,8 @@ namespace TeachMe.Controllers
             return Json(res, JsonRequestBehavior.AllowGet);
         }
 
-
+        //
+        // GET: /Profile/Edit/
         public ActionResult Edit()
         {
             EditProfileViewModel model = new EditProfileViewModel();
@@ -190,11 +193,13 @@ namespace TeachMe.Controllers
             var id = User.Identity.GetUserId();
             var teacher =  Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id);
             model.Teacher = teacher;
-            model.SubjectsId = teacher.SubjectsToTeach.Select(x => x.Id.ToString()).ToList();
+            model.SubjectsId = model.Teacher.SubjectsToTeach.Select(x => x.SubjectId.ToString()).ToList();
 
             return View(model);
         }
 
+        //
+        // POST: /Profile/Edit/
         [HttpPost]
         public ActionResult Edit(EditProfileViewModel model)
         {
@@ -215,20 +220,25 @@ namespace TeachMe.Controllers
                 teacher.Phone = model.Teacher.Phone;
                 teacher.PictureUrl = model.Teacher.PictureUrl;
                 teacher.Street = model.Teacher.Street;
-                teacher.SubjectsToTeach = new List<SubjectToTeach>();
+
+                // remove old subjects to teach
+                // bad logic !!!
+                Db.SubjectsToTeach.RemoveRange(teacher.SubjectsToTeach);
+                // add new subjects to teach
                 foreach (var idx in model.SubjectsId)
                 {
                     int i = int.Parse(idx);
                     var subj = Db.Subjects.FirstOrDefault(x => x.Id == i);
                     SubjectToTeach stt = new SubjectToTeach();
+                    stt.SubjectId = subj.Id;
                     stt.Name = subj.Name;
                     teacher.SubjectsToTeach.Add(stt);
                 }
                 model.Teacher.GeoLocation = new GeoLocation(model.Teacher.GetAddressForMap());
             
-                //Db.SaveChanges();
+                Db.SaveChanges();
 
-                //return RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
 
             model.Subjects = Db.Subjects.Select(x => new SelectListItem
@@ -256,6 +266,8 @@ namespace TeachMe.Controllers
             return View(model);
         }
 
+        //
+        // POST: /Profile/UploadImage/
         [HttpPost]
         public ContentResult UploadImage(HttpPostedFileBase file)
         {
@@ -270,7 +282,6 @@ namespace TeachMe.Controllers
                     Image image = Image.FromStream(ms);
                     Image resized = ImageUtils.ResizeImageFixedWidth(image, 300);
                     byte[] imageByte = ImageUtils.ImageToByteArraybyMemoryStream(resized);
-                    //byte[] array = ms.GetBuffer();
                     // upload image to imgur.com
                     imgurl = Utils.UploadImageToImgur(imageByte);
                 }
@@ -282,9 +293,32 @@ namespace TeachMe.Controllers
                 type = file.ContentType,
                 url = imgurl
             };
-
             string json = JsonConvert.SerializeObject(res);
             return Content(json, "application/json");
+        }
+
+        // GET: /Profile/ChangeActive
+        public ActionResult ChangeActive()
+        {
+            var id1 = User.Identity.GetUserId();
+            Teacher t = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id1);
+            if (t == null)
+                return RedirectToAction("Create");
+            t.isActive = !t.isActive;
+            Db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // GET: /Profile/Delete
+        public ActionResult Delete()
+        {
+            var id1 = User.Identity.GetUserId();
+            Teacher t = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id1);
+            if (t == null)
+                return RedirectToAction("Create");
+            Db.Teachers.Remove(t);
+            Db.SaveChanges();
+            return RedirectToAction("Index","Home");
         }
 
     }

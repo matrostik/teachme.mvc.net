@@ -83,8 +83,19 @@ namespace TeachMe.Models
 
         #endregion
 
+        #region Constructors
+
+        public Teacher()
+        {
+            SubjectsToTeach = new List<SubjectToTeach>();
+            GeoLocation = new GeoLocation();
+            Comments = new List<Comment>();
+        }
+
+        #endregion
+
         #region Methods
-        
+
         /// <summary>
         /// Returns full address of teacher
         /// City , Street 10

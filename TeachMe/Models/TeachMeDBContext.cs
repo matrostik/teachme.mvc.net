@@ -43,5 +43,10 @@ namespace TeachMe.Models
         /// List of existing institutions
         /// </summary>
         public DbSet<Institution> Institutions { get; set; }
+
+        /// <summary>
+        /// List of existing SubjectToTeach
+        /// </summary>
+        public DbSet<SubjectToTeach> SubjectsToTeach { get; set; }
     }
 }

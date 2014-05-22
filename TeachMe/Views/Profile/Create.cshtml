@@ -1,7 +1,7 @@
 ﻿@model TeachMe.Models.CreateProfileViewModel
 
 @{
-    ViewBag.Title = "פרופיל מורה";
+    ViewBag.Title = "יצירת פרופיל חדש";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -18,23 +18,16 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">פרטים אישיים</div>
-            <div class="panel-body">
+            <div class="panel-body">           
+
                 <div class="form-group">
 
                     <div class="col-md-4">
                     </div>
-                    <div class="col-md-1">
-                        @Html.LabelFor(m => m.Age)
-                        @Html.TextBoxFor(m => m.Age, new { @class = "form-control", @placeholder = "גיל" })
-                        @Html.ValidationMessageFor(m => m.Age)
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m.User.UserName)
+                        @Html.TextBoxFor(m => m.User.UserName, new { @class = "form-control", @disabled = "" })
                     </div>
-
-                    <div class="col-md-2">
-                        @Html.LabelFor(m => m.Phone)
-                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeholder = "מספר טלפון" })
-                        @Html.ValidationMessageFor(m => m.Phone)
-                    </div>
-
                     <div class="col-md-2">
                         @Html.LabelFor(m => m.User.LastName)
                         @Html.TextBoxFor(m => m.User.LastName, new { @class = "form-control", @disabled = "" })
@@ -48,6 +41,25 @@
                     </div>
 
                 </div>
+
+                <div class="form-group">
+
+                    <div class="col-md-8">
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(m => m.Phone)
+                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeholder = "מספר טלפון" })
+                        @Html.ValidationMessageFor(m => m.Phone)
+                    </div>
+                    <div class="col-md-1">
+                        @Html.LabelFor(m => m.Age)
+                        @Html.TextBoxFor(m => m.Age, new { @class = "form-control", @placeholder = "גיל" })
+                        @Html.ValidationMessageFor(m => m.Age)
+                    </div>
+                    <div class="col-md-1">
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -217,7 +229,7 @@
                     <div class="col-md-1">
                         <div class="row" dir="ltr">
                             <input type="checkbox" name="Example" id="switch-isActive" data-on-color="success" data-off-color="danger" data-on-text="פעיל" data-off-text="כבוי">
-                            @Html.Hidden("isActive", true)
+                            @Html.HiddenFor(m => m.isActive)
                         </div>
                     </div>
                     <div class="col-md-1">
@@ -256,7 +268,7 @@
     <script type="text/javascript">
         $('#SubjectsId').multiSelect()
 
-        $('#switch-isActive').bootstrapSwitch();
+        $('#switch-isActive').bootstrapSwitch('state', @Model.isActive.ToString().ToLower());
         $('#switch-isActive').on('switchChange.bootstrapSwitch', function (event, state) {
             $("#isActive").val(state);
         });

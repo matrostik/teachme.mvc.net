@@ -23,18 +23,10 @@
 
                     <div class="col-md-4">
                     </div>
-                    <div class="col-md-1">
-                        @Html.LabelFor(m => m.Teacher.Age)
-                        @Html.TextBoxFor(m => m.Teacher.Age, new { @class = "form-control", @placeholder = "גיל" })
-                        @Html.ValidationMessageFor(m => m.Teacher.Age)
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m.Teacher.User.UserName)
+                        @Html.TextBoxFor(m => m.Teacher.User.UserName, new { @class = "form-control", @disabled = "" })
                     </div>
-
-                    <div class="col-md-2">
-                        @Html.LabelFor(m => m.Teacher.Phone)
-                        @Html.TextBoxFor(m => m.Teacher.Phone, new { @class = "form-control", @placeholder = "מספר טלפון" })
-                        @Html.ValidationMessageFor(m => m.Teacher.Phone)
-                    </div>
-
                     <div class="col-md-2">
                         @Html.LabelFor(m => m.Teacher.User.LastName)
                         @Html.TextBoxFor(m => m.Teacher.User.LastName, new { @class = "form-control", @disabled = "" })
@@ -47,6 +39,24 @@
                     <div class="col-md-1">
                     </div>
 
+                </div>
+
+                <div class="form-group">
+
+                    <div class="col-md-8">
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(m => m.Teacher.Phone)
+                        @Html.TextBoxFor(m => m.Teacher.Phone, new { @class = "form-control", @placeholder = "מספר טלפון" })
+                        @Html.ValidationMessageFor(m => m.Teacher.Phone)
+                    </div>
+                    <div class="col-md-1">
+                        @Html.LabelFor(m => m.Teacher.Age)
+                        @Html.TextBoxFor(m => m.Teacher.Age, new { @class = "form-control", @placeholder = "גיל" })
+                        @Html.ValidationMessageFor(m => m.Teacher.Age)
+                    </div>
+                    <div class="col-md-1">
+                    </div>
                 </div>
             </div>
         </div>
@@ -214,10 +224,10 @@
                     <div class="col-md-10">
                     </div>
                     <div class="col-md-1">
-                        <div class="row" dir="ltr">
+                        <div dir="ltr">
                             <input type="checkbox" name="Example" id="switch-isActive" data-on-color="success" data-off-color="danger" data-on-text="פעיל" data-off-text="כבוי">
-                            @Html.Hidden("Teacher.isActive", true)
                         </div>
+                        @Html.HiddenFor(m=>m.Teacher.isActive)
                     </div>
                     <div class="col-md-1">
                     </div>
@@ -232,6 +242,7 @@
                     @*// create ButtonHelper with icon  *@
                     <span class="glyphicon glyphicon-floppy-save"></span>&nbsp;&nbsp;לשמור שינויים
                 </button>
+
             </div>
         </div>
 
@@ -239,7 +250,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLinkIcon("ביטול", "Index", "Profile", "glyphicon glyphicon-floppy-remove", new { @class = "btn btn-default" })
 </div>
 
 @Styles.Render("~/Content/fileupload")
@@ -255,9 +266,9 @@
     <script type="text/javascript">
         $('#SubjectsId').multiSelect()
 
-        $('#switch-isActive').bootstrapSwitch('state', '@Model.Teacher.isActive'.toLowerCase());
+        $('#switch-isActive').bootstrapSwitch('state', @Model.Teacher.isActive.ToString().ToLower());
         $('#switch-isActive').on('switchChange.bootstrapSwitch', function (event, state) {
-            $("#Teacher.isActive").val(state);
+            $("#Teacher_isActive").val(state);
         });
 
         $(document).ready(function () {
@@ -291,5 +302,5 @@
                 $('.progress .progress-bar').css('width', progress + '%');
             });
         });
-    </script>
+</script>
 }

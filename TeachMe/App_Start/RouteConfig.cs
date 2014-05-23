@@ -18,11 +18,11 @@ namespace TeachMe
            //url: "Search/Map/{category}/{city}",
            //defaults: new { controller = "Search", action = "Index", category = UrlParameter.Optional, city = UrlParameter.Optional }
            //);
-           // routes.MapRoute(
-           // name: "Search",
-           // url: "Search/{page}",
-           // defaults: new { controller = "Search", action = "Index", page = UrlParameter.Optional }
-           //);
+            routes.MapRoute(
+            name: "Teacher",
+            url: "Teacher/{id}",
+            defaults: new { controller = "Teacher", action = "Index", id = UrlParameter.Optional }
+           );
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

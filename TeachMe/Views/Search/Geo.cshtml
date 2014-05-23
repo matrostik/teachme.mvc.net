@@ -27,7 +27,7 @@
                      {
                         <li>
                             <div class="foo" data-latitude="@(geos[i].Latitude)" data-longitude="@(geos[i].Longitude)"
-                                 data-address="@(geos[i].Address)" data-name="@(geos[i].Address)">
+                                 data-address="@(geos[i].Address)" data-name="@(geos[i].Address)" data-id="@(geos[i].TeacherId)">
                                 @Html.Hidden("geos[" + i + "].Id", @geos[i].Id)
                                 @Html.Hidden("geos[" + i + "].TeacherId", @geos[i].TeacherId)
                                 @Html.Hidden("geos[" + i + "].Latitude", @geos[i].Latitude)
@@ -122,7 +122,7 @@
                     var contentString = '<div class="text-danger" style="width:275px">'
                + '<strong>מורה:</strong> ' + 'שם ושם משפחה' + '<br/>'
                + '<strong>כתובת:</strong> ' + ($(value).attr("data-address")) + '<br/>'
-               + '<div style="margin-top:10px"><a class="label label-warning" href="#">פרופיל המלא »</a></div><br/>'
+               + '<div style="margin-top:10px"><a class="label label-warning" href="/Teacher/'+($(value).attr("data-id"))+'">פרופיל המלא »</a></div><br/>'
                + '</div>';
                     var infowindow = new google.maps.InfoWindow({
                         content: contentString,

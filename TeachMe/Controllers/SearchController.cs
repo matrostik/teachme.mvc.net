@@ -10,6 +10,13 @@ namespace TeachMe.Controllers
 {
     public class SearchController : Controller
     {
+        public TeachMeDBContext Db { get; private set; }
+
+        public SearchController()
+        {
+            Db = new TeachMeDBContext();
+        }
+
         //
         // GET: /Search/
         public ActionResult Index(string firstName, string lastName, string sortOrder, int? page)
@@ -19,14 +26,14 @@ namespace TeachMe.Controllers
 
             List<Teacher> list = new List<Teacher>();
             if (!string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName))
-                list = (list.Union<Teacher>(FakeDB.Teachers.Where(t => t.User.FirstName.Contains(firstName) && t.User.LastName.Contains(lastName)))).ToList();
+                list = (list.Union<Teacher>(Db.Teachers.Where(t => t.isActive && t.User.FirstName.Contains(firstName) && t.User.LastName.Contains(lastName)))).ToList();
             else if (!string.IsNullOrEmpty(firstName))
-                list = (list.Union<Teacher>(FakeDB.Teachers.Where(t => t.User.FirstName.Contains(firstName)))).ToList();
+                list = (list.Union<Teacher>(Db.Teachers.Where(t => t.isActive && t.User.FirstName.Contains(firstName)))).ToList();
             else if (!string.IsNullOrEmpty(lastName))
-                list = (list.Union<Teacher>(FakeDB.Teachers.Where(t => t.User.LastName.Contains(lastName)))).ToList();
+                list = (list.Union<Teacher>(Db.Teachers.Where(t => t.isActive && t.User.LastName.Contains(lastName)))).ToList();
 
             if (string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
-                list = FakeDB.Teachers;
+                list = Db.Teachers.Where(t => t.isActive).ToList();
 
             //sorting
             if (!string.IsNullOrEmpty(sortOrder))
@@ -83,11 +90,11 @@ namespace TeachMe.Controllers
             List<Teacher> teachers;
             // search for teachers
             if (!string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(category))
-                teachers = FakeDB.Teachers.Where(t => t.City.Contains(city) && t.Category.Contains(category)).ToList();
+                teachers = Db.Teachers.Where(t => t.isActive && t.City.Contains(city) && t.SubjectsToTeach.FirstOrDefault(s=>s.Name.Contains(category))!=null).ToList();
             else if (!string.IsNullOrEmpty(city))
-                teachers = FakeDB.Teachers.Where(t => t.City.Contains(city)).ToList();
+                teachers = Db.Teachers.Where(t => t.isActive && t.City.Contains(city)).ToList();
             else if (!string.IsNullOrEmpty(category))
-                teachers = FakeDB.Teachers.Where(t => t.Category.Contains(category)).ToList();
+                teachers = Db.Teachers.Where(t => t.isActive && t.SubjectsToTeach.FirstOrDefault(s=>s.Name.Contains(category))!=null).ToList();
             else
                 teachers = new List<Teacher>();
 
@@ -112,13 +119,13 @@ namespace TeachMe.Controllers
             return View(model);
         }
 
-
         //
         // GET: /Geo/  test get geolocation
         public ActionResult Geo(string id, string address, List<Geo> geos)
         {
             // get teacher
-            var teacher = FakeDB.Teachers.FirstOrDefault(t => t.Id == int.Parse(id));
+            int geoId = int.Parse(id);
+            var teacher = Db.Teachers.FirstOrDefault(t => t.Id == geoId);
 
             //get teacher address
             if (teacher != null)

@@ -96,7 +96,7 @@
 
                             <dd>
                                 <span style="pointer-events:none;" dir="ltr">
-                                    <input type="checkbox" name="Example" id="switch-isActive" data-on-color="success" data-off-color="danger" data-on-text="פעיל" data-off-text="כבוי">
+                                    <input type="checkbox" name="Example" id="switch-isActive" data-on-color="success" data-off-color="danger" data-on-text="פעיל" data-off-text="מושהה">
                                 </span>
                             </dd>
                         </div>
@@ -124,19 +124,51 @@
     <div class="col-md-4">
     </div>
     <p>
-        @Html.ActionLinkIcon("עדכן פרופיל מורה", "Edit", "Profile", "glyphicon glyphicon-edit", new { @class = "btn btn-default" }) |
-       
+        @Html.ActionLinkIcon("ערוך פרופיל מורה", "Edit", "Profile", "glyphicon glyphicon-edit", new { @class = "btn btn-default" }) |
+
         @if (Model.isActive)
         {
-            @Html.ActionLinkIcon("כבה פרופיל מורה", "ChangeActive", "Profile", "glyphicon glyphicon-off", new { @class = "btn btn-default" }) 
+            @Html.ActionLinkIcon("השהה פרופיל מורה", "ChangeActive", "Profile", "glyphicon glyphicon-off", new { @class = "btn btn-default" })
         }
         else
         {
             @Html.ActionLinkIcon("הפעל פרופיל מורה", "ChangeActive", "Profile", "glyphicon glyphicon-off", new { @class = "btn btn-default" })
         } |
-        @Html.ActionLinkIcon("מחק פרופיל מורה", "Delete", "Profile", "glyphicon glyphicon-trash", new { @class = "btn btn-default" }) 
+        @*@Html.ActionLinkIcon("מחק פרופיל מורה", "#confirmDeleteComment", "", "glyphicon glyphicon-trash", new { @class = "btn btn-default", @data_toggle = "modal", @id = "deleteProfile", @data_url = "/Profile/Delete" })*@
+        <a class="btn btn-default" data-toggle="modal" id="deleteProfile" href="#confirmDeleteProfile" data-url="/Profile/Delete">
+            <span class="glyphicon glyphicon-trash"></span>
+            מחק פרופיל מורה
+        </a>
     </p>
 </div>
+
+<div class="modal fade" id="confirmDelete">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" style="float:left" data-dismiss="modal" aria-hidden="true">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+                <h4 class="modal-title">מחיקת פרופיל</h4>
+            </div>
+            <div class="modal-body">
+                <p>האם אתה בטוח שברצונך למחוק את הפרופיל?</p>
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("", "", FormMethod.Post, new { id = "confirmDeleteForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;מחק
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;בטל
+                    </button>
+                }
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 @Styles.Render("~/Content/bootstrapswitch")
 @section Scripts {
@@ -145,6 +177,14 @@
     <script type="text/javascript">
 
         $('#switch-isActive').bootstrapSwitch('state', @Model.isActive.ToString().ToLower());
+
+        //modal comment delete confirm
+        $(document).on("click", "#deleteProfile", function () {
+            var url = $(this).data('url');//select action url
+
+            $(".modal-footer #confirmDeleteForm").attr('action', url);
+            $('#confirmDelete').modal('show');
+        });
 
     </script>
 }

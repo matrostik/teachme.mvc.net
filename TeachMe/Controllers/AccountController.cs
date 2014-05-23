@@ -170,7 +170,7 @@ namespace TeachMe.Controllers
             ViewBag.HasLocalPassword = HasPassword();
             ViewBag.ReturnUrl = Url.Action("Manage");
 
-             var id1 = User.Identity.GetUserId();
+            var id1 = User.Identity.GetUserId();
             Teacher t = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id1);
             ViewBag.HasProfile = t != null;
             return View();
@@ -223,6 +223,9 @@ namespace TeachMe.Controllers
                 }
             }
             // If we got this far, something failed, redisplay form
+            var id1 = User.Identity.GetUserId();
+            Teacher t = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id1);
+            ViewBag.HasProfile = t != null;
             return View(model);
         }
 
@@ -599,7 +602,10 @@ namespace TeachMe.Controllers
         {
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError("", error);
+                if (error.Equals("Incorrect password."))
+                    ModelState.AddModelError("", "סיסמא שגויה.");
+                else
+                    ModelState.AddModelError("", error);
             }
         }
 

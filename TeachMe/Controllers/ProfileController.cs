@@ -118,7 +118,7 @@ namespace TeachMe.Controllers
             else
             {
                 // ovverride not number message
-                if (ModelState["HomeNum"].Errors.Count > 0 
+                if (ModelState["HomeNum"].Errors.Count > 0
                     && ModelState["HomeNum"].Errors.FirstOrDefault().ErrorMessage.Contains("is not valid"))
                 {
                     ModelState["HomeNum"].Errors.Clear();
@@ -191,7 +191,7 @@ namespace TeachMe.Controllers
                 .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
 
             var id = User.Identity.GetUserId();
-            var teacher =  Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id);
+            var teacher = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id);
             model.Teacher = teacher;
             model.SubjectsId = model.Teacher.SubjectsToTeach.Select(x => x.SubjectId.ToString()).ToList();
 
@@ -235,7 +235,7 @@ namespace TeachMe.Controllers
                     teacher.SubjectsToTeach.Add(stt);
                 }
                 model.Teacher.GeoLocation = new GeoLocation(model.Teacher.GetAddressForMap());
-            
+
                 Db.SaveChanges();
 
                 return RedirectToAction("Index");
@@ -310,15 +310,17 @@ namespace TeachMe.Controllers
         }
 
         // GET: /Profile/Delete
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete()
         {
             var id1 = User.Identity.GetUserId();
             Teacher t = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id1);
             if (t == null)
                 return RedirectToAction("Create");
-            Db.Teachers.Remove(t);
-            Db.SaveChanges();
-            return RedirectToAction("Index","Home");
+            //Db.Teachers.Remove(t);
+            //Db.SaveChanges();
+            return RedirectToAction("Index", "Home");
         }
 
     }

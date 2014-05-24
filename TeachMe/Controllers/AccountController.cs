@@ -154,12 +154,12 @@ namespace TeachMe.Controllers
             {
                 message = ManageMessageId.Error;
             }
-            return RedirectToAction("Manage", new { Message = message });
+            return RedirectToAction("Manage", new { Message = message, tabId = "tab3" });
         }
 
         //
         // GET: /Account/Manage
-        public ActionResult Manage(ManageMessageId? message)
+        public ActionResult Manage(ManageMessageId? message, string tabId = "tab1")
         {
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "הסיסמא שונתה בהצלחה."
@@ -173,6 +173,7 @@ namespace TeachMe.Controllers
             var id1 = User.Identity.GetUserId();
             Teacher t = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id1);
             ViewBag.HasProfile = t != null;
+            ViewBag.ActiveTab = tabId;
             return View();
         }
 
@@ -192,7 +193,7 @@ namespace TeachMe.Controllers
                     IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
+                        return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess, tabId = "tab2" });
                     }
                     else
                     {
@@ -214,7 +215,7 @@ namespace TeachMe.Controllers
                     IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
+                        return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess, tabId = "tab2" });
                     }
                     else
                     {
@@ -226,6 +227,7 @@ namespace TeachMe.Controllers
             var id1 = User.Identity.GetUserId();
             Teacher t = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id1);
             ViewBag.HasProfile = t != null;
+            ViewBag.ActiveTab = "tab2";
             return View(model);
         }
 
@@ -404,17 +406,18 @@ namespace TeachMe.Controllers
         public async Task<ActionResult> LinkLoginCallback()
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
+            ViewBag.ActiveTab = "tab1";
             if (loginInfo == null)
             {
-                return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
+                return RedirectToAction("Manage", new { Message = ManageMessageId.Error, tabId = "tab3" });
             }
             // !!!! must check if exist
             var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
             if (result.Succeeded)
             {
-                return RedirectToAction("Manage");
+                return RedirectToAction("Manage", new { tabId = "tab3" });
             }
-            return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
+            return RedirectToAction("Manage", new { Message = ManageMessageId.Error, tabId = "tab3" });
         }
 
         //
@@ -425,7 +428,7 @@ namespace TeachMe.Controllers
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Manage");
+                return RedirectToAction("Manage", new { tabId = "tab3" });
 
             if (ModelState.IsValid)
             {

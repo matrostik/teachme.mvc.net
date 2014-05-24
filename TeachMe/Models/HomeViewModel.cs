@@ -23,6 +23,19 @@ namespace TeachMe.Models
         /// </summary>
         public List<SelectListItem> Distances { get; set; }
 
+        /// <summary>
+        /// List of new teachers
+        /// </summary>
+        public List<Teacher> NewTeachers { get; set; }
 
+        /// <summary>
+        /// List of most rated teachers
+        /// </summary>
+        public List<Teacher> MostRatedTeachers { get; set; }
+
+        /// <summary>
+        /// List of most commented teachers
+        /// </summary>
+        public List<Teacher> MostCommentedTeachers { get; set; }
     }
 }

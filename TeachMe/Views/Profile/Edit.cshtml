@@ -52,7 +52,7 @@
                     </div>
                     <div class="col-md-1">
                         @Html.LabelFor(m => m.Teacher.Age)
-                        @Html.TextBoxFor(m => m.Teacher.Age, new { @class = "form-control", @placeholder = "גיל" })
+                        @Html.TextBoxFor(m => m.Teacher.Age, new { @class = "form-control", @placeholder = "גיל", @onkeypress = "return isNumber(event)" })
                         @Html.ValidationMessageFor(m => m.Teacher.Age)
                     </div>
                     <div class="col-md-1">
@@ -117,7 +117,7 @@
 
                     <div class="col-md-1">
                         @Html.LabelFor(m => m.Teacher.HomeNum)
-                        @Html.TextBoxFor(m => m.Teacher.HomeNum, new { @class = "form-control", @placeholder = "בית" })
+                        @Html.TextBoxFor(m => m.Teacher.HomeNum, new { @class = "form-control", @placeholder = "בית", @onkeypress = "return isNumber(event)" })
                         @Html.ValidationMessageFor(m => m.Teacher.HomeNum)
                     </div>
 
@@ -156,7 +156,7 @@
                         @Html.LabelFor(m => m.Teacher.LessonPrice)
                         <div class="input-group" dir="ltr">
                             <span class="input-group-addon">₪</span>
-                            @Html.TextBoxFor(m => m.Teacher.LessonPrice, new { @class = "form-control", @placeholder = "מחיר לשיעור", @dir = "rtl" })
+                            @Html.TextBoxFor(m => m.Teacher.LessonPrice, new { @class = "form-control", @placeholder = "מחיר לשיעור", @dir = "rtl", @onkeypress = "return isNumber(event)" })
                         </div>
                         @Html.ValidationMessageFor(m => m.Teacher.LessonPrice)
                     </div>
@@ -227,7 +227,7 @@
                         <div dir="ltr">
                             <input type="checkbox" name="Example" id="switch-isActive" data-on-color="success" data-off-color="danger" data-on-text="פעיל" data-off-text="כבוי">
                         </div>
-                        @Html.HiddenFor(m=>m.Teacher.isActive)
+                        @Html.HiddenFor(m => m.Teacher.isActive)
                     </div>
                     <div class="col-md-1">
                     </div>
@@ -237,12 +237,16 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-10 col-md-2">
-                <button type="submit" class="btn btn-default">
-                    @*// create ButtonHelper with icon  *@
-                    <span class="glyphicon glyphicon-floppy-save"></span>&nbsp;&nbsp;שמור שינויים
-                </button>
+            <div class="panel-body">
+                <div class="btn-group">
 
+                    @Html.ActionLinkIcon("ביטול", "Index", "Profile", "glyphicon glyphicon-floppy-remove", new { @class = "btn btn-default" })
+
+                    <button type="submit" class="btn btn-success">
+                        @*// create ButtonHelper with icon  *@
+                        <span class="glyphicon glyphicon-floppy-save"></span>&nbsp;&nbsp;שמור שינויים
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -250,7 +254,7 @@
 }
 
 <div>
-    @Html.ActionLinkIcon("ביטול", "Index", "Profile", "glyphicon glyphicon-floppy-remove", new { @class = "btn btn-default" })
+   
 </div>
 
 @Styles.Render("~/Content/fileupload")
@@ -302,5 +306,15 @@
                 $('.progress .progress-bar').css('width', progress + '%');
             });
         });
-</script>
+
+        //Allow only numbers to be typed in a textbox
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+    </script>
 }

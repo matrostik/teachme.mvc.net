@@ -22,9 +22,9 @@
                 </ul>
             </li>*@
         @*<li class="disabled"><a>Disabled</a></li>*@
-        <li><a href="#social" data-toggle="tab">ניהול התחברויות</a></li>
-        <li><a href="#password" data-toggle="tab">ניהול סיסמא</a></li>
-        <li class="active"><a href="#navigation" data-toggle="tab">ניווט</a></li>
+        <li id="tab3"><a href="#social" data-toggle="tab">ניהול התחברויות</a></li>
+        <li id="tab2"><a href="#password" data-toggle="tab">ניהול סיסמא</a></li>
+        <li id="tab1" class="active"><a href="#navigation" data-toggle="tab">ניווט</a></li>
     </ul>
 </div>
 <div class="row">
@@ -86,4 +86,15 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script language="javascript" type="text/javascript">
+
+        $(document).ready(function () {
+            
+            //set active tab
+            var tab = '@ViewBag.ActiveTab';
+            $('#' + tab+' a').trigger('click');
+
+        });
+
+    </script>
 }

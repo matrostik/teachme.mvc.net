@@ -176,6 +176,7 @@ namespace TeachMe.Models
         [Display(Name = "אימות סיסמא")]
         [Compare("NewPassword", ErrorMessage = "הסיסמא החדשה ואימות הסיסמא החדשה לא תואמים.")]
         public string ConfirmPassword { get; set; }
+
     }
 
 }

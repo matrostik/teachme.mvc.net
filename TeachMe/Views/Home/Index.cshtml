@@ -3,7 +3,7 @@
     ViewBag.Title = "TeachMe";
 }
 
-<div class="jumbotron">
+<div class="jumbotron" style="margin-bottom:10px">
 
     <div class="row">
         <div class="col-md-4">
@@ -81,11 +81,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             @Html.Label("firstName", "שם פרטי", new { @class = "control-label" })
-                            @Html.TextBox("firstName", "", new { @class = "form-control", @id = "inputDefault" })
+                            @Html.TextBox("firstName", "", new { @class = "form-control", @id = "firstName" })
                         </div>
                         <div class="col-md-6">
                             @Html.Label("lastName", "שם משפחה", new { @class = "control-label" })
-                            @Html.TextBox("lastName", "", new { @class = "form-control", @id = "inputDefault" })
+                            @Html.TextBox("lastName", "", new { @class = "form-control", @id = "lastName" })
                         </div>
                     </div>
                     <br />
@@ -107,39 +107,75 @@
 
 <div class="row">
     <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading"><strong>קוד מקור</strong></div>
-            <div class="panel-body">
-                @*<h2>קוד מקור</h2>*@
-                <p>
-                    הפרוייקט נעשה במסגרת קורס הנדסת תוכנה בעזריאלי מכללה אקדמית להנדסה ירושלים.
-                </p>
-                <br>
-                <p><a class="btn btn-default" href="https://github.com/matrostik/teachme.mvc.net">לפרטים &raquo;</a></p>
-            </div>
+        <div class="list-group">
+
+            <a href="#" class="list-group-item active">
+                <strong>מורים פופולריים</strong>
+            </a>
+
+            @foreach (var item in Model.MostCommentedTeachers)
+            {
+                <a href="/Teacher/@item.Id" class="list-group-item">
+                    <div class="media">
+                        <span class="pull-right">
+                            <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="@item.PictureUrl" style="width: 64px; height: 64px;">
+                        </span>
+                        <div class="media-body">
+                            <h4 class="media-heading">@item.GetFullName()</h4>
+                            <div><strong>תחומים:</strong> @item.GetSubjects()</div>
+                            <div><strong>עיר:</strong> @item.City</div>
+                        </div>
+                    </div>
+                </a>
+            }
         </div>
     </div>
     <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading"><strong>הצוות שלנו</strong></div>
-            <div class="panel-body">
-                @*<h2>הצוות שלנו</h2>*@
-                <p>.We are dev ninjas</p>
-                <br><br>
-                <p><a class="btn btn-default" href="https://github.com/matrostik/teachme.mvc.net/wiki/Team">לפרטים &raquo;</a></p>
-            </div>
+        <div class="list-group">
+
+            <a href="#" class="list-group-item active">
+                <strong>מורים הכי מדורגים</strong>
+            </a>
+
+            @foreach (var item in Model.MostRatedTeachers)
+            {
+                <a href="/Teacher/@item.Id" class="list-group-item">
+                    <div class="media">
+                        <span class="pull-right">
+                            <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="@item.PictureUrl" style="width: 64px; height: 64px;">
+                        </span>
+                        <div class="media-body">
+                            <h4 class="media-heading">@item.GetFullName()</h4>
+                            <div><strong>תחומים:</strong> @item.GetSubjects()</div>
+                            <div><strong>עיר:</strong> @item.City</div>
+                        </div>
+                    </div>
+                </a>
+            }
         </div>
     </div>
     <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading"><strong>כתבו אלינו</strong></div>
-            <div class="panel-body">
-                @*<h2>כתבו אלינו</h2>*@
-                <p>שתף את רצונותיך.</p>
-                <br><br>
-                <p><a class="btn btn-default" href="/Home/Contact">לפרטים &raquo;</a></p>
-            </div>
+        <div class="list-group">
+            <a href="#" class="list-group-item active">
+                <strong>מורים חדשים</strong>
+            </a>
+            @foreach (var item in Model.NewTeachers)
+            {
+                <a href="/Teacher/@item.Id" class="list-group-item">
+                    <div class="media">
+                        <span class="pull-right">
+                            <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="@item.PictureUrl" style="width: 64px; height: 64px;">
+                        </span>
+                        <div class="media-body">
+                            <h4 class="media-heading">@item.GetFullName()</h4>
+                            <div><strong>תחומים:</strong> @item.GetSubjects()</div>
+                            <div><strong>עיר:</strong> @item.City</div>
+                        </div>
+                    </div>
+                </a>
+            }
         </div>
+
     </div>
 
     @*<div class="col-md-4">
@@ -152,13 +188,21 @@
 @Styles.Render("~/Content/jqueryui")
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryui")
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGG8Hq0jur-Ca6QtjQ0iQFQ3TJG9WzEA8&v=3.exp&sensor=true&language=he" type="text/javascript"></script>
+
     <script language="javascript" type="text/javascript">
 
         $(document).ready(function () {
             $("#streetName").autocomplete({
                 position: { my: "right top", at: "right bottom", collision: "none" },
                 source: '@Url.Action("AutocompleteStreet")'
+            });
+            $("#firstName").autocomplete({
+                position: { my: "right top", at: "right bottom", collision: "none" },
+                source: '@Url.Action("AutocompleteFirstName")'
+            });
+            $("#lastName").autocomplete({
+                position: { my: "right top", at: "right bottom", collision: "none" },
+                source: '@Url.Action("AutocompleteLastName")'
             });
         });
 
@@ -177,9 +221,9 @@
             if (charCode != 46 && charCode > 31
               && (charCode < 48 || charCode > 57))
                 return false;
-
             return true;
         }
-       
+
     </script>
+
 }

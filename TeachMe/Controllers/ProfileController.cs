@@ -165,7 +165,7 @@ namespace TeachMe.Controllers
 
         //
         // GET: /Profile/Edit/
-        public ActionResult Edit()
+        public ActionResult Edit(int? id)
         {
             EditProfileViewModel model = new EditProfileViewModel();
             model.Subjects = Db.Subjects.Select(x => new SelectListItem
@@ -190,8 +190,20 @@ namespace TeachMe.Controllers
             model.Institutions = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
                 .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
 
-            var id = User.Identity.GetUserId();
-            var teacher = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id);
+            /*************************************************************/
+            if (id.HasValue)
+            {
+                Teacher tempT = Db.Teachers.FirstOrDefault(x => x.Id == id);
+                if (tempT == null)
+                    return RedirectToAction("Index","Home");
+                model.Teacher = tempT;
+                model.SubjectsId = model.Teacher.SubjectsToTeach.Select(x => x.SubjectId.ToString()).ToList();
+                return View(model);
+            }
+            /*************************************************************/
+
+            var idx= User.Identity.GetUserId();
+            var teacher = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == idx);
             model.Teacher = teacher;
             model.SubjectsId = model.Teacher.SubjectsToTeach.Select(x => x.SubjectId.ToString()).ToList();
 

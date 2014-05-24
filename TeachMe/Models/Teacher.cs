@@ -20,7 +20,7 @@ namespace TeachMe.Models
         public string PictureUrl { get; set; }
 
         [Required(ErrorMessage = "* יש להכניס גיל")]
-        [Range(1, 120, ErrorMessage = "יש להכניס גיל")]
+        [Range(15, 120, ErrorMessage = "יש להכניס גיל")]
         [Display(Name = "גיל")]
         public int Age{ get; set; }
 
@@ -68,6 +68,8 @@ namespace TeachMe.Models
         public int Raters { get; set; }
 
         public int Rating { get; set; }
+
+        public int Views { get; set; }
 
         public string ApplicationUserId { get; set; }
 
@@ -119,7 +121,7 @@ namespace TeachMe.Models
 
         public string GetSubjects()
         {
-            return string.Join(",",SubjectsToTeach.Select(x=>x.Name));
+            return string.Join(", ",SubjectsToTeach.Select(x=>x.Name));
         }
 
         /// <summary>

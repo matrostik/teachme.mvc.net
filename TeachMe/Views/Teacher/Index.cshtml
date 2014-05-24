@@ -75,7 +75,7 @@
                         <div class="panel-body">
 
                             <dd>
-                                <b>מקצוע:</b> @Html.DisplayName(Model.GetSubjects())</span>
+                                <b>מקצוע:</b> @Html.DisplayName(Model.GetSubjects())
                             </dd>
 
                             <dd>
@@ -101,22 +101,4 @@
             </font>
         </div>
     </div>
-</div>
-
-<div class="col-md-12">
-    <div class="col-md-4">
-    </div>
-    <p>
-        @Html.ActionLinkIcon("עדכן פרופיל מורה", "Edit", "Profile", "glyphicon glyphicon-edit", new { @class = "btn btn-default" }) |
-       
-        @if (Model.isActive)
-        {
-            @Html.ActionLinkIcon("כבה פרופיל מורה", "ChangeActive", "Profile", "glyphicon glyphicon-off", new { @class = "btn btn-default" }) 
-        }
-        else
-        {
-            @Html.ActionLinkIcon("הפעל פרופיל מורה", "ChangeActive", "Profile", "glyphicon glyphicon-off", new { @class = "btn btn-default" })
-        } |
-        @Html.ActionLinkIcon("מחק פרופיל מורה", "Delete", "Profile", "glyphicon glyphicon-trash", new { @class = "btn btn-default" }) 
-    </p>
 </div>

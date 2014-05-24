@@ -13,7 +13,7 @@ namespace TeachMe.Models
     {
         [Required(ErrorMessage = "* יש להכניס גיל")]
         [Display(Name = "גיל")]
-        [Range(1, 120, ErrorMessage = "יש להכניס גיל")]
+        [Range(15, 120, ErrorMessage = "יש להכניס גיל")]
         public int? Age { get; set; }
 
         [Required(ErrorMessage = "* יש להכניס תמונה")]

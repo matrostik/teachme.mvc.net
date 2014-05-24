@@ -123,24 +123,25 @@
 <div class="col-md-12">
     <div class="col-md-4">
     </div>
-    <p>
-        @Html.ActionLinkIcon("ערוך פרופיל מורה", "Edit", "Profile", "glyphicon glyphicon-edit", new { @class = "btn btn-default" }) |
-
-        @if (Model.isActive)
-        {
-            @Html.ActionLinkIcon("השהה פרופיל מורה", "ChangeActive", "Profile", "glyphicon glyphicon-off", new { @class = "btn btn-default" })
-        }
-        else
-        {
-            @Html.ActionLinkIcon("הפעל פרופיל מורה", "ChangeActive", "Profile", "glyphicon glyphicon-off", new { @class = "btn btn-default" })
-        } |
-        @*@Html.ActionLinkIcon("מחק פרופיל מורה", "#confirmDeleteComment", "", "glyphicon glyphicon-trash", new { @class = "btn btn-default", @data_toggle = "modal", @id = "deleteProfile", @data_url = "/Profile/Delete" })*@
-        <a class="btn btn-default" data-toggle="modal" id="deleteProfile" href="#confirmDeleteProfile" data-url="/Profile/Delete">
+    <div class="btn-group">
+        <a class="btn btn-primary" data-toggle="modal" id="deleteProfile" href="#confirmDeleteProfile" data-url="/Profile/Delete">
             <span class="glyphicon glyphicon-trash"></span>
             מחק פרופיל מורה
         </a>
-    </p>
+        @if (Model.isActive)
+        {
+            @Html.ActionLinkIcon("השהה פרופיל מורה", "ChangeActive", "Profile", "glyphicon glyphicon-off", new { @class = "btn btn-danger" })
+        }
+        else
+        {
+            @Html.ActionLinkIcon("הפעל פרופיל מורה", "ChangeActive", "Profile", "glyphicon glyphicon-off", new { @class = "btn btn-success" })
+        }
+        @Html.ActionLinkIcon("ערוך פרופיל מורה", "Edit", "Profile", "glyphicon glyphicon-edit", new { @class = "btn btn-default" })
+    </div>
+    <hr />
 </div>
+
+
 
 <div class="modal fade" id="confirmDelete">
     <div class="modal-dialog">
@@ -149,7 +150,7 @@
                 <button type="button" class="close" style="float:left" data-dismiss="modal" aria-hidden="true">
                     <span class="glyphicon glyphicon-remove"></span>
                 </button>
-                <h4 class="modal-title">מחיקת פרופיל</h4>
+                <h4 class="modal-title"><strong>מחיקת פרופיל</strong></h4>
             </div>
             <div class="modal-body">
                 <p>האם אתה בטוח שברצונך למחוק את הפרופיל?</p>
@@ -169,7 +170,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 @Styles.Render("~/Content/bootstrapswitch")
 @section Scripts {
     @Scripts.Render("~/bundles/bootstrapswitch")

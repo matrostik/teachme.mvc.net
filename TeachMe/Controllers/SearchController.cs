@@ -139,6 +139,7 @@ namespace TeachMe.Controllers
 
             ViewBag.Geo = res;
             ViewBag.Geos = geos;
+            ViewBag.Teacher = teacher;
             return View();
         }
 

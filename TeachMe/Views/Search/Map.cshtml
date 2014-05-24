@@ -17,6 +17,7 @@
          data-longitude="@(t.GeoLocation.Longitude)"
          data-address="@(t.GetAddressForMap())"
          data-name="@(t.GetFullName())"
+         data-id="@(t.Id)"
          data-picture="@(t.PictureUrl)">
     </div>
  }
@@ -100,9 +101,9 @@
                         + '<td width="155px"><div class="text-danger" style="width:210px">'
                         + '<strong>מורה:</strong> ' + ($(value).attr("data-name")) + '<br/>'
                         + '<strong>כתובת:</strong> ' + ($(value).attr("data-address")) + '<br/>'
-                        + '<div style="margin-top:10px"><a class="label label-warning" href="#">פרופיל המלא »</a></div><br/>'
+                        + '<div style="margin-top:10px"><a class="label label-warning" href="/Teacher/' + ($(value).attr("data-id")) + '">פרופיל המלא »</a></div><br/>'
                         + '</div></td>'
-                        + '<td width="55px"><img src="http://i.imgur.com/TgCrlzq.png" alt="Smiley face" height="75"></td>'
+                        + '<td width="55px"><img src="'+($(value).attr("data-picture"))+'" alt="Smiley face" height="75"></td>'
                         + '</div></td></tr></table>';
                     var infowindow = new google.maps.InfoWindow({
                         content: contentString,

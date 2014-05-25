@@ -104,6 +104,7 @@ namespace TeachMe.Controllers
 
                 // get user geolocation by address
                 t.GeoLocation = new GeoLocation(t.GetAddressForMap());
+                // set relation to user
                 if (User.Identity.IsAuthenticated)
                     t.ApplicationUserId = User.Identity.GetUserId();
 
@@ -165,7 +166,7 @@ namespace TeachMe.Controllers
 
         //
         // GET: /Profile/Edit/
-        public ActionResult Edit(int? id)
+        public ActionResult Edit()
         {
             EditProfileViewModel model = new EditProfileViewModel();
             model.Subjects = Db.Subjects.Select(x => new SelectListItem
@@ -189,18 +190,6 @@ namespace TeachMe.Controllers
 
             model.Institutions = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
                 .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
-
-            /*************************************************************/
-            if (id.HasValue)
-            {
-                Teacher tempT = Db.Teachers.FirstOrDefault(x => x.Id == id);
-                if (tempT == null)
-                    return RedirectToAction("Index","Home");
-                model.Teacher = tempT;
-                model.SubjectsId = model.Teacher.SubjectsToTeach.Select(x => x.SubjectId.ToString()).ToList();
-                return View(model);
-            }
-            /*************************************************************/
 
             var idx= User.Identity.GetUserId();
             var teacher = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == idx);
@@ -246,7 +235,8 @@ namespace TeachMe.Controllers
                     stt.Name = subj.Name;
                     teacher.SubjectsToTeach.Add(stt);
                 }
-                model.Teacher.GeoLocation = new GeoLocation(model.Teacher.GetAddressForMap());
+                // update geolocation
+                teacher.UpdateGeoLocation(new GeoLocation(model.Teacher.GetAddressForMap()));
 
                 Db.SaveChanges();
 

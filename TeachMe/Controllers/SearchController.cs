@@ -5,6 +5,7 @@ using TeachMe.Models;
 using PagedList;
 using System.Xml;
 using System.Web;
+using System.Data.Entity;
 
 namespace TeachMe.Controllers
 {
@@ -92,7 +93,7 @@ namespace TeachMe.Controllers
             if (!string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(category))
                 teachers = Db.Teachers.Where(t => t.isActive && t.City.Contains(city) && t.SubjectsToTeach.FirstOrDefault(s=>s.Name.Contains(category))!=null).ToList();
             else if (!string.IsNullOrEmpty(city))
-                teachers = Db.Teachers.Where(t => t.isActive && t.City.Contains(city)).ToList();
+                teachers = Db.Teachers.Where(t => t.City.Contains(city)).ToList();
             else if (!string.IsNullOrEmpty(category))
                 teachers = Db.Teachers.Where(t => t.isActive && t.SubjectsToTeach.FirstOrDefault(s=>s.Name.Contains(category))!=null).ToList();
             else
@@ -100,9 +101,13 @@ namespace TeachMe.Controllers
 
             foreach (var t in teachers)
             {
-                // get geo by address
-                var geo = GetLongitudeAndLatitude(t.GetAddressForMap());
-                t.GeoLocation = geo;
+                if (!t.GeoLocation.isExist())
+                {
+                    // get geo by address
+                    var geo = GetLongitudeAndLatitude(t.GetAddressForMap());
+                    t.UpdateGeoLocation(geo);
+                    Db.SaveChanges();
+                }  
             }
 
             // data

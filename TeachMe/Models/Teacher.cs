@@ -90,7 +90,6 @@ namespace TeachMe.Models
         public Teacher()
         {
             SubjectsToTeach = new List<SubjectToTeach>();
-            GeoLocation = new GeoLocation();
             Comments = new List<Comment>();
         }
 
@@ -119,9 +118,24 @@ namespace TeachMe.Models
             return User.FirstName + " " + User.LastName;
         }
 
+        /// <summary>
+        /// Get subjects separated by coma
+        /// </summary>
+        /// <returns></returns>
         public string GetSubjects()
         {
             return string.Join(", ",SubjectsToTeach.Select(x=>x.Name));
+        }
+
+        /// <summary>
+        /// Update teacher's geolocation
+        /// by new one
+        /// </summary>
+        /// <param name="geo"></param>
+        public void UpdateGeoLocation(GeoLocation geo)
+        {
+            this.GeoLocation.Latitude = geo.Latitude;
+            this.GeoLocation.Longitude = geo.Longitude;
         }
 
         /// <summary>

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Web;
 
 namespace TeachMe.Helpers
@@ -12,6 +9,7 @@ namespace TeachMe.Helpers
         Registration,
         ResetPassword
     }
+
     public class Email
     {
 
@@ -28,26 +26,38 @@ namespace TeachMe.Helpers
             var hostUrl = HttpContext.Current.Request.Url.Host;
             Thread thread = new Thread(() => SendEmailInBackground(to, name, "", "", confirmationToken, template, hostUrl));
             thread.Start();
-
-            //dynamic email = new Email(emailForm);
-            //email.To = to;
-            //email.From = new System.Net.Mail.MailAddress("jce.teachme@gmail.com", "TeachMe Support");
-            ////email.Subject = mail.Subject;
-            //email.UserName = username;
-            //email.ConfirmationToken = confirmationToken;
-            //email.Send();
         }
+
+        /// <summary>
+        /// Send email
+        /// </summary>
+        /// <param name="to">to</param>
+        /// <param name="username">username</param>
+        /// <param name="subject">subject</param>
+        /// <param name="body">body</param>
+        /// <param name="template">template</param>
         public static void Send(string to, string username, string subject, string body, EmailTemplate template)
         {
             var hostUrl = HttpContext.Current.Request.Url.Host;
             Thread thread = new Thread(() => SendEmailInBackground(to, username, subject, body, "", template, hostUrl));
             thread.Start();
         }
+
+        /// <summary>
+        /// Send email in new thread
+        /// </summary>
+        /// <param name="to">to</param>
+        /// <param name="username">username</param>
+        /// <param name="subject">subject</param>
+        /// <param name="body">body</param>
+        /// <param name="confirmationToken">confirmationToken</param>
+        /// <param name="template">template</param>
+        /// <param name="hostUrl">hostUrl</param>
         private static void SendEmailInBackground(string to, string username, string subject, string body, string confirmationToken, EmailTemplate template, string hostUrl)
         {
             dynamic email = new Postal.Email(template.ToString());
             email.To = to;
-            email.From = new System.Net.Mail.MailAddress("jce.teachme@gmail.com", "TeachMe Support");
+            email.From = new System.Net.Mail.MailAddress("jce.teachme@gmail.com", "צוות תמיכה של TeachMe");
             if (!string.IsNullOrEmpty(subject))
                 email.Subject = subject;
             if (!string.IsNullOrEmpty(body))
@@ -57,7 +67,6 @@ namespace TeachMe.Helpers
             email.HostUrl = hostUrl;
             email.Send();
         }
-
 
     }
 }

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TeachMe.Models;
 using TeachMe.Helpers;
 using Microsoft.AspNet.Identity;
-using System.Net;
-using System.Xml.Linq;
-using System.Text;
 using Newtonsoft.Json;
 using System.IO;
 using System.Drawing;
@@ -166,7 +162,7 @@ namespace TeachMe.Controllers
 
         //
         // GET: /Profile/Edit/
-        public ActionResult Edit()
+        public ActionResult Edit(int? id)
         {
             EditProfileViewModel model = new EditProfileViewModel();
             model.Subjects = Db.Subjects.Select(x => new SelectListItem
@@ -190,6 +186,18 @@ namespace TeachMe.Controllers
 
             model.Institutions = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
                 .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
+
+            /*************************************************************/
+            //if (id.HasValue)
+            //{
+            //    Teacher tempT = Db.Teachers.FirstOrDefault(x => x.Id == id);
+            //    if (tempT == null)
+            //        return RedirectToAction("Index", "Home");
+            //    model.Teacher = tempT;
+            //    model.SubjectsId = model.Teacher.SubjectsToTeach.Select(x => x.SubjectId.ToString()).ToList();
+            //    return View(model);
+            //}
+            /*************************************************************/
 
             var idx= User.Identity.GetUserId();
             var teacher = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == idx);
@@ -285,7 +293,7 @@ namespace TeachMe.Controllers
                     Image resized = ImageUtils.ResizeImageFixedWidth(image, 300);
                     byte[] imageByte = ImageUtils.ImageToByteArraybyMemoryStream(resized);
                     // upload image to imgur.com
-                    imgurl = Utils.UploadImageToImgur(imageByte);
+                    imgurl = ImageUtils.UploadImageToImgur(imageByte);
                 }
             }
             var res = new UploadFilesResult()
@@ -320,8 +328,8 @@ namespace TeachMe.Controllers
             Teacher t = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == id1);
             if (t == null)
                 return RedirectToAction("Create");
-            //Db.Teachers.Remove(t);
-            //Db.SaveChanges();
+            Db.Teachers.Remove(t);
+            Db.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
 

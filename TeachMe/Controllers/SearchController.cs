@@ -67,7 +67,7 @@ namespace TeachMe.Controllers
         }
 
         //
-        // GET: /Map/city/category/
+        // GET: /Map/city/streetName/streetNum/distance/category/
         public ActionResult Map(string city, string streetName, string streetNum, string distance, string category)
         {
             //create and set model
@@ -75,9 +75,12 @@ namespace TeachMe.Controllers
 
             //get user location
             string adr = city + "," + streetName + " " + streetNum;
-            var userGeo = GetLongitudeAndLatitude(adr);
+            
+            GeoLocation userGeo = null;
+            if (!string.IsNullOrEmpty(city))
+                userGeo = GetLongitudeAndLatitude(adr);
             // user location resolved set map settings
-            if(userGeo != null)
+            if (userGeo != null)
             {
                 model.MapCenter = userGeo;
                 model.MapZoom = 12;
@@ -88,17 +91,22 @@ namespace TeachMe.Controllers
                 model.MapZoom = 8;
             }
 
+            string searchFor = !string.IsNullOrEmpty(category) ? " ב" + category : string.Empty;
+            searchFor = !string.IsNullOrEmpty(city) ? searchFor + " באזור " + city : searchFor;
+            model.SearchFor = searchFor;
+
             List<Teacher> teachers;
             // search for teachers
             if (!string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(category))
-                teachers = Db.Teachers.Where(t => t.isActive && t.City.Contains(city) && t.SubjectsToTeach.FirstOrDefault(s=>s.Name.Contains(category))!=null).ToList();
+                teachers = Db.Teachers.Where(t => t.isActive && t.City.Contains(city) && t.SubjectsToTeach.FirstOrDefault(s => s.Name.Contains(category)) != null).ToList();
             else if (!string.IsNullOrEmpty(city))
                 teachers = Db.Teachers.Where(t => t.City.Contains(city)).ToList();
             else if (!string.IsNullOrEmpty(category))
-                teachers = Db.Teachers.Where(t => t.isActive && t.SubjectsToTeach.FirstOrDefault(s=>s.Name.Contains(category))!=null).ToList();
+                teachers = Db.Teachers.Where(t => t.isActive && t.SubjectsToTeach.FirstOrDefault(s => s.Name.Contains(category)) != null).ToList();
             else
                 teachers = new List<Teacher>();
 
+            // check if geo exist and get if not
             foreach (var t in teachers)
             {
                 if (!t.GeoLocation.isExist())
@@ -107,17 +115,17 @@ namespace TeachMe.Controllers
                     var geo = GetLongitudeAndLatitude(t.GetAddressForMap());
                     t.UpdateGeoLocation(geo);
                     Db.SaveChanges();
-                }  
+                }
             }
 
             // data
-            if(!string.IsNullOrEmpty(distance))
+            if (!string.IsNullOrEmpty(distance))
             {
                 model.Teachers = SearchInRadius(teachers, model, distance);
             }
             else
             {
-                 model.Teachers = teachers;
+                model.Teachers = teachers;
             }
             model.ResultCount = model.Teachers.Count;
             // pass model to view

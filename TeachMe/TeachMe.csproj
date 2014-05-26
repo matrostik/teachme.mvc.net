@@ -238,6 +238,10 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\busy.gif" />
+    <Content Include="Images\Carousel\carousel-01.jpg" />
+    <Content Include="Images\Carousel\carousel-02.jpg" />
+    <Content Include="Images\Carousel\carousel-03.jpg" />
+    <Content Include="Images\Carousel\carousel-04.jpg" />
     <Content Include="Images\Facebook.png" />
     <Content Include="Images\Google.png" />
     <Content Include="Images\logo_no_bg.png" />

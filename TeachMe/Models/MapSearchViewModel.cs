@@ -28,5 +28,7 @@ namespace TeachMe.Models
         /// Map zoom
         /// </summary>
         public int MapZoom { get; set; }
+
+        public string SearchFor { get; set; }
     }
 }

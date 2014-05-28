@@ -5,24 +5,33 @@
 
 <h2>תוצאות חיפוש</h2>
 <div class="well">
-    <p> חיפוש מורה @Model.SearchFor</p>
-    <p>סה"כ התקבלו @Model.ResultCount תוצאות</p> 
+    <div class="row">
+        <div class="col-md-9">
+            <center>
+                <script type="text/javascript" language="javascript" src="http://live.sekindo.com/live/liveView.php?s=51787&subId=DEFAULT"></script>
+            </center>
+        </div>
+        <div class="col-md-3">
+            <p> חיפוש מורה @Model.SearchFor</p>
+            <p>סה"כ התקבלו @Model.ResultCount תוצאות</p>
+        </div>
+    </div>
 </div>
 
 <div>
     @{ var list = Model.Teachers;
- foreach (var t in list)
- {/* Buld data for google maps*/
-    <div class="teachmemap"
-         data-latitude="@(t.GeoLocation.Latitude)"
-         data-longitude="@(t.GeoLocation.Longitude)"
-         data-address="@(t.GetAddressForMap())"
-         data-name="@(t.GetFullName())"
-         data-id="@(t.Id)"
-         data-picture="@(t.PictureUrl)">
-    </div>
- }
-}
+     foreach (var t in list)
+     {/* Buld data for google maps*/
+        <div class="teachmemap"
+             data-latitude="@(t.GeoLocation.Latitude)"
+             data-longitude="@(t.GeoLocation.Longitude)"
+             data-address="@(t.GetAddressForMap())"
+             data-name="@(t.GetFullName())"
+             data-id="@(t.Id)"
+             data-picture="@(t.PictureUrl)">
+        </div>
+     }
+    }
 </div>
 <div class="row">
     <div class="panel panel-default">
@@ -104,7 +113,7 @@
                         + '<strong>כתובת:</strong> ' + ($(value).attr("data-address")) + '<br/>'
                         + '<div style="margin-top:10px"><a class="label label-warning" href="/Teacher/' + ($(value).attr("data-id")) + '">פרופיל המלא »</a></div><br/>'
                         + '</div></td>'
-                        + '<td width="55px"><img src="'+($(value).attr("data-picture"))+'" alt="Smiley face" height="75"></td>'
+                        + '<td width="55px"><img src="' + ($(value).attr("data-picture")) + '" alt="Smiley face" height="75"></td>'
                         + '</div></td></tr></table>';
                     var infowindow = new google.maps.InfoWindow({
                         content: contentString,

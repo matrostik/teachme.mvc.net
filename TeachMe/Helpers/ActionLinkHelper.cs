@@ -28,10 +28,10 @@ namespace TeachMe.Helpers
         /// <param name="linkText"></param>
         /// <param name="actionName"></param>
         /// <param name="controllerName"></param>
-        /// <param name="glyphiconName">only name without glyphicon glyphicon-</param>
+        /// <param name="iconName">awesome glyphicon name</param>
         /// <param name="htmlAttributes"></param>
         /// <returns></returns>
-        public static MvcHtmlString ActionLinkIcon(this HtmlHelper helper, string linkText, string actionName, string controllerName, string glyphiconName, object htmlAttributes)
+        public static MvcHtmlString ActionLinkIcon(this HtmlHelper helper, string linkText, string actionName, string controllerName, string iconName, object htmlAttributes)
         {
             // Glyphicons
             //http://getbootstrap.com/components/#glyphicons
@@ -51,8 +51,8 @@ namespace TeachMe.Helpers
             a.MergeAttributes(new RouteValueDictionary(htmlAttributes));
 
             // Render icon
-            var span = new TagBuilder("span");
-            span.AddCssClass("glyphicon glyphicon-"+glyphiconName);
+            var span = new TagBuilder("i");
+            span.AddCssClass(iconName);
 
             a.InnerHtml = span.ToString(TagRenderMode.Normal) + "&nbsp;&nbsp;" + linkText;
 

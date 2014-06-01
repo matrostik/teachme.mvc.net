@@ -17,7 +17,7 @@
 /*Boxed Layout
 ------------------------------------*/
 .wrapper {
-  background: #fff;
+  background: #FFFFFF;
 }
 
 .boxed-layout {
@@ -803,7 +803,7 @@
 .purchase {
 	padding: 25px 0 30px;
 	border-bottom: solid 1px #eee;
-	background: url(../img/breadcrumbs.png) repeat;
+	background: url(/Images/Unify/breadcrumbs.png) repeat;
 }
 .purchase p {
 	margin-bottom: 0;
@@ -1075,7 +1075,7 @@
 	overflow: hidden;
 	padding: 10px 0 6px;
 	border-bottom: solid 1px #eee;
-	background: url(../img/breadcrumbs.png) repeat;
+	background: url(/Images/Unify/breadcrumbs.png) repeat;
 }
 .breadcrumbs h1 {
 	color: #666;

@@ -71,9 +71,9 @@ var App = function () {
         jQuery('.list-toggle').on('click', function() {
             jQuery(this).toggleClass('active');
         });
-        jQuery('.dropdown').on('click', function () {
-            jQuery(this).toggleClass('active');
-        });
+        //jQuery('.dropdown').on('click', function () {
+        //    jQuery(this).toggleClass('active');
+        //});
         /*
         jQuery('#serviceList').on('shown.bs.collapse'), function() {
             jQuery(".servicedrop").addClass('glyphicon-chevron-up').removeClass('glyphicon-chevron-down');

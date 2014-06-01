@@ -3,56 +3,60 @@
     ViewBag.Title = "כתבו אלינו";
 }
 
-<h2>@ViewBag.Title</h2>
-<h3>TeachMe יצירת קשר</h3>
-
-<div class="row margin-bottom-30">
-    @*<div class="col-md-10">
-            <center>
-                <script type="text/javascript" language="javascript" src="http://live.sekindo.com/live/liveView.php?s=51788&subId=DEFAULT"></script>
-            </center>
-        </div>*@
-    <div class="col-md-3">
-        <div class="headline"><h2>פרטים</h2></div>
-        <ul class="list-unstyled margin-bottom-30">
-            <li><a><i class="fa fa-home"></i></a><strong> קוד מקור: </strong><a href="#">GitHub</a></li>
-            <li><a><i class="fa fa-home"></i></a><strong> תמיכה: </strong><a href="#">Issues tracker</a></li>
-            <li><a><i class="fa fa-home"></i></a><strong> עזרה: </strong><a href="#">Wiki</a></li>
-        </ul>
+<div class="container content">
+    <div class="breadcrumbs">
+        <div class="container">
+            <h1 class="pull-right"><span class="glyphicon glyphicon-comment"></span>&nbsp; כתבו אלינו</h1>
+        </div>
     </div>
+    <div class="row margin-bottom-30">
+        @*<div class="col-md-10">
+                <center>
+                    <script type="text/javascript" language="javascript" src="http://live.sekindo.com/live/liveView.php?s=51788&subId=DEFAULT"></script>
+                </center>
+            </div>*@
+        <div class="col-md-3">
+            <div class="headline"><h2>פרטים</h2></div>
+            <address>
+                <strong><i class="fa fa-file-code-o"></i>&nbsp;קוד מקור:</strong>   <a href="https://github.com/matrostik/teachme.mvc.net">GitHub</a><br />
+                <strong><i class="fa fa-life-ring"></i>&nbsp;תמיכה:</strong>   <a href="https://github.com/matrostik/teachme.mvc.net/issues">Issues tracker</a><br />
+                <strong><i class="fa fa-info-circle"></i>&nbsp;עזרה:</strong> <a href="https://github.com/matrostik/teachme.mvc.net/wiki">Wiki</a>
+            </address>
+        </div>
 
-    <div class="col-md-9 mb-margin-bottom-30">
-        <div class="headline"><h2>טופס יצירת קשר</h2></div>
-        <fieldset>
-            @using (Html.BeginForm())
-            {
-                @Html.ValidationSummary(true)
-                <label>דואר אלקטרוני (חובה):</label>
-                <div class="row margin-bottom-20">
-                    <div class="col-md-7 col-md-offset-5">
-                        @Html.TextBoxFor(m => m.From, new { @class = "form-control", @id = "inputDefault" })
-                        @Html.ValidationMessageFor(model => model.From)
+        <div class="col-md-9 mb-margin-bottom-30">
+            <div class="headline"><h2>טופס יצירת קשר</h2></div>
+            <fieldset>
+                @using (Html.BeginForm())
+                {
+                    @Html.ValidationSummary(true)
+                    <label>דואר אלקטרוני (חובה):</label>
+                    <div class="row margin-bottom-20">
+                        <div class="col-md-7 col-md-offset-5">
+                            @Html.TextBoxFor(m => m.From, new { @class = "form-control", @id = "inputDefault" })
+                            @Html.ValidationMessageFor(model => model.From)
+                        </div>
                     </div>
-                </div>
-                <label>נושא (חובה):</label>
-                <div class="row margin-bottom-20">
-                    <div class="col-md-7 col-md-offset-5">
-                        @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @id = "inputDefault" })
-                        @Html.ValidationMessageFor(model => model.Subject)
+                    <label>נושא (חובה):</label>
+                    <div class="row margin-bottom-20">
+                        <div class="col-md-7 col-md-offset-5">
+                            @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", @id = "inputDefault" })
+                            @Html.ValidationMessageFor(model => model.Subject)
+                        </div>
                     </div>
-                </div>
-                <label>תוכן ההודעה (חובה):</label>
-                <div class="row margin-bottom-20">
-                    <div class="col-md-11 col-md-offset-1">
-                        @Html.TextAreaFor(m => m.Body, new { @class = "form-control", @rows = "8", @id = "inputDefault" })
-                        @Html.ValidationMessageFor(model => model.Body)
+                    <label>תוכן ההודעה (חובה):</label>
+                    <div class="row margin-bottom-20">
+                        <div class="col-md-11 col-md-offset-1">
+                            @Html.TextAreaFor(m => m.Body, new { @class = "form-control", @rows = "8", @id = "inputDefault" })
+                            @Html.ValidationMessageFor(model => model.Body)
+                        </div>
                     </div>
-                </div>
-                <button type="submit" class="btn-u">
-                    <span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;שלח
-                </button>
-                <span class="label label-info">@ViewBag.Result</span>
-            }
-        </fieldset>
+                    <button type="submit" class="btn-u">
+                        <span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;שלח
+                    </button>
+                    <span class="label label-info">@ViewBag.Result</span>
+                }
+            </fieldset>
+        </div>
     </div>
 </div>

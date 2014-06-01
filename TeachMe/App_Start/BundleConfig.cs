@@ -37,7 +37,7 @@ namespace TeachMe
                       "~/Content/bootstrap.min.css",
                       "~/Content/UnifyTheme/style.css",
                       "~/Content/UnifyTheme/default.css",
-                       "~/Content/UnifyTheme/custom.css.css"));
+                       "~/Content/UnifyTheme/custom.css"));
             bundles.Add(new StyleBundle("~/Content/cssplugins").Include(
                      "~/Content/UnifyTheme/plugins/flexslider.css",
                      "~/Content/UnifyTheme/plugins/parallax-slider.css")

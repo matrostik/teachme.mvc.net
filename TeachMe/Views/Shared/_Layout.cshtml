@@ -40,17 +40,17 @@
                     <div class="collapse navbar-collapse navbar-responsive-collapse">
                         <ul id="menu" class="nav navbar-nav">
                             <!-- About -->
-                            <li id="Home/About" class="dropdown">
+                            <li class="dropdown">
                                 @Html.ActionLinkIcon("מי אנחנו", "About", "Home", "glyphicon glyphicon-info-sign")
                             </li>
                             <!-- Ens About -->
                             <!-- Contact -->
-                            <li id="Home/Contact" class="dropdown">
+                            <li class="dropdown">
                                 @Html.ActionLinkIcon("כתבו אלינו", "Contact", "Home", "glyphicon glyphicon-comment")
                             </li>
                             <!-- End Contact -->
                             <!-- Home -->
-                            <li id="Home/Index" class="dropdown">
+                            <li class="dropdown">
                                 @Html.ActionLinkIcon("ראשי", "Index", "Home", "glyphicon glyphicon-home")
                             </li>
                             <!-- End Home -->
@@ -75,16 +75,15 @@
         </div>
         <!--=== End Header ===-->
 
-        <div class="container content">
+       
             @RenderBody()
-            <hr />
 
             <center>
                 <div>
                     <script type="text/javascript" language="javascript" src="http://live.sekindo.com/live/liveView.php?s=51788&subId=DEFAULT"></script>
                 </div>
             </center>
-        </div>
+        
 
         <!--=== Footer ===-->
         <div class="footer">

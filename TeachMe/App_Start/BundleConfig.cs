@@ -52,7 +52,8 @@ namespace TeachMe
                       "~/Scripts/UnifyTheme/jquery.flexslider-min.js",
                       "~/Scripts/UnifyTheme/modernizr.js",
                       "~/Scripts/UnifyTheme/jquery.cslider.js"));
-
+            bundles.Add(new StyleBundle("~/Content/page-reg").Include(
+                   "~/Content/UnifyTheme/pages/page_log_reg_v1.css"));
             //
             bundles.Add(new ScriptBundle("~/bundles/fileupload").Include(
                      "~/Scripts/jquery.fileupload.js",

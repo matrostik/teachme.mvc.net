@@ -237,6 +237,7 @@
     <Content Include="Content\UnifyTheme\custom.css" />
     <Content Include="Content\UnifyTheme\default.css" />
     <Content Include="Content\UnifyTheme\pages\page_log_reg_v1.css" />
+    <Content Include="Content\UnifyTheme\pages\page_search_inner.css" />
     <Content Include="Content\UnifyTheme\plugins.css" />
     <Content Include="Content\UnifyTheme\plugins\animate.css" />
     <Content Include="Content\UnifyTheme\plugins\box-shadows.css" />

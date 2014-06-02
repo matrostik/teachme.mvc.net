@@ -4,97 +4,107 @@
 @{
     ViewBag.Title = "חיפוש";
 }
-
-<h2>תוצאות חיפוש</h2>
 <div class="well">
-    סה"כ התקבלו @ViewBag.Count תוצאות
+    <div class="container">
+        <h2 class="pull-right">תוצאות חיפוש</h2>
+    </div>
 </div>
 
-@* style="border: double; border-color: white;" *@
-<div class="row">
-    <div class=" col-md-4">
-        <div class="well well-lg">
-            <center>
-                <script type="text/javascript" language="javascript" src="http://live.sekindo.com/live/liveView.php?s=51785&subId=DEFAULT"></script>
-            </center>
-        </div>
-        <div class="well well-lg">
-            Some related information postetd here. ex: popular search....
-        </div>
-    </div>
-    <div class="col-md-8" style="float:right">
-        @if (ViewBag.Count != 0)
-        {
-            <div class="row" style="margin-right:10px">
-                מיין תוצאות לפי: |
-                @Html.ActionLink("שם פרטי", "Index", new { firstName = ViewBag.FirstName, lastName = ViewBag.LastName, sortOrder = "firstName" }) |
-                @Html.ActionLink("שם משפחה", "Index", new { firstName = ViewBag.FirstName, lastName = ViewBag.LastName, sortOrder = "lastName" }) |
-                @Html.ActionLink("מחיר מהנמוך", "Index", new { firstName = ViewBag.FirstName, lastName = ViewBag.LastName, sortOrder = "priceUp" }) |
-                @Html.ActionLink("מחיר מהגבוה", "Index", new { firstName = ViewBag.FirstName, lastName = ViewBag.LastName, sortOrder = "priceDown" }) |
+<div class="container content">
+    @* style="border: double; border-color: white;" *@
+    <div class="row">
+        <div class=" col-md-3">
+            <div class="margin-bottom-30">
+                <div class="headline"><h2>מורים פופולריים</h2></div>
+                <p>
+                    בקרוב...
+                </p>
             </div>
-        }
-        <div class="list-group" style="margin-right:15px">
-            @foreach (var item in (PagedList.PagedList<Teacher>)@ViewBag.Result)
+            <div class="margin-bottom-30">
+                <div class="headline"><h2>פרסומות</h2></div>
+                <p>
+                    <center>
+                        <script type="text/javascript" language="javascript" src="http://live.sekindo.com/live/liveView.php?s=51785&subId=DEFAULT"></script>
+                    </center>
+                </p>
+            </div>
+            <div class="margin-bottom-30">
+                <div class="headline"><h2>מורה פרטי</h2></div>
+                <p>
+                    בקרוב...
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-9" style="float:right">
+            <div class="headline"><h2> סה"כ התקבלו @ViewBag.Count תוצאות</h2></div>
+            @if (ViewBag.Count != 0)
             {
-                <div class="row">
+                <div class="row" style="margin-right:10px">
+                    מיין תוצאות לפי: |
+                    @Html.ActionLink("שם פרטי", "Index", new { firstName = ViewBag.FirstName, lastName = ViewBag.LastName, sortOrder = "firstName" }) |
+                    @Html.ActionLink("שם משפחה", "Index", new { firstName = ViewBag.FirstName, lastName = ViewBag.LastName, sortOrder = "lastName" }) |
+                    @Html.ActionLink("מחיר מהנמוך", "Index", new { firstName = ViewBag.FirstName, lastName = ViewBag.LastName, sortOrder = "priceUp" }) |
+                    @Html.ActionLink("מחיר מהגבוה", "Index", new { firstName = ViewBag.FirstName, lastName = ViewBag.LastName, sortOrder = "priceDown" }) |
+                </div>
+            }
 
-                    <div class="list-group-item">
-                        <div class="row">
 
-                            <div class="col-md-9">
-                                <h4 class="list-group-item-heading">@item.User.FirstName @item.User.LastName</h4>
-                                <ul class="text-warning" style="margin-right:-20px;">
-                                    <li>
-                                        גיל: @item.Age
-                                    </li>
-                                    <li>
-                                        עיר: @item.City
-                                    </li>
-                                    <li>
-                                        תחום: @item.GetSubjects()
-                                    </li>
-                                    <li>
-                                        מחיר: @item.LessonPrice
-                                    </li>
-                                    <li>
-                                        טלפון: @item.Phone
-                                    </li>
-                                </ul>
-                                <p style="text-align:left">
-                                    <a class="btn btn-default" href="../Teacher/@item.Id">לפרופיל המלא &raquo;</a>
-                                   
-                                    @Html.ActionLink("לתצוגה על המפה", "Geo", new { id = @item.Id }, new { @class = "btn btn-default" })
-                                </p>
-                            </div>
+            <div class="list-group" style="margin-right:15px">
+                @foreach (var item in (PagedList.PagedList<Teacher>)@ViewBag.Result)
+                {
+                    
 
-                            <div class="col-md-3" style="padding: 0 5px 0 0;">
-                                <div class="well" style="padding: 10px;">
-                                    <a href="#">
-                                        <span>
-                                            <img src="@item.PictureUrl" class="img-responsive" />
-                                        </span>
-                                    </a>
+                    <div class="row">
+                        <div class="funny-boxes funny-boxes-top-sea">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <h2><a href="#">@item.User.FirstName @item.User.LastName</a></h2>
+                                    <ul class="list-unstyled funny-boxes-rating" style="margin:0;padding:0">
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                    </ul>
+                                    <ul class="list-unstyled" style="padding:0;margin-top:5px">
+                                        <li><i class="fa fa-user color-green" style="width:15px"></i> גיל: @item.Age</li>
+                                        <li><i class="fa fa-map-marker color-green" style="width:15px;padding-right:2px"></i>  עיר: @item.City</li>
+                                        <li><i class="fa fa-briefcase color-green" style="width:15px"></i> תחום: @item.GetSubjects()</li>
+                                        <li><i class="fa fa-graduation-cap color-green" style="width:15px;margin-right:-2px"></i> השכלה: @item.Education</li>
+                                        <li><i class="fa fa-money color-green" style="width:15px"></i> מחיר: @item.LessonPrice</li>
+                                        <li><i class="fa fa-info-circle color-green" style="width:15px"></i> אודות: @item.About</li>
+                                    </ul>
+                                    <p></p>
+                                    <a class="btn-u pull-left" href="../Teacher/@item.Id">לפרופיל המלא &raquo;</a>
+                                </div>
+                                <div class="col-md-3 funny-boxes-img">
+                                    <img alt="" src="@item.PictureUrl" class="img-responsive rounded-2x img-bordered">
+                                    <ul class="list-unstyled">
+                                        <li><i class="fa fa-eye"></i> צפיות: @item.Views</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                </div>
-            }
-        </div>
 
-        <div class="row">
-            @{
-                var list = (PagedList.PagedList<Teacher>)ViewBag.Result;
-                if (list.PageCount > 1)
-                {
-                    <span style="margin-right:20px">עמוד @(list.PageCount < list.PageNumber ? 0 : list.PageNumber) מתוך @list.PageCount </span>
                 }
-            }
-            <center dir="ltr">
-                @Html.PagedListPager(list, page => Url.Action("Index", new { page, firstName = ViewBag.FirstName, lastName = ViewBag.LastName, sortOrder = ViewBag.SortParm }))
-            </center>
-        </div>
+            </div>
 
+            <div class="row">
+                @{
+                    var list = (PagedList.PagedList<Teacher>)ViewBag.Result;
+                    if (list.PageCount > 1)
+                    {
+                        <span style="margin-right:20px">עמוד @(list.PageCount < list.PageNumber ? 0 : list.PageNumber) מתוך @list.PageCount </span>
+                    }
+                }
+                <center dir="ltr">
+                    @Html.PagedListPager(list, page => Url.Action("Index", new { page, firstName = ViewBag.FirstName, lastName = ViewBag.LastName, sortOrder = ViewBag.SortParm }))
+                </center>
+            </div>
+
+        </div>
     </div>
 </div>
+@Styles.Render("~/Content/page-search")

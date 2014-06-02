@@ -2,103 +2,168 @@
 @{
     ViewBag.Title = "עריכת פרופיל";
 }
+<div class="container content">
+    <h2>עריכת פרופיל</h2>
 
-<h2>עריכת פרופיל</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <h4>עריכת פרופיל קיים</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Teacher.Id)
+            @Html.HiddenFor(model => model.Teacher.ApplicationUserId)
 
-    <div class="form-horizontal">
-        <h4>עריכת פרופיל קיים</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.Teacher.Id)
-        @Html.HiddenFor(model => model.Teacher.ApplicationUserId)
+            <div class="panel panel-default">
+                <div class="panel-heading">פרטים אישיים</div>
+                <div class="panel-body">
+                    <div class="form-group">
 
-        <div class="panel panel-default">
-            <div class="panel-heading">פרטים אישיים</div>
-            <div class="panel-body">
-                <div class="form-group">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Teacher.User.UserName)
+                            @Html.TextBoxFor(m => m.Teacher.User.UserName, new { @class = "form-control", @disabled = "" })
+                        </div>
+                        <div class="col-md-2">
+                            @Html.LabelFor(m => m.Teacher.User.LastName)
+                            @Html.TextBoxFor(m => m.Teacher.User.LastName, new { @class = "form-control", @disabled = "" })
+                        </div>
 
-                    <div class="col-md-4">
+                        <div class="col-md-2">
+                            @Html.LabelFor(m => m.Teacher.User.FirstName)
+                            @Html.TextBoxFor(m => m.Teacher.User.FirstName, new { @class = "form-control", @disabled = "" })
+                        </div>
+                        <div class="col-md-1">
+                        </div>
+
                     </div>
-                    <div class="col-md-3">
-                        @Html.LabelFor(m => m.Teacher.User.UserName)
-                        @Html.TextBoxFor(m => m.Teacher.User.UserName, new { @class = "form-control", @disabled = "" })
-                    </div>
-                    <div class="col-md-2">
-                        @Html.LabelFor(m => m.Teacher.User.LastName)
-                        @Html.TextBoxFor(m => m.Teacher.User.LastName, new { @class = "form-control", @disabled = "" })
-                    </div>
 
-                    <div class="col-md-2">
-                        @Html.LabelFor(m => m.Teacher.User.FirstName)
-                        @Html.TextBoxFor(m => m.Teacher.User.FirstName, new { @class = "form-control", @disabled = "" })
-                    </div>
-                    <div class="col-md-1">
-                    </div>
+                    <div class="form-group">
 
-                </div>
-
-                <div class="form-group">
-
-                    <div class="col-md-8">
-                    </div>
-                    <div class="col-md-2">
-                        @Html.LabelFor(m => m.Teacher.Phone)
-                        @Html.TextBoxFor(m => m.Teacher.Phone, new { @class = "form-control", @placeholder = "מספר טלפון" })
-                        @Html.ValidationMessageFor(m => m.Teacher.Phone)
-                    </div>
-                    <div class="col-md-1">
-                        @Html.LabelFor(m => m.Teacher.Age)
-                        @Html.TextBoxFor(m => m.Teacher.Age, new { @class = "form-control", @placeholder = "גיל", @onkeypress = "return isNumber(event)" })
-                        @Html.ValidationMessageFor(m => m.Teacher.Age)
-                    </div>
-                    <div class="col-md-1">
+                        <div class="col-md-8">
+                        </div>
+                        <div class="col-md-2">
+                            @Html.LabelFor(m => m.Teacher.Phone)
+                            @Html.TextBoxFor(m => m.Teacher.Phone, new { @class = "form-control", @placeholder = "מספר טלפון" })
+                            @Html.ValidationMessageFor(m => m.Teacher.Phone)
+                        </div>
+                        <div class="col-md-1">
+                            @Html.LabelFor(m => m.Teacher.Age)
+                            @Html.TextBoxFor(m => m.Teacher.Age, new { @class = "form-control", @placeholder = "גיל", @onkeypress = "return isNumber(event)" })
+                            @Html.ValidationMessageFor(m => m.Teacher.Age)
+                        </div>
+                        <div class="col-md-1">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">תמונת פרופיל</div>
-            <div class="panel-body">
-                <div class="span12 pagination-centered">
-                    <div class="form-group">
-                        <div class="col-md-2">
-                        </div>
-                        <div class="col-md-3">
-                            @*<div class="file_name"></div>
-                                <div class="file_type"></div>
-                                <div class="file_size"></div>
-                                <div class="file_url"></div>*@
-                        </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">תמונת פרופיל</div>
+                <div class="panel-body">
+                    <div class="span12 pagination-centered">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-3">
+                                @*<div class="file_name"></div>
+                                    <div class="file_type"></div>
+                                    <div class="file_size"></div>
+                                    <div class="file_url"></div>*@
+                            </div>
 
-                        <div class="col-md-4">
-                            <a href="#" class="img-thumbnail">
-                                <img id="ProfileFoto" src="@Model.Teacher.PictureUrl" alt="תמונת פרופיל" class="">
-                            </a>
-                            @Html.HiddenFor(m => m.Teacher.PictureUrl)
-                        </div>
+                            <div class="col-md-4">
+                                <a href="#" class="img-thumbnail">
+                                    <img id="ProfileFoto" src="@Model.Teacher.PictureUrl" alt="תמונת פרופיל" class="">
+                                </a>
+                                @Html.HiddenFor(m => m.Teacher.PictureUrl)
+                            </div>
 
-                        <div class="col-md-2">
+                            <div class="col-md-2">
 
-                            <span class="btn btn-default fileinput-button">
-                                <img id="file_busy" src="~/Images/busy.gif" alt="busy" style="display: none">
-                                <span>הוספת תמונת פרופיל</span>
-                                <i class="glyphicon glyphicon-user"></i>
-                                <input id="fileupload" type="file" name="file" accept="image/x-png, image/gif, image/jpeg">
-                            </span>
-                            <span class="field-validation-error" id="ProfileFotoError"></span>
-                            @Html.ValidationMessageFor(m => m.Teacher.PictureUrl)
-                            <p>
-                                <div class="progress progress-striped active">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-                                        <span class="sr-only">0% complete</span>
+                                <span class="btn btn-default fileinput-button">
+                                    <img id="file_busy" src="~/Images/busy.gif" alt="busy" style="display: none">
+                                    <span>הוספת תמונת פרופיל</span>
+                                    <i class="glyphicon glyphicon-user"></i>
+                                    <input id="fileupload" type="file" name="file" accept="image/x-png, image/gif, image/jpeg">
+                                </span>
+                                <span class="field-validation-error" id="ProfileFotoError"></span>
+                                @Html.ValidationMessageFor(m => m.Teacher.PictureUrl)
+                                <p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                            <span class="sr-only">0% complete</span>
+                                        </div>
                                     </div>
-                                </div>
-                            </p>
+                                </p>
+                            </div>
+                            <div class="col-md-1">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">כתובת</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-md-5">
+                        </div>
+
+                        <div class="col-md-1">
+                            @Html.LabelFor(m => m.Teacher.HomeNum)
+                            @Html.TextBoxFor(m => m.Teacher.HomeNum, new { @class = "form-control", @placeholder = "בית", @onkeypress = "return isNumber(event)" })
+                            @Html.ValidationMessageFor(m => m.Teacher.HomeNum)
+                        </div>
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(m => m.Teacher.Street)
+                            @Html.TextBoxFor(m => m.Teacher.Street, new { @class = "form-control", @placeholder = "שם רחוב" })
+                            @Html.ValidationMessageFor(m => m.Teacher.Street)
+                        </div>
+
+                        <div class="col-md-2">
+                            @Html.LabelFor(m => m.Teacher.City)
+                            @Html.DropDownListFor(m => m.Teacher.City, Model.Cities, "בחר עיר", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Teacher.City)
+                        </div>
+
+                        <div class="col-md-1">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">פרטי השיעור</div>
+                <div class="panel-body">
+                    <div class="form-group">
+
+                        <div class="col-md-5">
+                        </div>
+                        <div class="col-md-2">
+                            @Html.LabelFor(m => m.SubjectsId)
+                            @Html.ListBoxFor(m => m.SubjectsId, Model.Subjects, new { @style = "display:none" })
+                            @Html.ValidationMessageFor(m => m.SubjectsId)
+                        </div>
+                        <div class="col-md-2">
+                            @Html.LabelFor(m => m.Teacher.LessonPrice)
+                            <div class="input-group" dir="ltr">
+                                <span class="input-group-addon">₪</span>
+                                @Html.TextBoxFor(m => m.Teacher.LessonPrice, new { @class = "form-control", @placeholder = "מחיר לשיעור", @dir = "rtl", @onkeypress = "return isNumber(event)" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Teacher.LessonPrice)
+                        </div>
+                        <div class="col-md-2">
+                            @Html.LabelFor(m => m.Teacher.LessonTime)
+                            @Html.DropDownListFor(m => m.Teacher.LessonTime, Model.Time, "בחר", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Teacher.LessonTime)
                         </div>
                         <div class="col-md-1">
                         </div>
@@ -106,155 +171,90 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">כתובת</div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <div class="col-md-5">
-                    </div>
-
-                    <div class="col-md-1">
-                        @Html.LabelFor(m => m.Teacher.HomeNum)
-                        @Html.TextBoxFor(m => m.Teacher.HomeNum, new { @class = "form-control", @placeholder = "בית", @onkeypress = "return isNumber(event)" })
-                        @Html.ValidationMessageFor(m => m.Teacher.HomeNum)
-                    </div>
-
-                    <div class="col-md-3">
-                        @Html.LabelFor(m => m.Teacher.Street)
-                        @Html.TextBoxFor(m => m.Teacher.Street, new { @class = "form-control", @placeholder = "שם רחוב" })
-                        @Html.ValidationMessageFor(m => m.Teacher.Street)
-                    </div>
-
-                    <div class="col-md-2">
-                        @Html.LabelFor(m => m.Teacher.City)
-                        @Html.DropDownListFor(m => m.Teacher.City, Model.Cities, "בחר עיר", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Teacher.City)
-                    </div>
-
-                    <div class="col-md-1">
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">פרטי השיעור</div>
-            <div class="panel-body">
-                <div class="form-group">
-
-                    <div class="col-md-5">
-                    </div>
-                    <div class="col-md-2">
-                        @Html.LabelFor(m => m.SubjectsId)
-                        @Html.ListBoxFor(m => m.SubjectsId, Model.Subjects, new { @style = "display:none" })
-                        @Html.ValidationMessageFor(m => m.SubjectsId)
-                    </div>
-                    <div class="col-md-2">
-                        @Html.LabelFor(m => m.Teacher.LessonPrice)
-                        <div class="input-group" dir="ltr">
-                            <span class="input-group-addon">₪</span>
-                            @Html.TextBoxFor(m => m.Teacher.LessonPrice, new { @class = "form-control", @placeholder = "מחיר לשיעור", @dir = "rtl", @onkeypress = "return isNumber(event)" })
-                        </div>
-                        @Html.ValidationMessageFor(m => m.Teacher.LessonPrice)
-                    </div>
-                    <div class="col-md-2">
-                        @Html.LabelFor(m => m.Teacher.LessonTime)
-                        @Html.DropDownListFor(m => m.Teacher.LessonTime, Model.Time, "בחר", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Teacher.LessonTime)
-                    </div>
-                    <div class="col-md-1">
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class=" panel-heading">אחר</div>
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <div class="col-md-11">
-                                @Html.LabelFor(m => m.Teacher.About)
-                                @Html.TextAreaFor(m => m.Teacher.About, new { @class = "form-control", @rows = 6, @placeholder = "תיאור המורה" })
-                                @Html.ValidationMessageFor(model => model.Teacher.About)
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class=" panel-heading">אחר</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-md-11">
+                                    @Html.LabelFor(m => m.Teacher.About)
+                                    @Html.TextAreaFor(m => m.Teacher.About, new { @class = "form-control", @rows = 6, @placeholder = "תיאור המורה" })
+                                    @Html.ValidationMessageFor(model => model.Teacher.About)
+                                </div>
+                                <div class="col-md-1">
+                                </div>
                             </div>
-                            <div class="col-md-1">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class=" panel-heading">השכלה</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-md-11">
+                                    @Html.LabelFor(m => m.Teacher.Institution)
+                                    @Html.GroupDropList("Teacher.Institution", Model.Institutions, Model.Teacher.Institution, "בחר", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Teacher.Institution)
+                                </div>
+                                <div class="col-md-1">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-11">
+                                    @Html.LabelFor(m => m.Teacher.Education)
+                                    @Html.TextAreaFor(m => m.Teacher.Education, new { @class = "form-control", @rows = 2, @placeholder = "השכלה" })
+                                    @Html.ValidationMessageFor(model => model.Teacher.Education)
+                                </div>
+                                <div class="col-md-1">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class=" panel-heading">השכלה</div>
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <div class="col-md-11">
-                                @Html.LabelFor(m => m.Teacher.Institution)
-                                @Html.GroupDropList("Teacher.Institution", Model.Institutions, Model.Teacher.Institution, "בחר", new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Teacher.Institution)
-                            </div>
-                            <div class="col-md-1">
-                            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">מצב הפרופיל</div>
+                <div class="panel-body">
+                    <div class="form-group">
+
+                        <div class="col-md-10">
                         </div>
-                        <div class="form-group">
-                            <div class="col-md-11">
-                                @Html.LabelFor(m => m.Teacher.Education)
-                                @Html.TextAreaFor(m => m.Teacher.Education, new { @class = "form-control", @rows = 2, @placeholder = "השכלה" })
-                                @Html.ValidationMessageFor(model => model.Teacher.Education)
+                        <div class="col-md-1">
+                            <div dir="ltr">
+                                <input type="checkbox" name="Example" id="switch-isActive" data-on-color="success" data-off-color="danger" data-on-text="פעיל" data-off-text="כבוי">
                             </div>
-                            <div class="col-md-1">
-                            </div>
+                            @Html.HiddenFor(m => m.Teacher.isActive)
                         </div>
+                        <div class="col-md-1">
+                        </div>
+
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">מצב הפרופיל</div>
-            <div class="panel-body">
-                <div class="form-group">
+            <div class="form-group">
+                <div class="panel-body">
+                    <div class="btn-group">
 
-                    <div class="col-md-10">
-                    </div>
-                    <div class="col-md-1">
-                        <div dir="ltr">
-                            <input type="checkbox" name="Example" id="switch-isActive" data-on-color="success" data-off-color="danger" data-on-text="פעיל" data-off-text="כבוי">
-                        </div>
-                        @Html.HiddenFor(m => m.Teacher.isActive)
-                    </div>
-                    <div class="col-md-1">
-                    </div>
+                        @Html.ActionLinkIcon("ביטול", "Index", "Profile", "glyphicon glyphicon-floppy-remove", new { @class = "btn btn-default" })
 
+                        <button type="submit" class="btn btn-success">
+                            @*// create ButtonHelper with icon  *@
+                            <span class="glyphicon glyphicon-floppy-save"></span>&nbsp;&nbsp;שמור שינויים
+                        </button>
+                    </div>
                 </div>
             </div>
+
         </div>
+    }
 
-        <div class="form-group">
-            <div class="panel-body">
-                <div class="btn-group">
-
-                    @Html.ActionLinkIcon("ביטול", "Index", "Profile", "glyphicon glyphicon-floppy-remove", new { @class = "btn btn-default" })
-
-                    <button type="submit" class="btn btn-success">
-                        @*// create ButtonHelper with icon  *@
-                        <span class="glyphicon glyphicon-floppy-save"></span>&nbsp;&nbsp;שמור שינויים
-                    </button>
-                </div>
-            </div>
-        </div>
-
+    <div>
     </div>
-}
-
-<div>
-   
 </div>
 
 @Styles.Render("~/Content/fileupload")

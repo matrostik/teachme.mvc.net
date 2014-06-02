@@ -2,46 +2,33 @@
 @{
     ViewBag.Title = "חיפוש על המפה";
 }
+<div class="container content">
 
-<h2>תוצאות חיפוש</h2>
-<div class="well">
-    <div class="row">
-        <div class="col-md-9">
-            <center>
-                <script type="text/javascript" language="javascript" src="http://live.sekindo.com/live/liveView.php?s=51787&subId=DEFAULT"></script>
-            </center>
-        </div>
-        <div class="col-md-3">
-            <p> חיפוש מורה @Model.SearchFor</p>
-            <p>סה"כ התקבלו @Model.ResultCount תוצאות</p>
-        </div>
+    <div class="heading heading-v1 margin-bottom-20">
+        <h2>תוצאות חיפוש</h2>
+        <p> חיפוש מורה <strong>@Model.SearchFor</strong></p>
+        <p>סה"כ התקבלו <strong>@Model.ResultCount</strong> תוצאות</p>
     </div>
-</div>
 
-<div>
-    @{ var list = Model.Teachers;
-     foreach (var t in list)
-     {/* Buld data for google maps*/
-        <div class="teachmemap"
-             data-latitude="@(t.GeoLocation.Latitude)"
-             data-longitude="@(t.GeoLocation.Longitude)"
-             data-address="@(t.GetAddressForMap())"
-             data-name="@(t.GetFullName())"
-             data-id="@(t.Id)"
-             data-picture="@(t.PictureUrl)">
-        </div>
-     }
-    }
-</div>
-<div class="row">
-    <div class="panel panel-default">
-        <div class="panel-heading">Google map</div>
-        <div class="panel-body">
-            <div id="map-canvas" style="width: 100%; min-height:600px; height: 100%; border: 1px solid #5E5454;"></div>
-        </div>
+    <div>
+        @{ var list = Model.Teachers;
+         foreach (var t in list)
+         {/* Buld data for google maps*/
+            <div class="teachmemap"
+                 data-latitude="@(t.GeoLocation.Latitude)"
+                 data-longitude="@(t.GeoLocation.Longitude)"
+                 data-address="@(t.GetAddressForMap())"
+                 data-name="@(t.GetFullName())"
+                 data-id="@(t.Id)"
+                 data-picture="@(t.PictureUrl)">
+            </div>
+         }
+        }
     </div>
-</div>
+    <div class="headline"><h3>תוצאות על המפה</h3></div>
+    <div id="map-canvas" style="width: 100%; min-height:600px; height: 100%; border: 1px solid #5E5454;"></div>
 
+</div>
 @section Scripts {
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGG8Hq0jur-Ca6QtjQ0iQFQ3TJG9WzEA8&v=3.exp&sensor=true&language=he" type="text/javascript"></script>
 

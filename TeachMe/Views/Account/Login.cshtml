@@ -31,7 +31,7 @@
                 </div>
                 <div class="margin-bottom-20">
                     <div class="input-group" dir="ltr">
-                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @placeholder = "סיסמא", @dir = "rtl" })
+                        @Html.TextBoxFor(m => m.Password, new { @type="password", @class = "form-control", @placeholder = "סיסמא", @dir = "rtl" })
                         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                     </div>
                     @Html.ValidationMessageFor(m => m.Password)

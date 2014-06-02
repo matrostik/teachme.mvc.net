@@ -4,60 +4,75 @@
     ViewBag.Title = "כניסה";
 }
 
-<h2>@ViewBag.Title</h2>
-<div class="row">
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new { Action = "ExternalLogin", ReturnUrl = ViewBag.ReturnUrl })
-        </section>
+<div class="container content">
+    <div class="breadcrumbs">
+        <div class="container">
+            <h1 class="pull-right">@ViewBag.Title</h1>
+        </div><!--/container-->
     </div>
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    <br />
+
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "reg-page", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                <h4>כניסה באמצעות חשבון TeachMe</h4>
-                <hr />
+                <div class="reg-header">
+                    <h2>כניסה באמצעות חשבון TeachMe</h2>
+                </div>
                 @Html.ValidationSummary(true)
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.UserName)
+                <div class="margin-bottom-20">
+                    <div class="input-group" dir="ltr">
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "שם משתמש", @dir = "rtl" })
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
                     </div>
-                    @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+                    @Html.ValidationMessageFor(m => m.UserName)
                 </div>
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password)
+                <div class="margin-bottom-20">
+                    <div class="input-group" dir="ltr">
+                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @placeholder = "סיסמא", @dir = "rtl" })
+                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                     </div>
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    @Html.ValidationMessageFor(m => m.Password)
                 </div>
-                <div class="form-group">
-                    <div class="col-md-offset-10 col-md-2">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <button type="submit" class="btn btn-default">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button class="btn-u pull-left" type="submit">
                             <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;כניסה
                         </button>
                     </div>
+                    <div class="col-md-6">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(m => m.RememberMe, new { @class = "pull-right", @style = "margin-left:10px" })
+                            @Html.LabelFor(m => m.RememberMe)
+
+                        </div>
+                    </div>
                 </div>
+
+                <hr>
                 <p>
                     @Html.ActionLink("הירשם", "Register") אם אין לך חשבון TeachMe באתר.
                 </p>
-                  <p>
-                    @Html.ActionLink("שכחת את הסיסמא?", "ResetPassword")
-                </p>
+                <p>@Html.ActionLink("שכחת את הסיסמא?", "ResetPassword")</p>
             }
-        </section>
+        </div>
     </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+            <div class="reg-page">
+                <section id="socialLoginForm">
+                    @Html.Partial("_ExternalLoginsListPartial", new { Action = "ExternalLogin", ReturnUrl = ViewBag.ReturnUrl })
+                </section>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+@Styles.Render("~/Content/page-reg")
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

@@ -1,17 +1,13 @@
 ﻿@model TeachMe.Models.LoginViewModel
-
 @{
     ViewBag.Title = "כניסה";
 }
-
-<div class="container content">
-    <div class="breadcrumbs">
-        <div class="container">
-            <h1 class="pull-right">@ViewBag.Title</h1>
-        </div><!--/container-->
+<div class="well">
+    <div class="container">
+        <h2 class="pull-right"><i class="fa fa-sign-in color-green"></i>&nbsp;@ViewBag.Title</h2>
     </div>
-    <br />
-
+</div>
+<div class="container content">
     <div class="row">
         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
 
@@ -72,7 +68,6 @@
 
 </div>
 
-@Styles.Render("~/Content/page-reg")
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

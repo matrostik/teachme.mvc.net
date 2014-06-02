@@ -12,7 +12,7 @@
 <body class="header-fixed">
     <div class="wrapper">
         <!--=== Header ===-->
-        <div class="header">
+        <div class="header" style="margin:0;padding:0">
             <!-- Topbar -->
             <div class="topbar">
                 <div class="container">
@@ -41,17 +41,17 @@
                         <ul id="menu" class="nav navbar-nav">
                             <!-- About -->
                             <li class="dropdown">
-                                @Html.ActionLinkIcon("מי אנחנו", "About", "Home", "glyphicon glyphicon-info-sign")
+                                @Html.ActionLinkIcon("מי אנחנו", "About", "Home", "glyphicon glyphicon-info-sign color-green")
                             </li>
                             <!-- Ens About -->
                             <!-- Contact -->
                             <li class="dropdown">
-                                @Html.ActionLinkIcon("כתבו אלינו", "Contact", "Home", "glyphicon glyphicon-comment")
+                                @Html.ActionLinkIcon("כתבו אלינו", "Contact", "Home", "glyphicon glyphicon-comment color-green")
                             </li>
                             <!-- End Contact -->
                             <!-- Home -->
                             <li class="dropdown">
-                                @Html.ActionLinkIcon("ראשי", "Index", "Home", "glyphicon glyphicon-home")
+                                @Html.ActionLinkIcon("ראשי", "Index", "Home", "glyphicon glyphicon-home color-green")
                             </li>
                             <!-- End Home -->
                             <!-- Search Block -->
@@ -74,10 +74,7 @@
             <!-- End Navbar -->
         </div>
         <!--=== End Header ===-->
-
-       
             @RenderBody()
-
             <center>
                 <div>
                     <script type="text/javascript" language="javascript" src="http://live.sekindo.com/live/liveView.php?s=51788&subId=DEFAULT"></script>

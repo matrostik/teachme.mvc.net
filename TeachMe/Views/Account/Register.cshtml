@@ -2,22 +2,18 @@
 @{
     ViewBag.Title = "הרשמה";
 }
-
-<div class="container content">
-    <div class="breadcrumbs">
-        <div class="container">
-            <h1 class="pull-right">@ViewBag.Title</h1>
-        </div><!--/container-->
+<div class="well">
+    <div class="container">
+        <h2 class="pull-right"><span class="fa fa-pencil-square-o color-green"></span> &nbsp;@ViewBag.Title</h2>
     </div>
-    <br />
+</div>
+<div class="container content">
     <div class="row">
         <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
             @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "reg-page", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-               
                 <div class="reg-header">
-            
                     <h2>יצירת חשבון חדש</h2>
                     <p>אם יש לך כבר חשבון, תוכל  <a href="/Account/Login" class="color-green">להכנס כאן</a> </p>
                 </div>
@@ -85,7 +81,6 @@
     </div>
 </div>
 
-@Styles.Render("~/Content/page-reg")
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

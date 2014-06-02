@@ -1,1 +1,65 @@
 /* Add here all your css styles (customizations) */
+
+/*Registration and Login Page v1
+------------------------------------*/
+.reg-page {
+	color: #555;
+	padding: 30px;
+	background: #fefefe;
+	border: solid 1px #eee;
+	box-shadow: 0 0 3px #eee;
+}
+
+/*Reg Header*/
+.reg-header {
+	color: #555;
+	text-align: center;
+	margin-bottom: 35px;
+	border-bottom: solid 1px #eee;
+}
+
+.reg-header h2 {
+	font-size: 24px;
+	margin-bottom: 15px;
+}
+
+/*Reg Forms*/
+.reg-page label {
+	color: #777;
+}
+
+
+.job-img {
+	overflow: hidden;
+	position: relative;
+	min-height: 300px;
+	background: url(/Images/Unify/1.jpg) 70% 40% no-repeat;
+}
+.job-img .job-description {
+	padding: 20px;
+	max-width: 450px;
+	margin: 60px auto 100px;	
+	background: rgba(255,255,255,0.8);
+}
+
+.job-img .job-description h2 {
+	font-size: 20px;
+	line-height: 27px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+	.job-img .job-description {
+		padding: 10px;
+		margin: 30px auto 100px;	
+	}
+}
+.job-img .job-img-inputs {
+	left: 0;
+	right: 0;
+	bottom: -7px;
+	padding: 20px 0;
+	position: absolute;
+	background: rgba(0,0,0,0.9);
+}

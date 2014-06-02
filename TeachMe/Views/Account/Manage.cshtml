@@ -3,9 +3,11 @@
 @{
     ViewBag.Title = "ניהול חשבון";
 }
-
-<h2>@ViewBag.Title</h2>
-
+<div class="well">
+    <div class="container">
+        <h2 class="pull-right"><span class="fa fa-cogs color-green"></span> &nbsp;@ViewBag.Title</h2>
+    </div>
+</div>
 <div class="container content">
     <p class="text-success">@ViewBag.StatusMessage</p>
 
@@ -35,12 +37,12 @@
                     <div class="panel-body">
                         @if (!ViewBag.HasProfile)
                         {
-                            @Html.ActionLinkIcon("צור פרופיל מורה", "Create", "Profile", "glyphicon glyphicon-user", new { @class = "btn btn-default" })
+                            @Html.ActionLinkIcon("צור פרופיל מורה", "Create", "Profile", "glyphicon glyphicon-user", new { @class = "btn-u" })
                         }
                         else
                         {
-                            <p>@Html.ActionLinkIcon("צפה בפרופיל מורה", "Index", "Profile", "glyphicon glyphicon-eye-open", new { @class = "btn btn-default" })</p>
-                            <p>@Html.ActionLinkIcon("עדכן פרופיל מורה", "Edit", "Profile", "glyphicon glyphicon-edit", new { @class = "btn btn-default" })</p>
+                            <p>@Html.ActionLinkIcon("צפה בפרופיל מורה", "Index", "Profile", "glyphicon glyphicon-eye-open", new { @class = "btn-u" })</p>
+                            <p>@Html.ActionLinkIcon("עדכן פרופיל מורה", "Edit", "Profile", "glyphicon glyphicon-edit", new { @class = "btn-u" })</p>
                         }
                     </div>
                 </div>

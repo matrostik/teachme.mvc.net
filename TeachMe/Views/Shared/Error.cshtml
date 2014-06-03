@@ -3,9 +3,17 @@
 @{
     ViewBag.Title = "שגיאה";
 }
-
-<h1 class="text-primary">שגיאה</h1>
-<h2 class="text-primary">התרחשה שגיאה, אנא נסה שוב במועד מאוחר יותר</h2>
-<h2 class="text-primary">במידה והינך נתקל שוב בבעיה אנא <a href="/Home/Contact">פנה</a> אלינו לטיפולה.</h2>
+<div class="breadcrumbs">
+    <div class="container">
+        <h2 class="pull-right"><i class="fa fa-exclamation-triangle color-green"></i> &nbsp;@ViewBag.Title</h2>
+    </div><!--/container-->
+</div>
+<div class="container content">
+    <div class="tag-box tag-box-v2">
+        <h2 class="text-primary"><span class="text-border text-border-red">התרחשה שגיאה, אנא נסה שוב במועד מאוחר יותר</span></h2>
+        <h2 class="text-primary"><span class="text-border text-border-red">במידה והינך נתקל שוב בבעיה אנא <a href="/Home/Contact">פנה</a> אלינו לטיפולה.</span></h2>
+        <p><span class="text-border text-border-red"></span></p>
+    </div>
+</div>
 
 

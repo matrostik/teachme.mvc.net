@@ -303,6 +303,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Images\under-construction-icon.png" />
     <Content Include="Images\Unify\1.jpg" />
     <Content Include="Images\Unify\breadcrumbs.png" />
     <Content Include="Images\Unify\mainpage.jpg" />

@@ -5,7 +5,7 @@
 .reg-page {
 	color: #555;
 	padding: 30px;
-	background: #fefefe;
+	background: url(/Images/Unify/breadcrumbs.png) repeat;
 	border: solid 1px #eee;
 	box-shadow: 0 0 3px #eee;
 }
@@ -47,7 +47,8 @@ input[type="checkbox"].input-validation-error {
     border: 0 none;
 }
 
-.validation-summary-errors {
+.validation-summary-errors,
+.validation-summary-errors ul li {
     color: #b94a48;
 }
 

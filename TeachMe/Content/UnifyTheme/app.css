@@ -342,6 +342,18 @@ h3.heading-xs {
 
 /*Tabs
 ------------------------------------*/
+/*Reset Bootstrap float*/
+.nav-tabs > li, .nav-pills > li {
+    float:none;
+    display:inline-block;
+    *display:inline; /* ie7 fix */
+     zoom:1; /* hasLayout ie7 trigger */
+}
+
+.nav-tabs, .nav-pills {
+    text-align:right;
+}
+
 /*Tabs v1*/
 .tab-v1 .nav-tabs { 
   border: none;
@@ -371,7 +383,9 @@ h3.heading-xs {
 }
 
 .tab-v1 .tab-content { 
-  padding: 10px 0;
+  padding: 10px;
+  background: #fafafa;
+  border: solid 1px #eee;
 }
 
 .tab-v1 .tab-content img {
@@ -386,7 +400,7 @@ h3.heading-xs {
 /*Tabs v2*/
 .tab-v2 .nav-tabs {
   border-bottom: none;
-}
+  }
 
 .tab-v2 .nav-tabs li a {
   padding: 9px 16px;

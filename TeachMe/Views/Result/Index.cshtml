@@ -2,7 +2,11 @@
 @{
     ViewBag.Title = "Result";
 }
-
-<h2>@Html.DisplayFor(m => m.Title)</h2>
-<p>@Html.Raw(Model.Text)</p>
-
+<div class="breadcrumbs">
+    <div class="container">
+        <h2 class="pull-right"><i class="fa fa-info color-green"></i> &nbsp;@Model.Title</h2>
+    </div><!--/container-->
+</div>
+<div class="container content">
+    <p>@Html.Raw(Model.Text)</p>
+</div>

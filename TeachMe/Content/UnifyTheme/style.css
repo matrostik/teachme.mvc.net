@@ -802,7 +802,7 @@
 /*Purchase Block*/
 .purchase {
 	padding: 25px 0 30px;
-	border-bottom: solid 1px #eee;
+	border-bottom: solid 3px #eee;
 	background: url(/Images/Unify/breadcrumbs.png) repeat;
 }
 .purchase p {

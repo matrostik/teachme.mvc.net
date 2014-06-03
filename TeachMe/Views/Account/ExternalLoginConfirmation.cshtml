@@ -2,47 +2,53 @@
 @{
     ViewBag.Title = "הרשמה";
 }
-<h2>@ViewBag.Title</h2>
-<h3>חיבור חשבון ה- @ViewBag.LoginProvider לאתר</h3>
+<div class="breadcrumbs">
+    <div class="container">
+        <h2 class="pull-right"><i class="fa fa-info-circle color-green"></i> &nbsp;@ViewBag.Title</h2>
+    </div><!--/container-->
+</div>
+<div class="container content">
+    <h3>חיבור חשבון ה- @ViewBag.LoginProvider לאתר</h3>
 
-@using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
+    @using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
 
-    <h4>טופס רישום</h4>
-    <hr />
-    @Html.ValidationSummary(true)
-    <p class="text-info">
-        חשבון ה- <strong>@ViewBag.LoginProvider</strong> שלך אומת בהצלחה.
+        <h4>טופס רישום</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        <p class="text-info">
+            חשבון ה- <strong>@ViewBag.LoginProvider</strong> שלך אומת בהצלחה.
             הדוא"ל המופיע למטה ישמש כשם המשתמש שלך באתר, לחץ על הכפתור הירשם כדי לסיים את הרישום ולהיכנס לאתר.
-    </p>
-    <div class="form-group">
-        <div class="col-md-11">
-            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control"})
-            @Html.ValidationMessageFor(m => m.FirstName)
+        </p>
+        <div class="form-group">
+            <div class="col-md-11">
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FirstName)
+            </div>
+            @Html.LabelFor(m => m.FirstName, new { @class = "col-md-1 control-label" })
         </div>
-        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-1 control-label" })
-    </div>
-    <div class="form-group">
-        <div class="col-md-11">
-            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.LastName)
+        <div class="form-group">
+            <div class="col-md-11">
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.LastName)
+            </div>
+            @Html.LabelFor(m => m.LastName, new { @class = "col-md-1 control-label" })
         </div>
-        @Html.LabelFor(m => m.LastName, new { @class = "col-md-1 control-label" })
-    </div>
-    <div class="form-group">
-        <div class="col-md-11">
-            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @readonly="true" })
-            @Html.ValidationMessageFor(m => m.UserName)
+        <div class="form-group">
+            <div class="col-md-11">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @readonly = "true" })
+                @Html.ValidationMessageFor(m => m.UserName)
+            </div>
+            @Html.LabelFor(m => m.UserName, new { @class = "col-md-1 control-label" })
         </div>
-        @Html.LabelFor(m => m.UserName, new { @class = "col-md-1 control-label" })
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="הירשם" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="הירשם" />
+            </div>
         </div>
-    </div>
-}
+    }
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

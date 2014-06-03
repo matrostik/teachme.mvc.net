@@ -3,102 +3,106 @@
 @{
     ViewBag.Title = "עמוד הפרופיל של " + @Model.User.FirstName + " " + @Model.User.LastName;
 }
-
-<h2>@ViewBag.Title</h2>
-
-<div class="list-group" style="margin-right:15px">
-    <div class="list-group-item">
-        <div class="row">
-            <font size=" 3">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">פרטים אישיים <div class="col-md-3">דירוג: @Html.DisplayFor(model => model.Raters)</div></div>
-                        <div class="panel-body">
-                            <div class="col-md-3" style="padding: 0 5px 0 0;">
-                                <div style="padding: 10px;">
-                                    <a href="#">
-                                        <span>
-                                            <img src="@Model.PictureUrl" class="img-thumbnail" align="left" />
-                                        </span>
-                                    </a>
+<div class="breadcrumbs">
+    <div class="container">
+        <h2 class="pull-right"><i class="fa fa-info-circle color-green"></i> &nbsp;@ViewBag.Title</h2>
+    </div><!--/container-->
+</div>
+<div class="container content">
+    <div class="list-group" style="margin-right:15px">
+        <div class="list-group-item">
+            <div class="row">
+                <font size=" 3">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">פרטים אישיים <div class="col-md-3">דירוג: @Html.DisplayFor(model => model.Raters)</div></div>
+                            <div class="panel-body">
+                                <div class="col-md-3" style="padding: 0 5px 0 0;">
+                                    <div style="padding: 10px;">
+                                        <a href="#">
+                                            <span>
+                                                <img src="@Model.PictureUrl" class="img-thumbnail" align="left" />
+                                            </span>
+                                        </a>
+                                    </div>
                                 </div>
+
+                                <dd>
+                                    <b>שם פרטי:</b> @Html.DisplayFor(model => model.User.FirstName)
+                                </dd>
+                                <dd>
+                                    <b>שם משפחה:</b> @Html.DisplayFor(model => model.User.LastName)
+                                </dd>
+                                <dd>
+                                    <b>גיל:</b> @Html.DisplayFor(model => model.Age)
+                                </dd>
+                                <dd>
+                                    <b>טלפון:</b> @Html.DisplayFor(model => model.Phone)
+                                </dd>
+                                <dd>
+                                    <b>אימייל:</b> @Html.DisplayFor(model => model.User.UserName)
+                                </dd>
+                                <dd>
+                                    <b>עיר:</b> @Html.DisplayFor(model => model.City)
+                                </dd>
+                                <dd>
+                                    <b>רחוב:</b> @Html.DisplayFor(model => model.Street)
+                                </dd>
+                                <dd>
+                                    <b>מספר בית:</b> @Html.DisplayFor(model => model.HomeNum)
+                                </dd>
                             </div>
+                        </div>
 
-                            <dd>
-                                <b>שם פרטי:</b> @Html.DisplayFor(model => model.User.FirstName)
-                            </dd>
-                            <dd>
-                                <b>שם משפחה:</b> @Html.DisplayFor(model => model.User.LastName)
-                            </dd>
-                            <dd>
-                                <b>גיל:</b> @Html.DisplayFor(model => model.Age)
-                            </dd>
-                            <dd>
-                                <b>טלפון:</b> @Html.DisplayFor(model => model.Phone)
-                            </dd>
-                            <dd>
-                                <b>אימייל:</b> @Html.DisplayFor(model => model.User.UserName)
-                            </dd>
-                            <dd>
-                                <b>עיר:</b> @Html.DisplayFor(model => model.City)
-                            </dd>
-                            <dd>
-                                <b>רחוב:</b> @Html.DisplayFor(model => model.Street)
-                            </dd>
-                            <dd>
-                                <b>מספר בית:</b> @Html.DisplayFor(model => model.HomeNum)
-                            </dd>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">תיאור כללי</div>
+                            <div class="panel-body">
+
+                                <dd>
+                                    <b>השכלה:</b>  @Html.DisplayFor(model => model.Education)
+                                </dd>
+
+                                <dd>
+                                    <b>מוסד אקדמי:</b> @Html.Raw(@Model.Institution)
+                                </dd>
+
+                                <dd>
+                                    <b>אודות:</b> @Html.DisplayFor(model => model.About)
+                                </dd>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">פרטי השיעור</div>
+                            <div class="panel-body">
+
+                                <dd>
+                                    <b>מקצוע:</b> @Html.DisplayName(Model.GetSubjects())
+                                </dd>
+
+                                <dd>
+                                    <b>משך השיעור:</b> @Html.DisplayFor(model => model.LessonTime) דקות
+                                </dd>
+
+                                <dd>
+                                    <b>מחיר השיעור:</b> @Html.DisplayFor(model => model.LessonPrice) ש"ח
+                                </dd>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">המלצות</div>
+                            <div class="panel-body">
+
+                                <dd>
+                                    תגובות:
+                                </dd>
+                            </div>
                         </div>
                     </div>
-
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading">תיאור כללי</div>
-                        <div class="panel-body">
-
-                            <dd>
-                                <b>השכלה:</b>  @Html.DisplayFor(model => model.Education)
-                            </dd>
-
-                            <dd>
-                                <b>מוסד אקדמי:</b> @Html.Raw(@Model.Institution)
-                            </dd>
-
-                            <dd>
-                                <b>אודות:</b> @Html.DisplayFor(model => model.About)
-                            </dd>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading">פרטי השיעור</div>
-                        <div class="panel-body">
-
-                            <dd>
-                                <b>מקצוע:</b> @Html.DisplayName(Model.GetSubjects())
-                            </dd>
-
-                            <dd>
-                                <b>משך השיעור:</b> @Html.DisplayFor(model => model.LessonTime) דקות
-                            </dd>
-
-                            <dd>
-                                <b>מחיר השיעור:</b> @Html.DisplayFor(model => model.LessonPrice) ש"ח
-                            </dd>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading">המלצות</div>
-                        <div class="panel-body">
-
-                            <dd>
-                                תגובות:
-                            </dd>
-                        </div>
-                    </div>
-                </div>
-            </font>
+                </font>
+            </div>
         </div>
     </div>
 </div>

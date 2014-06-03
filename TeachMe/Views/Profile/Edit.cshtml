@@ -2,8 +2,12 @@
 @{
     ViewBag.Title = "עריכת פרופיל";
 }
+<div class="breadcrumbs">
+    <div class="container">
+        <h2 class="pull-right"><span class="fa fa-pencil-square-o color-green"></span> &nbsp;@ViewBag.Title</h2>
+    </div><!--/container-->
+</div>
 <div class="container content">
-    <h2>עריכת פרופיל</h2>
 
     @using (Html.BeginForm())
     {

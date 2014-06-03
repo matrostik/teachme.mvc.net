@@ -30,7 +30,7 @@ namespace TeachMe.Controllers
                     break;
                 case ResultMessage.ResetPasswordCompleted:
                     model.Title = "שחזור סיסמא הושלם";
-                    model.Text = "אתה יכול להתחבר עם הסיסמא החדשה";
+                    model.Text = "אתה יכול להתחבר לאתר עם הסיסמא החדשה";
                     break;
                 case ResultMessage.ResetPasswordTokenError:
                     model.Title = "הלינק שהשתמשת לא נכון.";

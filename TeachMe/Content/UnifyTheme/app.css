@@ -1815,6 +1815,24 @@ i.icon-bg-light-grey {
   border-right-color: #5fb611;
 }
 
+/*Orange Right Bordered Funny Box**/
+.funny-boxes-right-orange {
+  border-right: solid 2px #e67e22;
+}
+
+.funny-boxes-right-orange:hover {
+  border-right-color: #d35400;
+}
+
+/*Yellow Right Bordered Funny Box**/
+.funny-boxes-right-yellow {
+  border-right: solid 2px #f1c40f;
+}
+
+.funny-boxes-right-yellow:hover {
+  border-right-color: #f39c12;
+}
+
 /*Typography
 ------------------------------------*/
 /*Text Dropcap*/
@@ -2660,6 +2678,7 @@ img.img-circle {
 .color-brown { color: #9c8061;}
 .color-light { color: #ffffff;}
 .color-orange { color: #e67e22;}
+.color-yellow { color: #f1c40f;}
 .color-green1 { color: #2ecc71;}
 .color-purple { color: #9b6bcc;}
 .color-dark-blue { color: #4765a0;}

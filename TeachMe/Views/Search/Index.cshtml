@@ -49,17 +49,14 @@
                 </div>
             }
 
-
             <div class="list-group" style="margin-right:15px">
                 @foreach (var item in (PagedList.PagedList<Teacher>)@ViewBag.Result)
                 {
-                    
-
                     <div class="row">
                         <div class="funny-boxes funny-boxes-top-sea">
                             <div class="row">
                                 <div class="col-md-9">
-                                    <h2><a href="#">@item.User.FirstName @item.User.LastName</a></h2>
+                                    <h2><a href="/Teacher/@item.Id">@item.User.FirstName @item.User.LastName</a></h2>
                                     <ul class="list-unstyled funny-boxes-rating" style="margin:0;padding:0">
                                         <li><i class="fa fa-star"></i></li>
                                         <li><i class="fa fa-star"></i></li>
@@ -76,7 +73,7 @@
                                         <li><i class="fa fa-info-circle color-green" style="width:15px"></i> אודות: @item.About</li>
                                     </ul>
                                     <p></p>
-                                    <a class="btn-u pull-left" href="../Teacher/@item.Id">לפרופיל המלא &raquo;</a>
+                                    <a class="btn-u pull-left" href="/Teacher/@item.Id">לפרופיל המלא &raquo;</a>
                                 </div>
                                 <div class="col-md-3 funny-boxes-img">
                                     <img alt="" src="@item.PictureUrl" class="img-responsive rounded-2x img-bordered">
@@ -87,7 +84,6 @@
                             </div>
                         </div>
                     </div>
-
                 }
             </div>
 

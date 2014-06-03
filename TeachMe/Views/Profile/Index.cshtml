@@ -124,19 +124,19 @@
         <div class="col-md-4">
         </div>
         <div class="btn-group">
-            <a class="btn btn-primary" data-toggle="modal" id="deleteProfile" href="#confirmDeleteProfile" data-url="/Profile/Delete">
+            <a class="btn btn-danger" data-toggle="modal" id="deleteProfile" href="#confirmDeleteProfile" data-url="/Profile/Delete">
                 <span class="glyphicon glyphicon-trash"></span>
                 מחק פרופיל מורה
             </a>
             @if (Model.isActive)
             {
-                @Html.ActionLinkIcon("השהה פרופיל מורה", "ChangeActive", "Profile", "glyphicon glyphicon-off", new { @class = "btn btn-danger" })
+                @Html.ActionLinkIcon("השהה פרופיל מורה", "ChangeActive", "Profile", "glyphicon glyphicon-off", new { @class = "btn btn-warning" })
             }
             else
             {
-                @Html.ActionLinkIcon("הפעל פרופיל מורה", "ChangeActive", "Profile", "glyphicon glyphicon-off", new { @class = "btn btn-success" })
+                @Html.ActionLinkIcon("הפעל פרופיל מורה", "ChangeActive", "Profile", "glyphicon glyphicon-off", new { @class = "btn btn-warning" })
             }
-            @Html.ActionLinkIcon("ערוך פרופיל מורה", "Edit", "Profile", "glyphicon glyphicon-edit", new { @class = "btn btn-default" })
+            @Html.ActionLinkIcon("ערוך פרופיל מורה", "Edit", "Profile", "glyphicon glyphicon-edit", new { @class = "btn btn-success" })
         </div>
         <hr />
     </div>

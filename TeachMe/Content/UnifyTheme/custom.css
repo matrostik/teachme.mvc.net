@@ -28,12 +28,39 @@
 	color: #777;
 }
 
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
 
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error,
+textarea.input-validation-error,
+select.input-validation-error {
+    /*background: #b94a48;*/
+    border: 1px solid #b94a48;
+}
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/* styles for main page */
 .job-img {
 	overflow: hidden;
 	position: relative;
-	min-height: 300px;
-	background: url(/Images/Unify/1.jpg) 70% 40% no-repeat;
+	min-height: 450px;
+	background: url(/Images/Unify/mainpage.jpg) 70% 40% no-repeat;
 }
 .job-img .job-description {
 	padding: 20px;
@@ -59,7 +86,7 @@
 	left: 0;
 	right: 0;
 	bottom: -7px;
-	padding: 20px 0;
+	padding: 0 0 25px 0;
 	position: absolute;
-	background: rgba(0,0,0,0.9);
+	background: rgba(0,0,0,0.8);
 }

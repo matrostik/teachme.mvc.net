@@ -1802,6 +1802,16 @@ i.icon-bg-light-grey {
   border-top-color: #f39c12;
 }
 
+/*Green Top Bordered Funny Box**/
+.funny-boxes-top-green {
+  border-top: solid 2px #72c02c;
+}
+
+.funny-boxes-top-green:hover {
+  border-top-color: #5fb611;
+}
+
+
 /*Orange Left Bordered Funny Box**/
 .funny-boxes-left-orange {
   border-left: solid 2px #e67e22;

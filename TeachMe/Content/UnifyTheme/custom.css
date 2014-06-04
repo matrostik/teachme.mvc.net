@@ -91,3 +91,42 @@ input[type="checkbox"].input-validation-error {
 	position: absolute;
 	background: rgba(0,0,0,0.8);
 }
+
+
+/*Comments
+------------------------------------*/
+.comments .media img {
+	top: 3px;
+	width: 54px;
+	height: 54px;
+	position: relative;
+}
+
+.post-comment h3,
+.comments .media h3 {
+	color: #72c02c;
+	font-size: 21px;
+	margin-bottom: 25px;
+}
+
+.comments .media h4.media-heading {
+	color: #555;
+	font-size: 17px;
+	position: relative;
+}
+
+.comments .media h4.media-heading span {
+	top: 0; 
+	right: 0;
+	color: #777;
+	font-size: 12px;
+	position: relative;
+}
+
+.comments .media h4.media-heading span a {
+	color: #72c02c;
+}
+
+.modal-dialog-center {
+    margin-top: 5%;
+}

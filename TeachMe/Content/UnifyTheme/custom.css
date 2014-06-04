@@ -1,0 +1,132 @@
+/* Add here all your css styles (customizations) */
+
+/*Registration and Login Page v1
+------------------------------------*/
+.reg-page {
+	color: #555;
+	padding: 30px;
+	background: url(/Images/Unify/breadcrumbs.png) repeat;
+	border: solid 1px #eee;
+	box-shadow: 0 0 3px #eee;
+}
+
+/*Reg Header*/
+.reg-header {
+	color: #555;
+	text-align: center;
+	margin-bottom: 35px;
+	border-bottom: solid 1px #eee;
+}
+
+.reg-header h2 {
+	font-size: 24px;
+	margin-bottom: 15px;
+}
+
+/*Reg Forms*/
+.reg-page label {
+	color: #777;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error,
+textarea.input-validation-error,
+select.input-validation-error {
+    /*background: #b94a48;*/
+    border: 1px solid #b94a48;
+}
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors,
+.validation-summary-errors ul li {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/* styles for main page */
+.job-img {
+	overflow: hidden;
+	position: relative;
+	min-height: 450px;
+	background: url(/Images/Unify/mainpage.jpg) 70% 40% no-repeat;
+}
+.job-img .job-description {
+	padding: 20px;
+	max-width: 450px;
+	margin: 60px auto 100px;	
+	background: rgba(255,255,255,0.8);
+}
+
+.job-img .job-description h2 {
+	font-size: 20px;
+	line-height: 27px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+	.job-img .job-description {
+		padding: 10px;
+		margin: 30px auto 100px;	
+	}
+}
+.job-img .job-img-inputs {
+	left: 0;
+	right: 0;
+	bottom: -7px;
+	padding: 0 0 25px 0;
+	position: absolute;
+	background: rgba(0,0,0,0.8);
+}
+
+
+/*Comments
+------------------------------------*/
+.comments .media img {
+	top: 3px;
+	width: 54px;
+	height: 54px;
+	position: relative;
+}
+
+.post-comment h3,
+.comments .media h3 {
+	color: #72c02c;
+	font-size: 21px;
+	margin-bottom: 25px;
+}
+
+.comments .media h4.media-heading {
+	color: #555;
+	font-size: 17px;
+	position: relative;
+}
+
+.comments .media h4.media-heading span {
+	top: 0; 
+	right: 0;
+	color: #777;
+	font-size: 12px;
+	position: relative;
+}
+
+.comments .media h4.media-heading span a {
+	color: #72c02c;
+}
+
+.modal-dialog-center {
+    margin-top: 5%;
+}

@@ -4,20 +4,29 @@
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("שלום " + User.FirstName() + "!", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">התנתק</a></li>
-    </ul>
+        <ul class="loginbar pull-right">
+            <li>
+                @Html.ActionLinkIcon("שלום " + User.FirstName() + "!", "Manage", "Account", "fa fa-user", htmlAttributes: new { title = "Manage" })
+            </li>
+            <li class="topbar-devider"></li>
+            <li>
+                <a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;התנתק</a>
+            </li>
+
+        </ul>
     }
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("הרשמה", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("כניסה", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    <ul class="loginbar pull-right">
+        <li>
+            @Html.ActionLinkIcon("הרשמה", "Register", "Account", "fa fa-pencil-square-o", new { id = "registerLink" })
+        </li>
+        <li class="topbar-devider"></li>
+        <li>
+            @Html.ActionLinkIcon("כניסה", "Login", "Account", "fa fa-sign-in", new { id = "loginLink" })
+        </li>
     </ul>
 }

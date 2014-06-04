@@ -5,50 +5,176 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title </title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/cssplugins")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header" style="float:right">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("TeachMe", "Index", "Home", null, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-               
-                <ul class="nav navbar-nav navbar-right" style="float:right">
-                    <li>
-                        <form class="navbar-form navbar-left">
-                            <input type="text" class="form-control col-lg-8" placeholder="חיפוש מהיר">
-                        </form>
-                    </li>
-                    <li>@Html.ActionLinkIcon("מי אנחנו", "About", "Home", "glyphicon glyphicon-info-sign")</li>
-                    <li>@Html.ActionLinkIcon("כתבו אלינו", "Contact", "Home", "glyphicon glyphicon-comment")</li>
-                    <li>@Html.ActionLinkIcon("ראשי", "Index", "Home", "glyphicon glyphicon-home")</li>
-                    
-                </ul>
-                <span style="float:left">
+<body class="header-fixed">
+    <div class="wrapper">
+        <!--=== Header ===-->
+        <div class="header">
+            <!-- Topbar -->
+            <div class="topbar">
+                <div class="container">
+                    <!-- Topbar Navigation -->
                     @Html.Partial("_LoginPartial")
-                </span>
+                    <!-- End Topbar Navigation -->
+                </div>
+            </div>
+            <!-- End Topbar -->
+            <!-- Navbar -->
+            <div class="navbar navbar-default" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="fa fa-bars"></span>
+                        </button>
+                        <a class="navbar-brand" href="/Home/Index">
+                            <img id="logo-header" src="~/Images/logo_no_bg_inline_small.png" alt="Logo">
+                        </a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse navbar-responsive-collapse">
+                        <ul id="menu" class="nav navbar-nav">
+                            <!-- About -->
+                            <li class="dropdown">
+                                @Html.ActionLinkIcon("מי אנחנו", "About", "Home", "glyphicon glyphicon-info-sign color-green")
+                            </li>
+                            <!-- Ens About -->
+                            <!-- Contact -->
+                            <li class="dropdown">
+                                @Html.ActionLinkIcon("כתבו אלינו", "Contact", "Home", "glyphicon glyphicon-comment color-green")
+                            </li>
+                            <!-- End Contact -->
+                            <!-- Home -->
+                            <li class="dropdown">
+                                @Html.ActionLinkIcon("ראשי", "Index", "Home", "glyphicon glyphicon-home color-green")
+                            </li>
+                            <!-- End Home -->
+                            <!-- Search Block -->
+                            <li>
+                                <i class="search fa fa-search search-btn"></i>
+                                <div class="search-open">
+                                    <div class="input-group animated fadeInDown">
+                                        <input type="text" class="form-control" placeholder="חיפוש מהיר">
+                                        <span class="input-group-btn">
+                                            <button class="btn-u" type="button">חפש</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- End Search Block -->
+                        </ul>
+                    </div><!--/navbar-collapse-->
+                </div>
+            </div>
+            <!-- End Navbar -->
+        </div>
+        <!--=== End Header ===-->
+            @RenderBody()
+            <center>
+                <div>
+                    <script type="text/javascript" language="javascript" src="http://live.sekindo.com/live/liveView.php?s=51788&subId=DEFAULT"></script>
+                </div>
+            </center>
+        
+
+        <!--=== Footer ===-->
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 md-margin-bottom-40">
+                        <!-- About -->
+                        <div class="headline"><h2>הודות</h2></div>
+                        <p class="margin-bottom-25 md-margin-bottom-40">TeachMe היא פלטפורמה לכל מי שרוצה ללמד או ללמוד כתלמיד תוכל לחפש מורה באזור שלך לפי ולקרוא עליו המלצות מתלמידים כמוך כמורה תוכל לקבל חשיפה לתלמידים רבים ניתן להתחבר לאתר באמצעות פרופיל רשת חברתית כמו פייסבוק או גוגל פלוס כך שלא תצטרך להירשם ל"עוד רשת חברתית"</p>
+                        <!-- End About -->
+                        <!-- Monthly Newsletter -->
+                        <div class="headline"><h2>עידכונים במייל</h2></div>
+                        <form class="footer-subsribe">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="כתובת אימיל">
+                                <span class="input-group-btn">
+                                    <button class="btn-u" type="button">רישם</button>
+                                </span>
+                            </div>
+                        </form>
+                        <!-- End Monthly Newsletter -->
+                    </div><!--/col-md-4-->
+
+                    <div class="col-md-4 md-margin-bottom-40">
+                        <!-- Ads -->
+                        <div class="posts">
+                            <div class="headline"><h2>פרסומות</h2></div>
+                            <div>
+                                <script type="text/javascript" language="javascript"
+                                        src="http://live.sekindo.com/live/liveView.php?s=51785&subId=DEFAULT"></script>
+                            </div>
+                        </div>
+                        <!-- End Ads -->
+                    </div><!--/col-md-4-->
+
+                    <div class="col-md-4">
+                        <!-- Contact Us -->
+                        <div class="headline"><h2>צור קשר</h2></div>
+                        <address class="md-margin-bottom-40">
+
+                            תגובות:  <a href="Home/Contact" class="">טופס</a><br>
+                            מייל: <a href="mailto:jce.teachme@gmail.com" class="">jce.teachme@gmail.com</a>
+                        </address>
+                        <!-- End Contact Us -->
+                        <!-- Social Links -->
+                        <div class="headline"><h2>השאר מחובר</h2></div>
+                        <ul class="social-icons">
+                            <li><a href="#" data-original-title="Feed" class="social_rss"></a></li>
+                            <li><a href="#" data-original-title="Facebook" class="social_facebook"></a></li>
+                            <li><a href="#" data-original-title="Twitter" class="social_twitter"></a></li>
+                            <li><a href="#" data-original-title="Goole Plus" class="social_googleplus"></a></li>
+                            <li><a href="#" data-original-title="Linkedin" class="social_linkedin"></a></li>
+                            <li><a href="#" data-original-title="Vimeo" class="social_vimeo"></a></li>
+                        </ul>
+                        <!-- End Social Links -->
+                    </div><!--/col-md-4-->
+                </div>
             </div>
         </div>
+        <!--/footer-->
+        <!--=== End Footer ===-->
+        <!--=== Copyright ===-->
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>
+                            @DateTime.Now.Year © TeachMe. ALL Rights Reserved.
+                            <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="/Home/Index">
+                            <img class="pull-right" id="logo-footer" src="~/Images/logo_no_bg_inline.png" alt="" height="40">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/copyright-->
+        <!--=== End Copyright ===-->
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>@DateTime.Now.Year - TeachMe &copy;</p>
-            <center><p><script type="text/javascript" language="javascript" src="http://live.sekindo.com/live/liveView.php?s=51788&subId=DEFAULT"></script></p></center>
-        </footer>
-    </div>
-
+    <!--/wrapper-->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/unify")
+    @Scripts.Render("~/bundles/unify/page")
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            App.init();
+            //App.initSliders();
+            //Index.initParallaxSlider();
+        });
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

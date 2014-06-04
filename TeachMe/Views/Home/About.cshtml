@@ -1,69 +1,118 @@
 ﻿@{
     ViewBag.Title = "אודות";
 }
-
-<h2><span class="glyphicon glyphicon-info-sign"></span> &nbsp;@ViewBag.Title</h2>
-
-<center><h3>TeachMe</h3></center>
-<p>
-    <div><center><img src="/Images/teachme.jpg" width="185" height="185" style="" /></center></div>
-</p>
-<p>
-    <blockquote class="pull-right">
-
-        <span style="font-size:large">TeachMe היא פלטפורמה לכל מי שרוצה ללמד או ללמוד כתלמיד תוכל לחפש מורה באזור שלך לפי ולקרוא עליו המלצות מתלמידים כמוך כמורה תוכל לקבל חשיפה לתלמידים רבים ניתן להתחבר לאתר באמצעות פרופיל רשת חברתית כמו פייסבוק או גוגל פלוס כך שלא תצטרך להירשם ל"עוד רשת חברתית"</span>
-        @*<div style="font-size:large">TeachMe היא פלטפורמה לכל מי שרוצה ללמד או ללמוד</div>
-            <div style="font-size:large">כתלמיד תוכל לחפש מורה באזור שלך לפי ולקרוא עליו המלצות מתלמידים כמוך</div>
-            <div style="font-size:large">כמורה תוכל לקבל חשיפה לתלמידים רבים</div>
-            <div style="font-size:large">ניתן להתחבר לאתר באמצעות פרופיל רשת חברתית כמו פייסבוק או גוגל פלוס כך שלא תצטרך להירשם ל"עוד רשת חברתית"</div>*@
-    </blockquote>
-</p>
-
-<center>
-    <div class="row">
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+<div class="breadcrumbs">
+    <div class="container">
+        <h2 class="pull-right"><i class="fa fa-info-circle color-green"></i> &nbsp;@ViewBag.Title</h2>
+    </div><!--/container-->
+</div>
+<div class="container content">
+    <!-- About Sldier -->
+    <div class="shadow-wrapper margin-bottom-50">
+        <div class="carousel slide carousel-v1 box-shadow shadow-effect-2" id="myCarousel">
             <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class=""></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
-                <li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>
-                <li data-target="#carousel-example-generic" data-slide-to="2" class="active"></li>
+                <li class="rounded-x active" data-target="#myCarousel" data-slide-to="0"></li>
+                <li class="rounded-x" data-target="#myCarousel" data-slide-to="1"></li>
+                <li class="rounded-x" data-target="#myCarousel" data-slide-to="2"></li>
+                <li class="rounded-x" data-target="#myCarousel" data-slide-to="3"></li>
             </ol>
+
             <div class="carousel-inner">
-                <div class="item">
-                    <img alt="First slide" src="/Images/Carousel/carousel-01.jpg">
-                    <div class="carousel-caption">
-                        <h3>TeachMe</h3>
-                        <p></p>
-                    </div>
-                </div>
                 <div class="item active">
-                    <img alt="Second slide" src="/Images/Carousel/carousel-02.jpg">
-                    <div class="carousel-caption">
-                        <h3>TeachMe</h3>
-                        <p></p>
-                    </div>
+                    <img class="img-responsive" src="/Images/Carousel/carousel1200-01.jpg" alt="">
+
                 </div>
                 <div class="item">
-                    <img alt="Third slide" src="/Images/Carousel/carousel-03.jpg">
-                    <div class="carousel-caption">
-                        <h3>TeachMe</h3>
-                        <p></p>
-                    </div>
+                    <img class="img-responsive" src="/Images/Carousel/carousel1200-02.jpg" alt="">
+
                 </div>
                 <div class="item">
-                    <img alt="Third slide" src="/Images/Carousel/carousel-04.jpg">
-                    <div class="carousel-caption">
-                        <h3>TeachMe</h3>
-                        <p></p>
-                    </div>
+                    <img class="img-responsive" src="/Images/Carousel/carousel1200-03.jpg" alt="">
+
+                </div>
+                <div class="item">
+                    <img class="img-responsive" src="/Images/Carousel/carousel1200-04.jpg" alt="">
+
                 </div>
             </div>
-            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-            </a>
-            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-            </a>
+
+            <div class="carousel-arrow">
+                <a data-slide="prev" href="#myCarousel" class="left carousel-control">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                <a data-slide="next" href="#myCarousel" class="right carousel-control">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
         </div>
     </div>
-</center>
+    <!-- End About Sldier -->
+    <!-- About Description -->
+    <div class="headline"><h2>אודות <span class="color-green">TeachMe</span></h2></div>
+    <div class="row">
+        <div class="col-md-4">
+            <div><center><img src="/Images/teachme.jpg" width="185" height="185" style="" /></center></div>
+        </div>
+        <div class="col-md-8">
+            <div class="title-box-v2">
+                <p>TeachMe היא פלטפורמה לכל מי שרוצה ללמד או ללמוד כתלמיד תוכל לחפש מורה באזור שלך לפי ולקרוא עליו המלצות מתלמידים כמוך כמורה תוכל לקבל חשיפה לתלמידים רבים ניתן להתחבר לאתר באמצעות פרופיל רשת חברתית כמו פייסבוק או גוגל פלוס כך שלא תצטרך להירשם ל"עוד רשת חברתית"</p>
+            </div>
+        </div>
+        
+</div>
+    <!-- About Description -->
+    <!-- Meer Our Team -->
+    <div class="headline"><h2>הצוות שלנו</h2></div>
+    <div class="row team">
+        <div class="col-sm-3">
+            <div class="thumbnail-style">
+                <img class="img-responsive" src="/Images/profile-icon.png" alt="">
+                <h3><a>רוס ח.</a> <small>developer</small></h3>
+                <p>...</p>
+                <ul class="list-unstyled list-inline team-socail">
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="thumbnail-style">
+                <img class="img-responsive" src="/Images/profile-icon.png" alt="">
+                <h3><a>קובי א.</a> <small>developer</small></h3>
+                <p>...</p>
+                <ul class="list-unstyled list-inline team-socail">
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="thumbnail-style">
+                <img class="img-responsive" src="/Images/profile-icon.png" alt="">
+                <h3><a>אנטון ט.</a> <small>developer</small></h3>
+                <p>...</p>
+                <ul class="list-unstyled list-inline team-socail">
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="thumbnail-style">
+                <img class="img-responsive" src="/Images/profile-icon.png" alt="">
+                <h3><a>אהובה ב.</a> <small>developer</small></h3>
+                <p>...</p>
+                <ul class="list-unstyled list-inline team-socail">
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--/team-->
+    <!-- Meer Our Team -->
+</div>

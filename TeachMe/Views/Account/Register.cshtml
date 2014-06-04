@@ -2,68 +2,85 @@
 @{
     ViewBag.Title = "הרשמה";
 }
-
-<h2>@ViewBag.Title</h2>
-<div class="row">
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new { Action = "ExternalLogin", ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
-    <div class="col-md-8">
-        <section id="registerForm">
-            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+<div class="breadcrumbs">
+    <div class="container">
+        <h2 class="pull-right"><i class="fa fa-pencil-square-o color-green"></i> &nbsp;@ViewBag.Title</h2>
+    </div><!--/container-->
+</div>
+<div class="container content">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "reg-page", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                <h4>יצירת חשבון חדש</h4>
-                <hr />
+                <div class="reg-header">
+                    <h2>יצירת חשבון חדש</h2>
+                    <p>אם יש לך כבר חשבון, תוכל  <a href="/Account/Login" class="color-green">להכנס כאן</a> </p>
+                </div>
                 @Html.ValidationSummary(true)
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.FirstName)
-                    </div>
-                    @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+                <span class="color-red">*</span> @Html.LabelFor(m => m.FirstName)
+                <div class="margin-bottom-20">
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.FirstName)
                 </div>
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.LastName)
-                    </div>
-                    @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+
+                <span class="color-red">*</span> @Html.LabelFor(m => m.LastName)
+                <div class="margin-bottom-20">
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.LastName)
                 </div>
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.UserName)
-                    </div>
-                    @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+                <span class="color-red">*</span> @Html.LabelFor(m => m.UserName)
+                <div class="margin-bottom-20">
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.UserName)
                 </div>
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password)
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <span class="color-red">*</span> @Html.LabelFor(m => m.ConfirmPassword)
+                        <div class="margin-bottom-20">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password)
+                        </div>
                     </div>
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-sm-6">
+                        <span class="color-red">*</span> @Html.LabelFor(m => m.Password)
+                        <div class="margin-bottom-20">
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-lg-4 text-left">
+                        <button class="btn-u" type="submit"><span class="glyphicon glyphicon-save"></span>&nbsp;&nbsp;הירשם</button>
                     </div>
-                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-8 col-md-2">
-                        <button type="submit" class="btn btn-default">
-                            <span class="glyphicon glyphicon-save"></span>&nbsp;&nbsp;הירשם
-                        </button>
+                    <div class="col-lg-8">
+                        <label class="checkbox">
+                            <input type="checkbox" class="pull-right" style="margin-left:10px">
+                            אני מסכים עם <a href="#" class="color-green">הסכם ותנאי שימוש באתר</a>
+                        </label>
                     </div>
+
                 </div>
             }
-        </section>
+        </div>
+    </div>
+<br />
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="reg-page">
+                <section id="socialLoginForm">
+                    @Html.Partial("_ExternalLoginsListPartial", new { Action = "ExternalLogin", ReturnUrl = ViewBag.ReturnUrl })
+                </section>
+            </div>
+        </div>
     </div>
 </div>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

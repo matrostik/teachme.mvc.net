@@ -34,7 +34,7 @@ namespace TeachMe
                       "~/Content/site.css"));
             // new css
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.min.css")
+                      "~/Content/bootstrap.min.css", "~/Content/UnifyTheme/app.css", "~/Content/UnifyTheme/plugins.css")
                       .Include("~/Content/UnifyTheme/style.css", new CssRewriteUrlTransform())
                       .Include("~/Content/UnifyTheme/default.css",
                        "~/Content/UnifyTheme/custom.css"));

@@ -236,7 +236,6 @@
     <Content Include="Content\UnifyTheme\app.css" />
     <Content Include="Content\UnifyTheme\custom.css" />
     <Content Include="Content\UnifyTheme\default.css" />
-    <Content Include="Content\UnifyTheme\pages\page_search_inner.css" />
     <Content Include="Content\UnifyTheme\plugins.css" />
     <Content Include="Content\UnifyTheme\plugins\animate.css" />
     <Content Include="Content\UnifyTheme\plugins\box-shadows.css" />
@@ -391,7 +390,9 @@
       <SubType>Code</SubType>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\UnifyTheme\pages\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />

@@ -8,14 +8,12 @@
     </div><!--/container-->
 </div>
 <div class="container content">
-
+    <div class="headline"><h2>עריכת פרופיל קיים</h2></div>
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h4>עריכת פרופיל קיים</h4>
-            <hr />
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.Teacher.Id)
             @Html.HiddenFor(model => model.Teacher.ApplicationUserId)

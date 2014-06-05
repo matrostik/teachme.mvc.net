@@ -2,63 +2,64 @@
 @{
     ViewBag.Title = "TeachMe";
 }
-<div class="job-img margin-bottom-30">
-    <div class="job-description">
+<div class="job-img">
+    <div class="job-description animated fadeInDownBig">
         <h2>חיפוש מורה פרטי בכל תחום ובכל מקום שתבחר ...</h2>
     </div>
     <div class="job-img-inputs">
         <div class="container">
-            <div class="heading heading-v1">
+            <div class="heading heading-v1 animated fadeInLeftBig">
                 <h2>חיפוש לפי פרטי מורה</h2>
             </div>
-            @using (Html.BeginForm("Map", "Search", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                <div class="row margin-bottom-20">
-                    <div class="col-sm-4 md-margin-bottom-10">
-                        <div class="input-group" dir="ltr">
-                            @Html.TextBox("streetNum", "", new { @class = "form-control", @placeholder = "הכנס מס' בית", @id = "inputDefault", @dir = "rtl", @onkeypress = "return isNumber(event)" })
-                            <span class="input-group-addon"><i class="fa fa-building"></i></span>
+            <div class="animated fadeInLeftBig">
+                @using (Html.BeginForm("Map", "Search", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <div class="row margin-bottom-20">
+                        <div class="col-sm-4 md-margin-bottom-10">
+                            <div class="input-group" dir="ltr">
+                                @Html.TextBox("streetNum", "", new { @class = "form-control", @placeholder = "הכנס מס' בית", @id = "inputDefault", @dir = "rtl", @onkeypress = "return isNumber(event)" })
+                                <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 md-margin-bottom-10">
+                            <div class="input-group" dir="ltr">
+                                @Html.TextBox("streetName", "", new { @class = "form-control", @placeholder = "הכנס רחוב", @id = "streetName", @dir = "rtl" })
+                                <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 md-margin-bottom-10">
+                            <div class="input-group" dir="ltr">
+                                @*@Html.TextBox("lastName", "", new { @class = "form-control", @placeholder = "שם משפחה", @id = "lastName", @dir = "rtl" })*@
+                                @Html.DropDownList("city", @Model.Cities, "בחר עיר", new { @class = "form-control", @dir = "rtl" })
+                                <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-4 md-margin-bottom-10">
-                        <div class="input-group" dir="ltr">
-                            @Html.TextBox("streetName", "", new { @class = "form-control", @placeholder = "הכנס רחוב", @id = "streetName", @dir = "rtl" })
-                            <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <button type="submit" class="btn-u btn-block btn-u-dark">
+                                <span class="glyphicon glyphicon-search"></span>&nbsp;חפש מורה
+                            </button>
+                        </div>
+                        <div class="col-sm-4 md-margin-bottom-10">
+                            <div class="input-group" dir="ltr">
+                                @Html.DropDownList("category", @Model.Subjects, "בחר תחום", new { @class = "form-control", @dir = "rtl" })
+                                <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 md-margin-bottom-10">
+                            <div class="input-group" dir="ltr">
+                                @Html.DropDownList("distance", @Model.Distances, "בחר טווח", new { @class = "form-control", @dir = "rtl" })
+                                <span class="input-group-addon"><i class="fa fa-arrows"></i></span>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-4 md-margin-bottom-10">
-                        <div class="input-group" dir="ltr">
-                            @*@Html.TextBox("lastName", "", new { @class = "form-control", @placeholder = "שם משפחה", @id = "lastName", @dir = "rtl" })*@
-                            @Html.DropDownList("city", @Model.Cities, "בחר עיר", new { @class = "form-control", @dir = "rtl" })
-                            <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <button type="submit" class="btn-u btn-block btn-u-dark">
-                            <span class="glyphicon glyphicon-search"></span>&nbsp;חפש מורה
-                        </button>
-                    </div>
-                    <div class="col-sm-4 md-margin-bottom-10">
-                        <div class="input-group" dir="ltr">
-                            @Html.DropDownList("category", @Model.Subjects, "בחר תחום", new { @class = "form-control", @dir = "rtl" })
-                            <span class="input-group-addon"><i class="fa fa-book"></i></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 md-margin-bottom-10">
-                        <div class="input-group" dir="ltr">
-                            @Html.DropDownList("distance", @Model.Distances, "בחר טווח", new { @class = "form-control", @dir = "rtl" })
-                            <span class="input-group-addon"><i class="fa fa-arrows"></i></span>
-                        </div>
-                    </div>
-                </div>
-            }
-
-            <div class="heading heading-v1">
+                }
+            </div>
+            <div class="heading heading-v1 animated fadeInRightBig">
                 <h2>חיפוש לפי פרטי מורה</h2>
             </div>
-            <div class="row">
+            <div class="row animated fadeInRightBig">
                 @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     <div class="col-sm-4">
@@ -80,22 +81,20 @@
                     </div>
                 }
             </div>
-
         </div>
     </div>
 </div>
 
 <div class="container content">
-
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 animated fadeInUpBig">
             <div class="headline"><h2>מורים פופולריים</h2></div>
             @foreach (var item in Model.MostCommentedTeachers)
             {
                 <div class="funny-boxes funny-boxes-right-orange no-space margin-bottom-15">
                     <div class="row">
                         <div class="col-md-9">
-                            <h2><a href="/Teacher/@item.Id">@item.User.FirstName @item.User.LastName</a></h2>
+                            <h4 style="padding:0;margin:0"><a href="/Teacher/@item.Id">@item.User.FirstName @item.User.LastName</a></h4>
                             <ul class="list-unstyled" style="padding:0;">
                                 <li><i class="fa fa-map-marker color-orange" style="width:15px;padding-right:2px"></i>  עיר: @item.City</li>
                                 <li><i class="fa fa-briefcase color-orange" style="width:15px"></i> תחום: @item.GetSubjects()</li>
@@ -109,14 +108,14 @@
                 </div>
             }
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 animated fadeInUpBig">
             <div class="headline"><h2>מורים הכי מדורגים</h2></div>
             @foreach (var item in Model.MostRatedTeachers)
             {
                 <div class="funny-boxes funny-boxes-right-yellow no-space margin-bottom-15">
                     <div class="row">
                         <div class="col-md-9">
-                            <h2><a href="/Teacher/@item.Id">@item.User.FirstName @item.User.LastName</a></h2>
+                            <h4 style="padding:0;margin:0"><a href="/Teacher/@item.Id">@item.User.FirstName @item.User.LastName</a></h4>
                             <ul class="list-unstyled funny-boxes-rating" style="margin:0;padding:0">
                                 <li><i class="fa fa-star"></i></li>
                                 <li><i class="fa fa-star"></i></li>
@@ -130,20 +129,20 @@
                             </ul>
                         </div>
                         <div class="col-md-3 funny-boxes-img">
-                            <a href="/Teacher/@item.Id"><img alt="" src="@item.PictureUrl" class="img-responsive rounded-2x"></a>
+                            <a href="/Teacher/@item.Id"><img alt="" src="@item.PictureUrl" class="img-responsive img-bordered"></a>
                         </div>
                     </div>
                 </div>
             }
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 animated fadeInUpBig">
             <div class="headline"><h2>מורים חדשים</h2></div>
             @foreach (var item in Model.NewTeachers)
             {
                 <div class="funny-boxes funny-boxes-right-u no-space margin-bottom-15">
                     <div class="row">
                         <div class="col-md-9">
-                            <h2><a href="/Teacher/@item.Id">@item.User.FirstName @item.User.LastName</a></h2>
+                            <h4 style="padding:0;margin:0"><a href="/Teacher/@item.Id">@item.User.FirstName @item.User.LastName</a></h4>
                             <ul class="list-unstyled" style="padding:0;">
                                 <li><i class="fa fa-map-marker color-green" style="width:15px;padding-right:2px"></i>  עיר: @item.City</li>
                                 <li><i class="fa fa-briefcase color-green" style="width:15px"></i> תחום: @item.GetSubjects()</li>
@@ -158,29 +157,24 @@
 
 
                 @*<a href="/Teacher/@item.Id" class="list-group-item">
-                        <div class="media">
-                            <span class="pull-right">
-                                <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="@item.PictureUrl" style="width: 64px; height: 64px;">
-                            </span>
-                            <div class="media-body">
-                                <h4 class="media-heading">@item.GetFullName()</h4>
-                                <div><strong>תחומים:</strong> @item.GetSubjects()</div>
-                                <div><strong>עיר:</strong> @item.City</div>
-                            </div>
+                    <div class="media">
+                        <span class="pull-right">
+                            <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="@item.PictureUrl" style="width: 64px; height: 64px;">
+                        </span>
+                        <div class="media-body">
+                            <h4 class="media-heading">@item.GetFullName()</h4>
+                            <div><strong>תחומים:</strong> @item.GetSubjects()</div>
+                            <div><strong>עיר:</strong> @item.City</div>
                         </div>
-                    </a>*@
+                    </div>
+                </a>*@
             }
 
             @***@
         </div>
-
-        @*<div class="col-md-4">
-                <h2>Web Hosting</h2>
-                <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-                <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-            </div>*@
     </div>
 </div>
+
 @Styles.Render("~/Content/jqueryui")
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryui")

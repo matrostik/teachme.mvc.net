@@ -74,14 +74,14 @@
             <!-- End Navbar -->
         </div>
         <!--=== End Header ===-->
+        <!--=== Body ===-->
             @RenderBody()
-            <center>
+            @*<center>
                 <div>
                     <script type="text/javascript" language="javascript" src="http://live.sekindo.com/live/liveView.php?s=51788&subId=DEFAULT"></script>
                 </div>
-            </center>
-        
-
+            </center>*@
+        <!--=== End Body ===-->
         <!--=== Footer ===-->
         <div class="footer">
             <div class="container">
@@ -171,7 +171,7 @@
     <script type="text/javascript">
         jQuery(document).ready(function () {
             App.init();
-            //App.initSliders();
+            App.initSliders();
             //Index.initParallaxSlider();
         });
     </script>

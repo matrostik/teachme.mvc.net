@@ -41,10 +41,59 @@ namespace TeachMe.Controllers
             }
             model.Distances = distances;
 
-            model.NewTeachers = Db.Teachers.OrderByDescending(x => x.User.RegistrationDate).Take(5).ToList();
-            model.MostRatedTeachers = Db.Teachers.OrderByDescending(x => x.Rating).Take(5).ToList();
-            model.MostCommentedTeachers = Db.Teachers.OrderByDescending(x => x.Comments.Count).Take(5).ToList();
+            //model.NewTeachers = Db.Teachers.OrderByDescending(x => x.User.RegistrationDate).Take(5).ToList();
+            //model.MostRatedTeachers = Db.Teachers.OrderByDescending(x => x.Rating).Take(5).ToList();
+            //model.MostCommentedTeachers = Db.Teachers.OrderByDescending(x => x.Comments.Count).Take(5).ToList();
             return View(model);
+        }
+
+        public ActionResult GetNewTeachers()
+        {
+            var teachers = Db.Teachers.OrderByDescending(x => x.User.RegistrationDate).Take(5).ToList()
+                .Select(x => new TeacherSimple
+                {
+                    Id = x.Id,
+                    FirstName = x.User.FirstName,
+                    LastName = x.User.LastName,
+                    City = x.City,
+                    LessonPrice = x.LessonPrice,
+                    Subjects = string.Join(", ", x.SubjectsToTeach.Select(s => s.Name)),
+                    PictureUrl = x.PictureUrl
+                }).ToList();
+            return Json(teachers, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetMostRatedTeachers()
+        {
+            var teachers = Db.Teachers.OrderByDescending(x => x.Rating).Take(5).ToList()
+                .Select(x => new TeacherSimple
+                {
+                    Id = x.Id,
+                    FirstName = x.User.FirstName,
+                    LastName = x.User.LastName,
+                    City = x.City,
+                    LessonPrice = x.LessonPrice,
+                    Subjects = string.Join(", ", x.SubjectsToTeach.Select(s => s.Name)),
+                    PictureUrl = x.PictureUrl,
+                    Rating = x.Rating
+                }).ToList();
+            return Json(teachers, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetMostCommentedTeachers()
+        {
+            var teachers = Db.Teachers.OrderByDescending(x => x.Comments.Count).Take(5).ToList()
+                .Select(x => new TeacherSimple
+                {
+                    Id = x.Id,
+                    FirstName = x.User.FirstName,
+                    LastName = x.User.LastName,
+                    City = x.City,
+                    LessonPrice = x.LessonPrice,
+                    Subjects = string.Join(", ", x.SubjectsToTeach.Select(s => s.Name)),
+                    PictureUrl = x.PictureUrl
+                }).ToList();
+            return Json(teachers, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult AutocompleteStreet(string term)
@@ -63,7 +112,7 @@ namespace TeachMe.Controllers
 
         public ActionResult AutocompleteLastName(string term)
         {
-            var filteredItems = Db.Users.Where(item => item.LastName.StartsWith(term)).Distinct().OrderBy(x=>x.LastName).ToList();
+            var filteredItems = Db.Users.Where(item => item.LastName.StartsWith(term)).Distinct().OrderBy(x => x.LastName).ToList();
             List<string> res = filteredItems.Select(x => x.LastName).Take(20).ToList();
             return Json(res, JsonRequestBehavior.AllowGet);
         }

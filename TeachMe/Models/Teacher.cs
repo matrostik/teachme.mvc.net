@@ -149,4 +149,17 @@ namespace TeachMe.Models
 
         #endregion
     }
+
+    public class TeacherSimple
+    {
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string PictureUrl { get; set; }
+        public string City { get; set; }
+        public string Subjects { get; set; }
+        public int LessonPrice { get; set; }
+        public int Rating { get; set; }
+
+    }
 }

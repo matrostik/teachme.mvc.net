@@ -87,9 +87,9 @@
 
 <div class="container content">
     <div class="row">
-        <div class="col-md-4 animated fadeInUpBig">
+        <div id="teachersMostCommented" class="col-md-4 animated fadeInUpBig">
             <div class="headline"><h2>מורים פופולריים</h2></div>
-            @foreach (var item in Model.MostCommentedTeachers)
+            @*@foreach (var item in Model.MostCommentedTeachers)
             {
                 <div class="funny-boxes funny-boxes-right-orange no-space margin-bottom-15">
                     <div class="row">
@@ -106,11 +106,11 @@
                         </div>
                     </div>
                 </div>
-            }
+            }*@
         </div>
-        <div class="col-md-4 animated fadeInUpBig">
+        <div id="teachersMostRated" class="col-md-4 animated fadeInUpBig">
             <div class="headline"><h2>מורים הכי מדורגים</h2></div>
-            @foreach (var item in Model.MostRatedTeachers)
+            @*@foreach (var item in Model.MostRatedTeachers)
             {
                 <div class="funny-boxes funny-boxes-right-yellow no-space margin-bottom-15">
                     <div class="row">
@@ -133,11 +133,11 @@
                         </div>
                     </div>
                 </div>
-            }
+            }*@
         </div>
-        <div class="col-md-4 animated fadeInUpBig">
+        <div id="teachersNew" class="col-md-4 animated fadeInUpBig">
             <div class="headline"><h2>מורים חדשים</h2></div>
-            @foreach (var item in Model.NewTeachers)
+            @*@foreach (var item in Model.NewTeachers)
             {
                 <div class="funny-boxes funny-boxes-right-u no-space margin-bottom-15">
                     <div class="row">
@@ -154,23 +154,7 @@
                         </div>
                     </div>
                 </div>
-
-
-                @*<a href="/Teacher/@item.Id" class="list-group-item">
-                    <div class="media">
-                        <span class="pull-right">
-                            <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="@item.PictureUrl" style="width: 64px; height: 64px;">
-                        </span>
-                        <div class="media-body">
-                            <h4 class="media-heading">@item.GetFullName()</h4>
-                            <div><strong>תחומים:</strong> @item.GetSubjects()</div>
-                            <div><strong>עיר:</strong> @item.City</div>
-                        </div>
-                    </div>
-                </a>*@
-            }
-
-            @***@
+            }*@
         </div>
     </div>
 </div>
@@ -194,7 +178,80 @@
                 position: { my: "right top", at: "right bottom", collision: "none" },
                 source: '@Url.Action("AutocompleteLastName")'
             });
+
+            getNewTeachers();
+            getMostRatedTeachers();
+            getMostCommentedTeachers()
         });
+
+        function getNewTeachers() {
+            $.ajax({
+                url: "/Home/GetNewTeachers",
+                type: "Get",
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        //alert(data[i].FirstName);
+                        $('<div class="funny-boxes funny-boxes-right-u no-space margin-bottom-15 animated fadeInUpBig"><div class="row"><div class="col-md-9">'
+                            + '<h4 style="padding:0;margin:0"><a href="/Teacher/' + data[i].Id + '">' + data[i].FirstName + ' ' + data[i].LastName + '</a></h4>'
+                            + '<ul class="list-unstyled" style="padding:0;">'
+                            + '<li><i class="fa fa-map-marker color-green" style="width:15px;padding-right:2px"></i>  עיר: ' + data[i].City + '</li>'
+                            + '<li><i class="fa fa-briefcase color-green" style="width:15px"></i> תחום: ' + data[i].Subjects + '</li>'
+                            + '<li><i class="fa fa-money color-green" style="width:15px"></i> מחיר: ' + data[i].LessonPrice + '</li>'
+                            + '</ul></div>'
+                            + '<div class="col-md-3 funny-boxes-img"> <a href="/Teacher/' + data[i].Id + '"><img alt="" src="' + data[i].PictureUrl + '" class="img-responsive rounded-2x"></a></div>'
+                            + '</div></div>').appendTo("#teachersNew");
+                    }
+                },
+                error: function (msg) { alert(msg); }
+            });
+        }
+
+        function getMostRatedTeachers() {
+            $.ajax({
+                url: "/Home/GetMostRatedTeachers",
+                type: "Get",
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        $('<div class="funny-boxes funny-boxes-right-yellow no-space margin-bottom-15 animated fadeInUpBig"><div class="row"><div class="col-md-9">'
+                            + '<h4 style="padding:0;margin:0"><a href="/Teacher/' + data[i].Id + '">' + data[i].FirstName + ' ' + data[i].LastName + '</a></h4>'
+                            + '<ul class="list-unstyled funny-boxes-rating" style="margin:0;padding:0">'
+                             + '<li><i class="fa fa-star"></i></li>'
+                             + '<li><i class="fa fa-star"></i></li>'
+                             + '<li><i class="fa fa-star"></i></li>'
+                             + '<li><i class="fa fa-star"></i></li>'
+                             + '<li><i class="fa fa-star"></i></li></ul>'
+                            + '<ul class="list-unstyled" style="padding:0;">'
+                            + '<li><i class="fa fa-map-marker color-yellow" style="width:15px;padding-right:2px"></i>  עיר: ' + data[i].City + '</li>'
+                            + '<li><i class="fa fa-briefcase color-yellow" style="width:15px"></i> תחום: ' + data[i].Subjects + '</li>'
+                            + '</ul></div>'
+                            + '<div class="col-md-3 funny-boxes-img"> <a href="/Teacher/' + data[i].Id + '"><img alt="" src="' + data[i].PictureUrl + '" class="img-responsive rounded-2x"></a></div>'
+                            + '</div></div>').appendTo("#teachersMostRated");
+                    }
+                },
+                error: function (msg) { alert(msg); }
+            });
+        }
+
+        function getMostCommentedTeachers() {
+            $.ajax({
+                url: "/Home/GetMostCommentedTeachers",
+                type: "Get",
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        $('<div class="funny-boxes funny-boxes-right-orange no-space margin-bottom-15 animated fadeInUpBig"><div class="row"><div class="col-md-9">'
+                            + '<h4 style="padding:0;margin:0"><a href="/Teacher/' + data[i].Id + '">' + data[i].FirstName + ' ' + data[i].LastName + '</a></h4>'
+                            + '<ul class="list-unstyled" style="padding:0;">'
+                            + '<li><i class="fa fa-map-marker color-orange" style="width:15px;padding-right:2px"></i>  עיר: ' + data[i].City + '</li>'
+                            + '<li><i class="fa fa-briefcase color-orange" style="width:15px"></i> תחום: ' + data[i].Subjects + '</li>'
+                            + '<li><i class="fa fa-money color-orange" style="width:15px"></i> מחיר: ' + data[i].LessonPrice + '</li>'
+                            + '</ul></div>'
+                            + '<div class="col-md-3 funny-boxes-img"> <a href="/Teacher/' + data[i].Id + '"><img alt="" src="' + data[i].PictureUrl + '" class="img-responsive rounded-2x"></a></div>'
+                            + '</div></div>').appendTo("#teachersMostCommented");
+                    }
+                },
+                error: function (msg) { alert(msg); }
+            });
+        }
 
         //Allow only numbers to be typed in a textbox
         function isNumber(evt) {

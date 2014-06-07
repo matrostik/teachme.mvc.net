@@ -16,11 +16,20 @@ namespace TeachMe.Models
         ResetPasswordTokenError,
         Error
     }
- 
+    public enum ResultType
+    {
+        info,
+        success,
+        warning,
+        danger
+    }
+
     public class ResultViewModel
     {
         public string Title { get; set; }
 
         public string Text { get; set; }
+
+        public ResultType Type { get; set; }
     }
 }

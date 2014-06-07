@@ -8,5 +8,8 @@
     </div><!--/container-->
 </div>
 <div class="container content">
-    <p>@Html.Raw(Model.Text)</p>
-</div>
+    <div class="margin-bottom-40"></div>
+        <div class="alert alert-@Model.Type fade in margin-bottom-50">
+            <strong>@Html.Raw(Model.Text)</strong>
+        </div>
+    </div>

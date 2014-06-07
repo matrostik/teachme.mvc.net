@@ -47,8 +47,7 @@ namespace TeachMe
 
             bundles.Add(new ScriptBundle("~/bundles/unify/page").Include(
                       "~/Scripts/UnifyTheme/jquery-migrate-1.2.1.min.js",
-                       "~/Scripts/UnifyTheme/pages/app.js",
-                      "~/Scripts/UnifyTheme/pages/index.js"));
+                       "~/Scripts/UnifyTheme/pages/app.js"));
             bundles.Add(new ScriptBundle("~/bundles/unify").Include(
                       "~/Scripts/UnifyTheme/back-to-top.js",
                       "~/Scripts/UnifyTheme/jquery.flexslider-min.js",

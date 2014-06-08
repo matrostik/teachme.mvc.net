@@ -54,6 +54,8 @@ namespace TeachMe
                       "~/Scripts/UnifyTheme/modernizr.js",
                       "~/Scripts/UnifyTheme/jquery.cslider.js"));
 
+            bundles.Add(new StyleBundle("~/Content/brand").Include(
+                     "~/Content/UnifyTheme/plugins/brand-buttons.css"));
             // Other plugins
             bundles.Add(new ScriptBundle("~/bundles/fileupload").Include(
                      "~/Scripts/jquery.fileupload.js",

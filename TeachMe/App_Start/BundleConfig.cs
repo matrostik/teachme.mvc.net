@@ -54,8 +54,11 @@ namespace TeachMe
                       "~/Scripts/UnifyTheme/modernizr.js",
                       "~/Scripts/UnifyTheme/jquery.cslider.js"));
 
-            bundles.Add(new StyleBundle("~/Content/brand").Include(
+            // Brand and Social Buttons brand-buttons-inversed.css
+            bundles.Add(new StyleBundle("~/Content/brand-buttons").Include(
+                     "~/Content/UnifyTheme/plugins/brand-buttons-inversed.css",
                      "~/Content/UnifyTheme/plugins/brand-buttons.css"));
+
             // Other plugins
             bundles.Add(new ScriptBundle("~/bundles/fileupload").Include(
                      "~/Scripts/jquery.fileupload.js",

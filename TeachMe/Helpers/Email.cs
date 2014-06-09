@@ -55,17 +55,23 @@ namespace TeachMe.Helpers
         /// <param name="hostUrl">hostUrl</param>
         private static void SendEmailInBackground(string to, string username, string subject, string body, string confirmationToken, EmailTemplate template, string hostUrl)
         {
-            dynamic email = new Postal.Email(template.ToString());
-            email.To = to;
-            email.From = new System.Net.Mail.MailAddress("jce.teachme@gmail.com", "צוות תמיכה של TeachMe");
-            if (!string.IsNullOrEmpty(subject))
-                email.Subject = subject;
-            if (!string.IsNullOrEmpty(body))
-                email.Body = body;
-            email.UserName = username;
-            email.ConfirmationToken = confirmationToken;
-            email.HostUrl = hostUrl;
-            email.Send();
+            try
+            {
+                dynamic email = new Postal.Email(template.ToString());
+                email.To = to;
+                email.From = new System.Net.Mail.MailAddress("jce.teachme@gmail.com", "צוות תמיכה של TeachMe");
+                if (!string.IsNullOrEmpty(subject))
+                    email.Subject = subject;
+                if (!string.IsNullOrEmpty(body))
+                    email.Body = body;
+                email.UserName = username;
+                email.ConfirmationToken = confirmationToken;
+                email.HostUrl = hostUrl;
+                email.Send();
+            }
+            catch (System.Exception)
+            {
+            }
         }
 
     }

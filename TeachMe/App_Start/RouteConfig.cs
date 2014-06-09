@@ -13,16 +13,8 @@ namespace TeachMe
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-           // routes.MapRoute(
-           //name: "SearchMap",
-           //url: "Search/Map/{category}/{city}",
-           //defaults: new { controller = "Search", action = "Index", category = UrlParameter.Optional, city = UrlParameter.Optional }
-           //);
-            routes.MapRoute(
-            name: "Teacher",
-            url: "Teacher/{id}",
-            defaults: new { controller = "Teacher", action = "Index", id = UrlParameter.Optional }
-           );
+            routes.MapMvcAttributeRoutes();
+           
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

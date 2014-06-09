@@ -87,23 +87,61 @@
 
     <div class="row">
         <div class="headline"><h2>שיתוף</h2></div>
-        <div class="col-md-6">
+        <div class="col-md-12">
+            <button class="btn btn-android-inversed" id="sendProfile"><i class="fa fa-envelope"></i></button>
+            <a class="btn btn-facebook-inversed" href="https://www.facebook.com/sharer/sharer.php?u=@Request.Url.AbsoluteUri" target="_blank"><i class="fa fa-facebook" style="width:13px"></i></a>
+            <a class="btn btn-googleplus-inversed" href="https://plus.google.com/share?url=@Request.Url.AbsoluteUri" target="_blank"><i class="fa fa-google-plus"></i></a>
+            <a class="btn btn-twitter-inversed" href="https://twitter.com/share?url=@Request.Url.AbsoluteUri" target="_blank"><i class="fa fa-twitter"></i></a>
         </div>
-        <div class="col-md-2">
-            <button class="btn btn-sm btn-block btn-twitter" dir="ltr">
-                <i class="fa fa-twitter"></i> Twitter
-            </button>
+        <!-- Start Send Email Modal -->
+        <div class="modal fade" id="sendProfileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-dialog-center">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="float:left">×</button>
+                        <h4 class="modal-title" id="myModalLabel">שלח לחבר</h4>
+                    </div>
+                    @using (Html.BeginForm("SendProfile", "Teacher",FormMethod.Post))
+                    {
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true)
+                                    @Html.HiddenFor(x => x.Id)
+                                    <label><span class="color-red">*</span>שם השולח/ת</label>
+                                    <div class="row margin-bottom-20">
+                                        <div class="col-md-6 col-md-offset-6">
+                                            <input type="text" id="from" name="from" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <label><span class="color-red">*</span>שלח לדוא"ל</label>
+                                    <div class="row margin-bottom-20">
+                                        <div class="col-md-6 col-md-offset-6">
+                                            <input type="text" name="email" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <label><span class="color-red">*</span>הערות</label>
+                                    <div class="row margin-bottom-20">
+                                        <div class="col-md-7 col-md-offset-5">
+                                            <textarea class="form-control" name="comment" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn-u btn-u-primary"><i class="fa fa-envelope"></i>&nbsp;שלח</button>
+                            <button type="button" class="btn-u btn-u-default" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;סגור</button>
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
-        <div class="col-md-2">
-            <button class="btn btn-sm btn-block btn-googleplus" dir="ltr">
-                <i class="fa fa-google-plus"></i> Google+
-            </button>
-        </div>
-        <div class="col-md-2">
-            <button class="btn btn-sm btn-block btn-facebook" dir="ltr">
-                <i class="fa fa-facebook"></i> Facebook
-            </button>
-        </div>
+        <!-- End Send Email Modal -->
+
     </div>
 
     <div class="row comments">
@@ -169,11 +207,15 @@
     </div>
     <!-- End Comment Form -->
 </div>
-@Styles.Render("~/Content/brand")
+@Styles.Render("~/Content/brand-buttons")
 @section Scripts {
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGG8Hq0jur-Ca6QtjQ0iQFQ3TJG9WzEA8&v=3.exp&sensor=true&language=he" type="text/javascript"></script>
 
     <script type="text/javascript">
+        //modal comment delete confirm
+        $(document).on("click", "#sendProfile", function () {
+            $('#sendProfileModal').modal('show');
+        });
         var mapcode;
         var map;
         function initialize() {

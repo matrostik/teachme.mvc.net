@@ -1,9 +1,16 @@
 ﻿@{ Layout = null; /* Overrides the Layout set for regular page views. */ }
 
-Subject: Complete Registration Process
+Subject: השלמת תהליך הרישום - TeacMe
+Content-Type: text/html; charset=utf-8
 
-    שלום @ViewBag.UserName,
+<html>
+<body dir="rtl">
+    <p>
+        שלום @ViewBag.UserName,
+    </p>
     להשלמת תהליך הרישום כנס ללינק הבא:
-    http://@ViewBag.hosturl/account/registerconfirmation/@ViewBag.confirmationtoken
+    <a href="http://@ViewBag.hosturl/Account/RegisterConfirmation/@ViewBag.ConfirmationToken" target="_blank">השלמת תהליך הרישום</a>
 
+</body>
+</html>
 

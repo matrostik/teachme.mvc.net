@@ -37,27 +37,10 @@ namespace TeachMe.Controllers
         public ActionResult Create()
         {
             var model = new CreateProfileViewModel();
-            model.Subjects = Db.Subjects.Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            }).ToList();
-
-            model.Cities = Db.Cities.Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Name
-            }).ToList();
-
-            var items = new List<SelectListItem>();
-            items.Add(new SelectListItem() { Text = "30 דקות", Value = "30" });
-            items.Add(new SelectListItem() { Text = "45 דקות", Value = "45" });
-            items.Add(new SelectListItem() { Text = "60 דקות", Value = "60" });
-            items.Add(new SelectListItem() { Text = "90 דקות", Value = "90" });
-            model.Time = items;
-
-            model.Institutions = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
-                .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
+            model.Subjects = GetSubjectsSelectedList();
+            model.Cities = GetCitiesSelectedList();
+            model.Time = GetLessonTimeSelectedList();
+            model.Institutions = GetInstitutionsGroupDropList();
 
             var id = User.Identity.GetUserId();
             model.User = Db.Users.FirstOrDefault(x => x.Id == id);
@@ -123,27 +106,10 @@ namespace TeachMe.Controllers
                 }
             }
             // model not valid get data again and return to page
-            model.Subjects = Db.Subjects.Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            }).ToList();
-
-            model.Cities = Db.Cities.Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Name
-            }).ToList();
-
-            var items = new List<SelectListItem>();
-            items.Add(new SelectListItem() { Text = "30 דקות", Value = "30" });
-            items.Add(new SelectListItem() { Text = "45 דקות", Value = "45" });
-            items.Add(new SelectListItem() { Text = "60 דקות", Value = "60" });
-            items.Add(new SelectListItem() { Text = "90 דקות", Value = "90" });
-            model.Time = items;
-
-            model.Institutions = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
-                 .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
+            model.Subjects = GetSubjectsSelectedList();
+            model.Cities = GetCitiesSelectedList();
+            model.Time = GetLessonTimeSelectedList();
+            model.Institutions = GetInstitutionsGroupDropList();
 
             var id = User.Identity.GetUserId();
             model.User = Db.Users.FirstOrDefault(x => x.Id == id);
@@ -165,27 +131,10 @@ namespace TeachMe.Controllers
         public ActionResult Edit(int? id)
         {
             EditProfileViewModel model = new EditProfileViewModel();
-            model.Subjects = Db.Subjects.Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            }).ToList();
-
-            model.Cities = Db.Cities.Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Name
-            }).ToList();
-
-            var items = new List<SelectListItem>();
-            items.Add(new SelectListItem() { Text = "30 דקות", Value = "30" });
-            items.Add(new SelectListItem() { Text = "45 דקות", Value = "45" });
-            items.Add(new SelectListItem() { Text = "60 דקות", Value = "60" });
-            items.Add(new SelectListItem() { Text = "90 דקות", Value = "90" });
-            model.Time = items;
-
-            model.Institutions = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
-                .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
+            model.Subjects = GetSubjectsSelectedList();
+            model.Cities = GetCitiesSelectedList();
+            model.Time = GetLessonTimeSelectedList();
+            model.Institutions = GetInstitutionsGroupDropList();
 
             /*************************************************************/
             //if (id.HasValue)
@@ -199,7 +148,7 @@ namespace TeachMe.Controllers
             //}
             /*************************************************************/
 
-            var idx= User.Identity.GetUserId();
+            var idx = User.Identity.GetUserId();
             var teacher = Db.Teachers.FirstOrDefault(x => x.ApplicationUserId == idx);
             model.Teacher = teacher;
             model.SubjectsId = model.Teacher.SubjectsToTeach.Select(x => x.SubjectId.ToString()).ToList();
@@ -250,28 +199,11 @@ namespace TeachMe.Controllers
 
                 return RedirectToAction("Index");
             }
-
-            model.Subjects = Db.Subjects.Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            }).ToList();
-
-            model.Cities = Db.Cities.Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Name
-            }).ToList();
-
-            var items = new List<SelectListItem>();
-            items.Add(new SelectListItem() { Text = "30 דקות", Value = "30" });
-            items.Add(new SelectListItem() { Text = "45 דקות", Value = "45" });
-            items.Add(new SelectListItem() { Text = "60 דקות", Value = "60" });
-            items.Add(new SelectListItem() { Text = "90 דקות", Value = "90" });
-            model.Time = items;
-
-            model.Institutions = Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
-                .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
+            // model not valid get data again and return to page
+            model.Subjects = GetSubjectsSelectedList();
+            model.Cities = GetCitiesSelectedList();
+            model.Time = GetLessonTimeSelectedList();
+            model.Institutions = GetInstitutionsGroupDropList();
 
             return View(model);
         }
@@ -331,6 +263,56 @@ namespace TeachMe.Controllers
             Db.Teachers.Remove(t);
             Db.SaveChanges();
             return RedirectToAction("Index", "Home");
+        }
+
+        /// <summary>
+        /// Build Subjects selected list
+        /// </summary>
+        /// <returns></returns>
+        private List<SelectListItem> GetSubjectsSelectedList()
+        {
+            return Db.Subjects.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
+        }
+
+        /// <summary>
+        ///  Build Cities selected list
+        /// </summary>
+        /// <returns></returns>
+        private List<SelectListItem> GetCitiesSelectedList()
+        {
+            return Db.Cities.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Name
+            }).ToList();
+        }
+
+        /// <summary>
+        /// Build Institutions GroupDropList
+        /// </summary>
+        /// <returns></returns>
+        private List<GroupDropListItem> GetInstitutionsGroupDropList()
+        {
+            return Db.Institutions.OrderBy(x => x.Id).GroupBy(x => x.Type)
+                .Select(g => new GroupDropListItem { Name = g.Key, Items = g.Select(x => new OptionItem { Text = x.Name, Value = x.Name }).ToList() }).ToList();
+        }
+
+        /// <summary>
+        /// Build LessonTime selected list
+        /// </summary>
+        /// <returns></returns>
+        private List<SelectListItem> GetLessonTimeSelectedList()
+        {
+            var items = new List<SelectListItem>();
+            items.Add(new SelectListItem() { Text = "30 דקות", Value = "30" });
+            items.Add(new SelectListItem() { Text = "45 דקות", Value = "45" });
+            items.Add(new SelectListItem() { Text = "60 דקות", Value = "60" });
+            items.Add(new SelectListItem() { Text = "90 דקות", Value = "90" });
+            return items;
         }
 
     }

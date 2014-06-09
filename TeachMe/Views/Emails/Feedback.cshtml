@@ -1,7 +1,15 @@
 ﻿@{ Layout = null; /* Overrides the Layout set for regular page views. */ }
 
-Subject: @ViewBag.Subject
+Subject: @ViewBag.Subject - TeacMe
+Content-Type: text/html; charset=utf-8
 
-From: @ViewBag.UserName
+<html>
+<body dir="rtl">
+    @ViewBag.UserName
+    <p>
+        @ViewBag.Body
+    </p>
+</body>
+</html>
 
-@ViewBag.Body
+

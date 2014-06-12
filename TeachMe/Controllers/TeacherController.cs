@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using TeachMe.Helpers;
 using TeachMe.Models;
+using System.Collections.Generic;
+
 
 namespace TeachMe.Controllers
 {
@@ -22,7 +25,10 @@ namespace TeachMe.Controllers
             {
                 return RedirectToAction("Index", "Result", new { Message = ResultMessage.Error });
             }
-            Teacher model = Db.Teachers.FirstOrDefault(t => t.Id == id.Value);
+
+            TeacherViewModel model = new TeacherViewModel();
+            model.Teacher = Db.Teachers.FirstOrDefault(t => t.Id == id.Value);
+            model.Comment = new Comment() { TeacherId = model.Teacher.Id };
             return View(model);
         }
 
@@ -35,7 +41,38 @@ namespace TeachMe.Controllers
             Teacher teacher = Db.Teachers.FirstOrDefault(t => t.Id == id.Value);
             // Send reset password email
             Email.Send(email, "", teacher.GetFullName(), " פרופיל של" + teacher.GetFullName(), EmailTemplate.Feedback);
-            return RedirectToAction("Index", new { @id=id });
+            return RedirectToAction("Index", new { @id = id });
+        }
+
+        [Route("Teacher/CreateComment/")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateComment([Bind(Include = "Id,TeacherId,AuthorName,CommentText")] Comment comment)
+        {
+           
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    comment.Date = DateTime.Now;
+                    Teacher teacher = Db.Teachers.Find(comment.TeacherId);
+                    teacher.Comments.Add(comment);
+                    Db.SaveChanges();
+                }
+                catch (Exception)
+                {
+
+                }
+                return RedirectToAction("Index", new { id = comment.TeacherId });
+            }
+            //ModelState.AddModelError("", "Some Error.");
+            var tvm = new TeacherViewModel();
+            tvm.Teacher = Db.Teachers.Find(comment.TeacherId);
+            tvm.Comment = comment;
+            return View("Index", tvm);
+
+
         }
 
     }

@@ -70,7 +70,7 @@ namespace TeachMe.Controllers
                 {
                     Id = x.Id,
                     FirstName = x.User.FirstName,
-                    LastName = x.User.LastName,
+                    LastName = x.User.LastName, 
                     City = x.City,
                     LessonPrice = x.LessonPrice,
                     Subjects = string.Join(", ", x.SubjectsToTeach.Select(s => s.Name)),

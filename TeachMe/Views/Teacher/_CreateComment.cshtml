@@ -1,0 +1,41 @@
+﻿@model TeachMe.Models.Comment
+
+@using (Html.BeginForm("CreateComment", "Teacher"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="post-comment">
+        <div class="headline"><h2>הוסף תגובה</h2></div>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(m => m.TeacherId)
+            <label><span class="color-red">*</span> שם</label>
+            <div class="row margin-bottom-20">
+                <div class="col-md-5 col-md-offset-7">
+
+                    @Html.TextBoxFor(model => model.AuthorName, new { @class = "form-control", @id = "inputDefault" })
+                    @Html.ValidationMessageFor(model => model.AuthorName)
+                </div>
+            </div>
+
+
+
+            <label><span class="color-red">*</span> תגובה</label>
+            <div class="row margin-bottom-20">
+                <div class="col-md-7 col-md-offset-5">
+                    @Html.TextAreaFor(model => model.CommentText, new { @class = "form-control", @id = "inputDefault", @rows = 5 })
+                    @Html.ValidationMessageFor(model => model.CommentText)
+                </div>
+            </div>
+
+            <p><button class="btn-u" type="submit"><i class="fa fa-comments"></i>&nbsp;&nbsp;הוסף תגובה</button></p>
+        }
+    </div>
+        <!-- End Comment Form -->
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

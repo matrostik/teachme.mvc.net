@@ -217,6 +217,7 @@
     <Compile Include="Models\Subject.cs" />
     <Compile Include="Models\SubjectToTeach.cs" />
     <Compile Include="Models\Teacher.cs" />
+    <Compile Include="Models\TeacherViewModel.cs" />
     <Compile Include="Models\TeachMeDBContext.cs" />
     <Compile Include="Models\UploadFilesResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -391,6 +392,7 @@
     <Content Include="Views\Teacher\Index.cshtml">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Views\Teacher\_CreateComment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\UnifyTheme\pages\" />

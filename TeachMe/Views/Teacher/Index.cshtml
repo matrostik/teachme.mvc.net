@@ -1,6 +1,6 @@
-﻿@model TeachMe.Models.Teacher
+﻿@model TeachMe.Models.TeacherViewModel
 @{
-    ViewBag.Title = "עמוד הפרופיל של " + @Model.GetFullName();
+    ViewBag.Title = "עמוד הפרופיל של " + @Model.Teacher.GetFullName();
 }
 <div class="breadcrumbs">
     <div class="container">
@@ -22,8 +22,8 @@
                     <div class="margin-bottom-30">
                         <div class="headline"><h2>פרטי התקשרות</h2></div>
                         <ul class="list-unstyled who margin-bottom-30" style="padding-right:0">
-                            <li><a href="#"><i class="fa fa-envelope"></i> &nbsp;@Html.DisplayFor(model => model.User.UserName)</a></li>
-                            <li><a href="#"><i class="fa fa-phone"></i> &nbsp;@Html.DisplayFor(model => model.Phone)</a></li>
+                            <li><a href="#"><i class="fa fa-envelope"></i> &nbsp;@Html.DisplayFor(model => model.Teacher.User.UserName)</a></li>
+                            <li><a href="#"><i class="fa fa-phone"></i> &nbsp;@Html.DisplayFor(model => model.Teacher.Phone)</a></li>
                         </ul>
                     </div>
                 </div>
@@ -32,9 +32,9 @@
                         <div class="col-md-5">
                             <div class="headline"><h2>תיאור כללי</h2></div>
                             <ul class="list-unstyled margin-bottom-30" style="padding-right:0">
-                                <li><b><span class="text-border text-border-green">השכלה</span>:</b>  @Html.DisplayFor(model => model.Education)</li>
-                                <li><b><span class="text-border text-border-green">מוסד אקדמי</span>:</b> @Html.Raw(@Model.Institution)</li>
-                                <li><b><span class="text-border text-border-green">אודות</span>:</b> @Html.DisplayFor(model => model.About)</li>
+                                <li><b><span class="text-border text-border-green">השכלה</span>:</b>  @Html.DisplayFor(model => model.Teacher.Education)</li>
+                                <li><b><span class="text-border text-border-green">מוסד אקדמי</span>:</b> @Html.Raw(@Model.Teacher.Institution)</li>
+                                <li><b><span class="text-border text-border-green">אודות</span>:</b> @Html.DisplayFor(model => model.Teacher.About)</li>
                             </ul>
                         </div>
 
@@ -43,16 +43,16 @@
                             <div class="row">
                                 <div class="col-md-7">
                                     <ul class="list-unstyled margin-bottom-30" style="padding-right:0">
-                                        <li><b><span class="text-border text-border-green">שם פרטי</span>:</b> @Html.DisplayFor(model => model.User.FirstName)</li>
-                                        <li><b><span class="text-border text-border-green">שם משפחה</span>:</b> @Html.DisplayFor(model => model.User.LastName)</li>
-                                        <li><b><span class="text-border text-border-green">גיל</span>:</b> @Html.DisplayFor(model => model.Age)</li>
-                                        <li><b><span class="text-border text-border-green">עיר</span>:</b> @Html.DisplayFor(model => model.City)</li>
-                                        <li><b><span class="text-border text-border-green">רחוב</span>:</b> @Html.DisplayFor(model => model.Street)</li>
-                                        <li><b><span class="text-border text-border-green">מספר בית</span>:</b> @Html.DisplayFor(model => model.HomeNum)</li>
+                                        <li><b><span class="text-border text-border-green">שם פרטי</span>:</b> @Html.DisplayFor(model => model.Teacher.User.FirstName)</li>
+                                        <li><b><span class="text-border text-border-green">שם משפחה</span>:</b> @Html.DisplayFor(model => model.Teacher.User.LastName)</li>
+                                        <li><b><span class="text-border text-border-green">גיל</span>:</b> @Html.DisplayFor(model => model.Teacher.Age)</li>
+                                        <li><b><span class="text-border text-border-green">עיר</span>:</b> @Html.DisplayFor(model => model.Teacher.City)</li>
+                                        <li><b><span class="text-border text-border-green">רחוב</span>:</b> @Html.DisplayFor(model => model.Teacher.Street)</li>
+                                        <li><b><span class="text-border text-border-green">מספר בית</span>:</b> @Html.DisplayFor(model => model.Teacher.HomeNum)</li>
                                     </ul>
                                 </div>
                                 <div class="col-md-5">
-                                    <img class="img-responsive rounded-2x img-bordered" src="@Model.PictureUrl" alt="">
+                                    <img class="img-responsive rounded-2x img-bordered" src="@Model.Teacher.PictureUrl" alt="">
                                 </div>
                             </div>
                         </div>
@@ -61,9 +61,9 @@
                         <div class=" col-md-9">
                             <div class="headline"><h2>פרטי השיעור</h2></div>
                             <ul class="list-unstyled margin-bottom-30" style="padding-right:0">
-                                <li><b><span class="text-border text-border-green">מקצוע</span>:</b> @Html.DisplayName(Model.GetSubjects())</li>
-                                <li><b><span class="text-border text-border-green">משך השיעור</span>:</b> @Html.DisplayFor(model => model.LessonTime) דקות</li>
-                                <li><b><span class="text-border text-border-green">מחיר השיעור</span>:</b> @Html.DisplayFor(model => model.LessonPrice) ש"ח</li>
+                                <li><b><span class="text-border text-border-green">מקצוע</span>:</b> @Html.DisplayName(Model.Teacher.GetSubjects())</li>
+                                <li><b><span class="text-border text-border-green">משך השיעור</span>:</b> @Html.DisplayFor(model => model.Teacher.LessonTime) דקות</li>
+                                <li><b><span class="text-border text-border-green">מחיר השיעור</span>:</b> @Html.DisplayFor(model => model.Teacher.LessonPrice) ש"ח</li>
                             </ul>
                         </div>
                         <div class=" col-md-3">
@@ -108,7 +108,7 @@
                                 <div class="col-md-12">
                                     @Html.AntiForgeryToken()
                                     @Html.ValidationSummary(true)
-                                    @Html.HiddenFor(x => x.Id)
+                                    @Html.HiddenFor(x => x.Teacher.Id)
                                     <label><span class="color-red">*</span>שם השולח/ת</label>
                                     <div class="row margin-bottom-20">
                                         <div class="col-md-6 col-md-offset-6">
@@ -146,174 +146,139 @@
 
     <div class="row comments">
         <div class="headline"><h2>תגובות</h2></div>
-        <div class="shadow-wrapper">
+        @foreach (var c in Model.Teacher.Comments)
+        {
+             <div class="shadow-wrapper">
             <div class="tag-box tag-box-v3 margin-bottom-15 box-shadow shadow-effect-2" style="padding:10px">
                 <div class="media">
                     <a class="pull-right" href="#">
                         <i class="icon-custom icon-lg icon-color-u fa fa-comments"></i>
                     </a>
                     <div class="media-body">
-                        <h4 class="media-heading"><span class="text-border text-border-green">04.06.14</span></h4>
-                        <p>TeachMe היא פלטפורמה לכל מי שרוצה ללמד או ללמוד כתלמיד תוכל לחפש מורה באזור שלך לפי ולקרוא עליו המלצות מתלמידים כמוך כמורה תוכל לקבל חשיפה לתלמידים רבים ניתן להתחבר לאתר באמצעות פרופיל רשת חברתית כמו פייסבוק או גוגל פלוס כך שלא תצטרך להירשם ל"עוד רשת חברתית"</p>
+                        <h4 class="media-heading"><span class="text-border text-border-green">@c.Date.ToString("dd.MM.yyyy")</span></h4>
+                        <p>@c.AuthorName:</p>
+                        <p>@c.CommentText</p>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="shadow-wrapper">
-            <div class="tag-box tag-box-v3 margin-bottom-15 box-shadow shadow-effect-2" style="padding:10px">
-                <div class="media">
-                    <a class="pull-right" href="#">
-                        <i class="icon-custom icon-lg icon-color-u fa fa-comments"></i>
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading"><span class="text-border text-border-green">04.06.14</span></h4>
-                        <p>TeachMe היא פלטפורמה לכל מי שרוצה ללמד או ללמוד כתלמיד תוכל לחפש מורה באזור שלך לפי ולקרוא עליו המלצות מתלמידים כמוך כמורה תוכל לקבל חשיפה לתלמידים רבים ניתן להתחבר לאתר באמצעות פרופיל רשת חברתית כמו פייסבוק או גוגל פלוס כך שלא תצטרך להירשם ל"עוד רשת חברתית"</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        }
+      
     </div>
     <!-- Comment Form -->
-    <div class="post-comment">
-        <div class="headline"><h2>הוסף תגובה</h2></div>
-        @using (Html.BeginForm())
-        {
-            @Html.ValidationSummary(true)
-            <label><span class="color-red">*</span> שם</label>
-            <div class="row margin-bottom-20">
-                <div class="col-md-5 col-md-offset-7">
-                    <input type="text" class="form-control">
-                </div>
-            </div>
 
-            <label><span class="color-red">*</span> דואר אלקטרוני</label>
-            <div class="row margin-bottom-20">
-                <div class="col-md-5 col-md-offset-7">
-                    <input type="text" class="form-control">
-                </div>
-            </div>
-
-            <label><span class="color-red">*</span> תגובה</label>
-            <div class="row margin-bottom-20">
-                <div class="col-md-7 col-md-offset-5">
-                    <textarea class="form-control" rows="8"></textarea>
-                </div>
-            </div>
-
-            <p><button class="btn-u" type="submit"><i class="fa fa-comments"></i>&nbsp;&nbsp;הוסף תגובה</button></p>
-        }
-    </div>
-    <!-- End Comment Form -->
+    <p>
+        @Html.Partial("_CreateComment",Model.Comment)
+    </p>
+   
 </div>
 @Styles.Render("~/Content/brand-buttons")
 @section Scripts {
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGG8Hq0jur-Ca6QtjQ0iQFQ3TJG9WzEA8&v=3.exp&sensor=true&language=he" type="text/javascript"></script>
 
     <script type="text/javascript">
-        //modal comment delete confirm
-        $(document).on("click", "#sendProfile", function () {
-            $('#sendProfileModal').modal('show');
-        });
-        var mapcode;
-        var map;
-        function initialize() {
-            var latlng = new google.maps.LatLng('@Model.GeoLocation.Latitude', '@Model.GeoLocation.Longitude');
-            var myOptions = {
-                zoom: 14,
-                center: latlng,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
-            var marker = new google.maps.Marker
-            (
-                {
-                    position: new google.maps.LatLng('@Model.GeoLocation.Latitude', '@Model.GeoLocation.Longitude'),
-                    map: map,
-                    title: 'Click me'
-                }
-            );
-            var contentString = '<div class="text-danger" style="width:275px">'
-                + '<strong>מורה:</strong> ' + 'שם ושם משפחה' + '<br/>'
-                + '<strong>כתובת:</strong> ' + '@ViewBag.Address' + '<br/>'
-                + '<div style="margin-top:10px"><a class="label label-warning" href="#">פרופיל המלא »</a></div><br/>'
-                + '</div>';
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString,
-                size: new google.maps.Size(250, 150)
-            });
-            google.maps.event.addListener(marker, 'click', function () {
-                // Calling the open method of the infoWindow
-                infowindow.open(map, marker);
-            });
-            //markicons();
-        }
-        window.onload = initialize;
-
-        function markicons() {
-            var latlng = new google.maps.LatLng('@(Model.GeoLocation.Latitude)', '@(Model.GeoLocation.Longitude)');
-            var foos = $(".foo");
-            var markers = new Array();
-            var mapOptions = {
-                zoom: 14,
-                center: latlng,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            var mapCanvas = document.getElementById('map-canvas');
-            if (mapCanvas != null) {
-                map = new google.maps.Map(mapCanvas, mapOptions);
-                $.each(foos, function (key, value) {
-
-                    markers[key] = new google.maps.Marker({
-                        map: map,
-                        draggable: false,
-                        animation: google.maps.Animation.DROP,
-                        position: new google.maps.LatLng(
-                            Number($(value).attr("data-latitude")),
-                            Number($(value).attr("data-longitude")
-                         ))
-                    });
-
-                    var contentString = '<table><tr>'
-                        + '<td width="155px"><div class="text-danger" style="width:210px">'
-                        + '<strong>מורה:</strong> ' + ($(value).attr("data-name")) + '<br/>'
-                        + '<strong>כתובת:</strong> ' + ($(value).attr("data-address")) + '<br/>'
-                        + '<div style="margin-top:10px"><a class="label label-warning" href="/Teacher/' + ($(value).attr("data-id")) + '">פרופיל המלא »</a></div><br/>'
-                        + '</div></td>'
-                        + '<td width="55px"><img src="' + ($(value).attr("data-picture")) + '" alt="Smiley face" height="75"></td>'
-                        + '</div></td></tr></table>';
-                    var infowindow = new google.maps.InfoWindow({
-                        content: contentString,
-                        size: new google.maps.Size(250, 150)
-                    });
-
-                    google.maps.event.addListener(markers[key], 'click', function () {
-                        // If you need this...
-                        infowindow.open(map, markers[key]);
-                    });
-
-                });
+    //modal comment delete confirm
+    $(document).on("click", "#sendProfile", function () {
+        $('#sendProfileModal').modal('show');
+    });
+    var mapcode;
+    var map;
+    function initialize() {
+        var latlng = new google.maps.LatLng('@Model.Teacher.GeoLocation.Latitude', '@Model.Teacher.GeoLocation.Longitude');
+        var myOptions = {
+            zoom: 14,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+        var marker = new google.maps.Marker
+        (
+            {
+                position: new google.maps.LatLng('@Model.Teacher.GeoLocation.Latitude', '@Model.Teacher.GeoLocation.Longitude'),
+                map: map,
+                title: 'Click me'
             }
-        }
+    );
+        var contentString = '<div class="text-danger" style="width:275px">'
+            + '<strong>מורה:</strong> ' + 'שם ושם משפחה' + '<br/>'
+            + '<strong>כתובת:</strong> ' + '@ViewBag.Address' + '<br/>'
+            + '<div style="margin-top:10px"><a class="label label-warning" href="#">פרופיל המלא »</a></div><br/>'
+            + '</div>';
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString,
+            size: new google.maps.Size(250, 150)
+        });
+        google.maps.event.addListener(marker, 'click', function () {
+            // Calling the open method of the infoWindow
+            infowindow.open(map, marker);
+        });
+        //markicons();
+    }
+    window.onload = initialize;
 
+    function markicons() {
+        var latlng = new google.maps.LatLng('@(Model.Teacher.GeoLocation.Latitude)', '@(Model.Teacher.GeoLocation.Longitude)');
+        var foos = $(".foo");
+        var markers = new Array();
+        var mapOptions = {
+            zoom: 14,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var mapCanvas = document.getElementById('map-canvas');
+        if (mapCanvas != null) {
+            map = new google.maps.Map(mapCanvas, mapOptions);
+            $.each(foos, function (key, value) {
 
-        function codeAddress() {
-            var add = document.getElementById('address').value;
-            mapcode.geocode({ 'address': add }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    diag.setCenter(results[0].geometry.location);
-                    var hint = new google.maps.Marker({
-                        diag: map,
-                        position: results[0].geometry.location,
-                        title: add
-                    });
-                    hint.setMap(diag);
-                } else {
-                    alert('This code is not successful ' + status);
-                }
+                markers[key] = new google.maps.Marker({
+                    map: map,
+                    draggable: false,
+                    animation: google.maps.Animation.DROP,
+                    position: new google.maps.LatLng(
+                        Number($(value).attr("data-latitude")),
+                        Number($(value).attr("data-longitude")
+                     ))
+                });
+
+                var contentString = '<table><tr>'
+                    + '<td width="155px"><div class="text-danger" style="width:210px">'
+                    + '<strong>מורה:</strong> ' + ($(value).attr("data-name")) + '<br/>'
+                    + '<strong>כתובת:</strong> ' + ($(value).attr("data-address")) + '<br/>'
+                    + '<div style="margin-top:10px"><a class="label label-warning" href="/Teacher/' + ($(value).attr("data-id")) + '">פרופיל המלא »</a></div><br/>'
+                    + '</div></td>'
+                    + '<td width="55px"><img src="' + ($(value).attr("data-picture")) + '" alt="Smiley face" height="75"></td>'
+                    + '</div></td></tr></table>';
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    size: new google.maps.Size(250, 150)
+                });
+
+                google.maps.event.addListener(markers[key], 'click', function () {
+                    // If you need this...
+                    infowindow.open(map, markers[key]);
+                });
+
             });
         }
-        google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
+    }
+
+
+    function codeAddress() {
+        var add = document.getElementById('address').value;
+        mapcode.geocode({ 'address': add }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                diag.setCenter(results[0].geometry.location);
+                var hint = new google.maps.Marker({
+                    diag: map,
+                    position: results[0].geometry.location,
+                    title: add
+                });
+                hint.setMap(diag);
+            } else {
+                alert('This code is not successful ' + status);
+            }
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
 }

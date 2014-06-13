@@ -164,7 +164,6 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryui")
-    @Scripts.Render("~/bundles/irfan.rating")
 
 
     <script language="javascript" type="text/javascript">
@@ -211,20 +210,16 @@
         }
 
         function buildRate(id, rate) {
-            var radio = '<input class="rating" type="radio" value=';
             var result = '';
             for (var i = 1; i <= 5; i++) {
-                result += '<input class="rating" name="vote_' + id + '" type="radio" value="' + i + '" ';
-                if (rate > i - 1 && rate <= i)
-                    result += "checked=checked />";
-                else
-                    result += "/>";
+                result += '<a class="star';
+                if (rate >= i)
+                    result += ' fullStar';
+                result += '"></a>';
             }
-
-            var str = '<div class="pull right">'
-                + '<div class="ratting-item" id="'+id+' data-pid="'+id+'">'
+            var str = '<div class="stars pull-right">'
                 + result
-                + '</div><span class="result"></span></div>';
+                + '</div><br/>';
             return str;
         }
 
@@ -234,6 +229,7 @@
                 url: "/Home/GetMostRatedTeachers",
                 type: "Get",
                 success: function (data) {
+
                     for (var i = 0; i < data.length; i++) {
                         var rate = buildRate(data[i].Id, data[i].Rating);
                         $('<div class="funny-boxes funny-boxes-right-yellow no-space margin-bottom-15 animated fadeInUpBig"><div class="row"><div class="col-md-9">'

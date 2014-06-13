@@ -42,14 +42,13 @@ namespace TeachMe
             bundles.Add(new StyleBundle("~/Content/cssplugins")
                      .Include("~/Content/UnifyTheme/plugins/font-awesome.min.css", new CssRewriteUrlTransform())
                      .Include("~/Content/UnifyTheme/plugins/line-icons.css", new CssRewriteUrlTransform())
-                     .Include("~/Content/UnifyTheme/plugins/flexslider.css","~/Content/UnifyTheme/plugins/parallax-slider.css", "~/Content/irfan.rating.css")
+                     .Include("~/Content/UnifyTheme/plugins/flexslider.css","~/Content/UnifyTheme/plugins/parallax-slider.css")
                      .Include("~/Content/UnifyTheme/plugins/box-shadows.css", "~/Content/UnifyTheme/plugins/animate.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/unify/page").Include(
                       "~/Scripts/UnifyTheme/jquery-migrate-1.2.1.min.js",
                        "~/Scripts/UnifyTheme/pages/app.js"));
             bundles.Add(new ScriptBundle("~/bundles/unify").Include(
-                      "~/Scripts/UnifyTheme/irfan.rating.js",
                       "~/Scripts/UnifyTheme/back-to-top.js",
 
                       "~/Scripts/UnifyTheme/jquery.flexslider-min.js",

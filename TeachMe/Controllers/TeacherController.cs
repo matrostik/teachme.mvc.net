@@ -75,5 +75,51 @@ namespace TeachMe.Controllers
 
         }
 
+        [Route("Teacher/RateItem/")]
+        public ActionResult RateItem(int id, int rate)
+        {
+            bool success = false;
+            string error = "";
+            double totalRaters = 0;
+            try
+            {
+                if (Request.Cookies["rating" + id] != null)
+                    return Json(new { error = error, success = success, pid = id, total = totalRaters }, JsonRequestBehavior.AllowGet);
+                Response.Cookies["rating" + id].Value = DateTime.Now.ToString();
+                Response.Cookies["rating" + id].Expires = DateTime.Now.AddYears(1);
+
+                totalRaters = IncrementRating(rate, id);
+                success = true;
+            }
+            catch (Exception ex)
+            {
+                // get last error
+                if (ex.InnerException != null)
+                    while (ex.InnerException != null)
+                        ex = ex.InnerException;
+
+                error = ex.Message;
+            }
+            if (totalRaters != 0)
+                success = true;
+            return Json(new { error = error, success = success, pid = id, total = totalRaters }, JsonRequestBehavior.AllowGet);
+        }
+
+        public int IncrementRating(int rate, int id)
+        {
+            var teach = Db.Teachers.Where(a => a.Id == id).First();
+            try
+            {
+                teach.Rating += rate;
+                teach.Raters += 1;
+                Db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+            return teach.Raters;
+        }
+
     }
 }

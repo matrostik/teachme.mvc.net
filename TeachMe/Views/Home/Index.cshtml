@@ -160,8 +160,12 @@
 </div>
 
 @Styles.Render("~/Content/jqueryui")
+@Styles.Render("~/Content/irfan.rating")
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/irfan.rating")
+
 
     <script language="javascript" type="text/javascript">
 
@@ -206,20 +210,35 @@
             });
         }
 
+        function buildRate(id, rate) {
+            var radio = '<input class="rating" type="radio" value=';
+            var result = '';
+            for (var i = 1; i <= 5; i++) {
+                result += '<input class="rating" name="vote_' + id + '" type="radio" value="' + i + '" ';
+                if (rate > i - 1 && rate <= i)
+                    result += "checked=checked />";
+                else
+                    result += "/>";
+            }
+
+            var str = '<div class="pull right">'
+                + '<div class="ratting-item" id="'+id+' data-pid="'+id+'">'
+                + result
+                + '</div><span class="result"></span></div>';
+            return str;
+        }
+
+
         function getMostRatedTeachers() {
             $.ajax({
                 url: "/Home/GetMostRatedTeachers",
                 type: "Get",
                 success: function (data) {
                     for (var i = 0; i < data.length; i++) {
+                        var rate = buildRate(data[i].Id, data[i].Rating);
                         $('<div class="funny-boxes funny-boxes-right-yellow no-space margin-bottom-15 animated fadeInUpBig"><div class="row"><div class="col-md-9">'
                             + '<h4 style="padding:0;margin:0"><a href="/Teacher/' + data[i].Id + '">' + data[i].FirstName + ' ' + data[i].LastName + '</a></h4>'
-                            + '<ul class="list-unstyled funny-boxes-rating" style="margin:0;padding:0">'
-                             + '<li><i class="fa fa-star"></i></li>'
-                             + '<li><i class="fa fa-star"></i></li>'
-                             + '<li><i class="fa fa-star"></i></li>'
-                             + '<li><i class="fa fa-star"></i></li>'
-                             + '<li><i class="fa fa-star"></i></li></ul>'
+                            + rate
                             + '<ul class="list-unstyled" style="padding:0;">'
                             + '<li><i class="fa fa-map-marker color-yellow" style="width:15px;padding-right:2px"></i>  עיר: ' + data[i].City + '</li>'
                             + '<li><i class="fa fa-briefcase color-yellow" style="width:15px"></i> תחום: ' + data[i].Subjects + '</li>'
@@ -231,6 +250,7 @@
                 error: function (msg) { alert(msg); }
             });
         }
+
 
         function getMostCommentedTeachers() {
             $.ajax({

@@ -75,7 +75,8 @@ namespace TeachMe.Controllers
                     LessonPrice = x.LessonPrice,
                     Subjects = string.Join(", ", x.SubjectsToTeach.Select(s => s.Name)),
                     PictureUrl = x.PictureUrl,
-                    Rating = x.Rating
+                    Rating = x.Raters==0 ? 0 : x.Rating/x.Raters
+
                 }).ToList();
             return Json(teachers, JsonRequestBehavior.AllowGet);
         }

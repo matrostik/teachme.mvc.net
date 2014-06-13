@@ -230,6 +230,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\irfan.rating.css" />
     <Content Include="Content\UnifyTheme\plugins\brand-buttons-inversed.css" />
     <Content Include="Content\UnifyTheme\plugins\brand-buttons.css" />
     <Content Include="Content\jquery-ui.css" />
@@ -298,6 +299,7 @@
     <Content Include="Images\social\xing.png" />
     <Content Include="Images\social\yahoo.png" />
     <Content Include="Images\social\youtube.png" />
+    <Content Include="Images\star.gif" />
     <Content Include="Images\switch.png" />
     <Content Include="Images\teachme.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -311,6 +313,7 @@
     <Content Include="Images\Unify\mainpage.jpg" />
     <Content Include="Images\up.png" />
     <Content Include="Scripts\bootstrap-switch.js" />
+    <Content Include="Scripts\irfan.rating.js" />
     <Content Include="Scripts\jquery-1.11.1.min.map" />
     <Content Include="fonts\Simple-Line-Icons.eot" />
     <Content Include="fonts\Simple-Line-Icons.ttf" />
@@ -393,6 +396,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Teacher\_CreateComment.cshtml" />
+    <Content Include="Views\Shared\_TeacherRatingPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\UnifyTheme\pages\" />

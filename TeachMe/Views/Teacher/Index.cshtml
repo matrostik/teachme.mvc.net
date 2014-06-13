@@ -68,15 +68,7 @@
                         </div>
                         <div class=" col-md-3">
                             <div class="headline"><h2>דירוג</h2></div>
-                            @*Rating placeholder*@
-                            <ul class="list-inline" style="padding-right:0">
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                            </ul>
-                            @*Rating placeholder*@
+                                 @Html.Partial("_TeacherRatingPartial", Model.Teacher)
                         </div>
                     </div>
                 </div>
@@ -108,7 +100,7 @@
                                 <div class="col-md-12">
                                     @Html.AntiForgeryToken()
                                     @Html.ValidationSummary(true)
-                                    @Html.HiddenFor(x => x.Teacher.Id)
+                                    @Html.Hidden("id", Model.Teacher.Id )
                                     <label><span class="color-red">*</span>שם השולח/ת</label>
                                     <div class="row margin-bottom-20">
                                         <div class="col-md-6 col-md-offset-6">
@@ -173,8 +165,13 @@
    
 </div>
 @Styles.Render("~/Content/brand-buttons")
+@Styles.Render("~/Content/irfan.rating")
+
 @section Scripts {
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGG8Hq0jur-Ca6QtjQ0iQFQ3TJG9WzEA8&v=3.exp&sensor=true&language=he" type="text/javascript"></script>
+
+@Scripts.Render("~/bundles/irfan.rating")
+
 
     <script type="text/javascript">
     //modal comment delete confirm
@@ -280,5 +277,47 @@
         });
     }
     google.maps.event.addDomListener(window, 'load', initialize);
+
+    // ratting system: https://github.com/irfan/jquery-star-rating
+    $('.ratting-item').rating(function (vote, event) {
+        var anchor = $(event.currentTarget),
+            pid = anchor.closest(".ratting-item").data("pid"),
+            url = '@Url.Action("RateItem", "Teacher")';
+
+        // show message while doing the database round trip
+        $('.ratting-item[data-pid=' + pid + ']')
+            .next()
+            .text("...מעבדים את בחירתך");
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: { rate: vote, id: pid },
+            success: function (data) {
+
+                if (data.success) {
+                    // all went well, here you can say Thank you
+                    $('.ratting-item[data-pid=' + data.pid + ']')
+                        .next()
+                        .text("סה''כ דירוגים " + data.total + "");
+                }
+                else {
+                    // There must be an Exception error, let's show it
+                    $('.ratting-item[data-pid=' + data.pid + ']')
+                        .next()
+                        .text("כבר דירגת");
+                }
+            },
+            error: function (err) {
+                // the call thrown an error
+                //$('.result').text(err);
+            },
+            complete: function () {
+                //$(".loading").hide();
+            }
+        });
+    });
+
+
 </script>
 }

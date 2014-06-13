@@ -1,0 +1,12 @@
+﻿@using TeachMe.Helpers
+@model TeachMe.Models.Teacher
+<div class ="pull-right">
+    <div class="ratting-item" id="@Model.Id" data-pid="@Model.Id">
+        <input class="rating" name="vote_@Model.Id" type="radio" value="1" @Utils.CheckRate(0, 1, Model.Rating, Model.Raters) />
+        <input class="rating" name="vote_@Model.Id" type="radio" value="2" @Utils.CheckRate(1, 2, Model.Rating, Model.Raters) />
+        <input class="rating" name="vote_@Model.Id" type="radio" value="3" @Utils.CheckRate(2, 3, Model.Rating, Model.Raters) />
+        <input class="rating" name="vote_@Model.Id" type="radio" value="4" @Utils.CheckRate(3, 4, Model.Rating, Model.Raters) />
+        <input class="rating" name="vote_@Model.Id" type="radio" value="5" @Utils.CheckRate(4, 5, Model.Rating, Model.Raters) />
+    </div>
+    <span class="result"></span>
+</div>

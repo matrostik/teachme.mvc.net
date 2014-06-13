@@ -43,14 +43,14 @@ namespace TeachMe
                      .Include("~/Content/UnifyTheme/plugins/font-awesome.min.css", new CssRewriteUrlTransform())
                      .Include("~/Content/UnifyTheme/plugins/line-icons.css", new CssRewriteUrlTransform())
                      .Include("~/Content/UnifyTheme/plugins/flexslider.css","~/Content/UnifyTheme/plugins/parallax-slider.css")
-                     .Include("~/Content/UnifyTheme/plugins/box-shadows.css", "~/Content/UnifyTheme/plugins/animate.css"));
+                     .Include("~/Content/UnifyTheme/plugins/box-shadows.css", "~/Content/UnifyTheme/plugins/animate.css", "~/Content/irfan.rating.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/unify/page").Include(
                       "~/Scripts/UnifyTheme/jquery-migrate-1.2.1.min.js",
                        "~/Scripts/UnifyTheme/pages/app.js"));
             bundles.Add(new ScriptBundle("~/bundles/unify").Include(
                       "~/Scripts/UnifyTheme/back-to-top.js",
-
+                      "~/Scripts/irfan.rating.js",
                       "~/Scripts/UnifyTheme/jquery.flexslider-min.js",
                       "~/Scripts/UnifyTheme/modernizr.js",
                       "~/Scripts/UnifyTheme/jquery.cslider.js"));
@@ -61,10 +61,10 @@ namespace TeachMe
                      "~/Content/UnifyTheme/plugins/brand-buttons.css"));
 
             // Other plugins
-            bundles.Add(new ScriptBundle("~/bundles/irfan.rating").Include(
-             "~/Scripts/irfan.rating.js"));
-            bundles.Add(new StyleBundle("~/Content/irfan.rating").Include(
-                   "~/Content/irfan.rating.css"));
+            //bundles.Add(new ScriptBundle("~/bundles/irfan.rating").Include(
+            // "~/Scripts/irfan.rating.js"));
+            //bundles.Add(new StyleBundle("~/Content/irfan.rating").Include(
+            //       "~/Content/irfan.rating.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/fileupload").Include(
                      "~/Scripts/jquery.fileupload.js",

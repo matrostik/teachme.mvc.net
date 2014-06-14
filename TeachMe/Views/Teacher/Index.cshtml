@@ -186,6 +186,7 @@
                     var mapcode;
                     var map;
                     function initialize() {
+                        var image = '/Images/map-marker.png';
                         var latlng = new google.maps.LatLng('@Model.Teacher.GeoLocation.Latitude', '@Model.Teacher.GeoLocation.Longitude');
                         var myOptions = {
                             zoom: 14,
@@ -198,72 +199,11 @@
                             {
                                 position: new google.maps.LatLng('@Model.Teacher.GeoLocation.Latitude', '@Model.Teacher.GeoLocation.Longitude'),
                                 map: map,
-                                title: 'Click me'
+                                icon: image
                             }
-                    );
-                        var contentString = '<div class="text-danger" style="width:275px">'
-                            + '<strong>מורה:</strong> ' + 'שם ושם משפחה' + '<br/>'
-                            + '<strong>כתובת:</strong> ' + '@ViewBag.Address' + '<br/>'
-                            + '<div style="margin-top:10px"><a class="label label-warning" href="#">פרופיל המלא »</a></div><br/>'
-                            + '</div>';
-                        var infowindow = new google.maps.InfoWindow({
-                            content: contentString,
-                            size: new google.maps.Size(250, 150)
-                        });
-                        google.maps.event.addListener(marker, 'click', function () {
-                            // Calling the open method of the infoWindow
-                            infowindow.open(map, marker);
-                        });
-                        //markicons();
+                        );
                     }
                     window.onload = initialize;
-
-                    function markicons() {
-                        var latlng = new google.maps.LatLng('@(Model.Teacher.GeoLocation.Latitude)', '@(Model.Teacher.GeoLocation.Longitude)');
-                        var foos = $(".foo");
-                        var markers = new Array();
-                        var mapOptions = {
-                            zoom: 14,
-                            center: latlng,
-                            mapTypeId: google.maps.MapTypeId.ROADMAP
-                        };
-                        var mapCanvas = document.getElementById('map-canvas');
-                        if (mapCanvas != null) {
-                            map = new google.maps.Map(mapCanvas, mapOptions);
-                            $.each(foos, function (key, value) {
-
-                                markers[key] = new google.maps.Marker({
-                                    map: map,
-                                    draggable: false,
-                                    animation: google.maps.Animation.DROP,
-                                    position: new google.maps.LatLng(
-                                        Number($(value).attr("data-latitude")),
-                                        Number($(value).attr("data-longitude")
-                                     ))
-                                });
-
-                                var contentString = '<table><tr>'
-                                    + '<td width="155px"><div class="text-danger" style="width:210px">'
-                                    + '<strong>מורה:</strong> ' + ($(value).attr("data-name")) + '<br/>'
-                                    + '<strong>כתובת:</strong> ' + ($(value).attr("data-address")) + '<br/>'
-                                    + '<div style="margin-top:10px"><a class="label label-warning" href="/Teacher/' + ($(value).attr("data-id")) + '">פרופיל המלא »</a></div><br/>'
-                                    + '</div></td>'
-                                    + '<td width="55px"><img src="' + ($(value).attr("data-picture")) + '" alt="Smiley face" height="75"></td>'
-                                    + '</div></td></tr></table>';
-                                var infowindow = new google.maps.InfoWindow({
-                                    content: contentString,
-                                    size: new google.maps.Size(250, 150)
-                                });
-
-                                google.maps.event.addListener(markers[key], 'click', function () {
-                                    // If you need this...
-                                    infowindow.open(map, markers[key]);
-                                });
-
-                            });
-                        }
-                    }
-
 
                     function codeAddress() {
                         var add = document.getElementById('address').value;

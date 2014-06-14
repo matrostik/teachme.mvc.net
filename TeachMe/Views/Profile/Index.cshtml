@@ -15,7 +15,7 @@
         <div class="col-md-12">
 
             <div class="panel panel-default">
-                <div class="panel-heading">המורה-פרטים אישיים</div>
+                <div class="panel-heading">פרטים אישיים</div>
                 <div class="panel-body">
 
                     <div class="col-md-3">
@@ -56,7 +56,7 @@
             </div>
 
             <div class="panel panel-default">
-                <div class="panel-heading">המורה-תיאור כללי</div>
+                <div class="panel-heading">תיאור כללי</div>
                 <div class="panel-body">
 
                     <dd>
@@ -111,8 +111,30 @@
                         דירוג: @Html.DisplayFor(model => model.Raters)
                     </dd>
                     <dd>
-                        תגובות: 
-                      
+                        תגובות:
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div style="overflow-y:auto; height: 300px;">
+                                    @foreach (var c in Model.Comments)
+                                    {
+                                        <div class="shadow-wrapper">
+                                            <div class="tag-box tag-box-v3 margin-bottom-15 box-shadow shadow-effect-2" style="padding:10px">
+                                                <div class="media">
+                                                    <a class="pull-right" href="#">
+                                                        <i class="icon-custom icon-lg icon-color-u fa fa-comments"></i>
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading"><span class="text-border text-border-green">@c.Date.ToString("dd.MM.yyyy")</span></h4>
+                                                        <p>@c.AuthorName:</p>
+                                                        <p>@c.CommentText</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
                     </dd>
            
         </div>

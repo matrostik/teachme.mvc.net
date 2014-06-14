@@ -1,0 +1,20 @@
+﻿@{ Layout = null; /* Overrides the Layout set for regular page views. */ }
+
+Subject: A new comment added to your profile - TeacMe
+Content-Type: text/html; charset=utf-8
+
+<html>
+<body dir="rtl">
+    <p>
+        נוספה תגובה חדשה לפרופיל שלך ב-TeachMe מאת @ViewBag.UserName.
+        <br />
+        @ViewBag.Body
+        <br />
+        לצפייה בתגובות נוספות היכנס לפרופיל שלך
+    </p>
+    <a href="@ViewBag.HostUrl/Profile/Index" target="_blank">כנס לפרופיל</a>
+</body>
+</html>
+
+
+

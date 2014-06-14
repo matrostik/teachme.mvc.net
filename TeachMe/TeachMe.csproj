@@ -397,6 +397,7 @@
     </Content>
     <Content Include="Views\Teacher\_CreateComment.cshtml" />
     <Content Include="Views\Shared\_TeacherRatingPartial.cshtml" />
+    <Content Include="Views\Emails\Comment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\UnifyTheme\pages\" />

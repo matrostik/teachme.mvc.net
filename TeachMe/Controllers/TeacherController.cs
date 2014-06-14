@@ -40,7 +40,7 @@ namespace TeachMe.Controllers
         {
             Teacher teacher = Db.Teachers.FirstOrDefault(t => t.Id == id.Value);
             // Send reset password email
-            Email.Send(email, "", teacher.GetFullName(), " פרופיל של" + teacher.GetFullName(), EmailTemplate.Feedback);
+            Email.Send(email, "", teacher.GetFullName(), " פרופיל של" + teacher.GetFullName(), EmailTemplate.Comment);
             return RedirectToAction("Index", new { @id = id });
         }
 
@@ -49,8 +49,6 @@ namespace TeachMe.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateComment([Bind(Include = "Id,TeacherId,AuthorName,CommentText")] Comment comment)
         {
-           
-
             if (ModelState.IsValid)
             {
                 try
@@ -59,6 +57,8 @@ namespace TeachMe.Controllers
                     Teacher teacher = Db.Teachers.Find(comment.TeacherId);
                     teacher.Comments.Add(comment);
                     Db.SaveChanges();
+                    string to = teacher.User.UserName;
+                    Email.Send(to, comment.AuthorName, "", comment.CommentText, EmailTemplate.Comment);
                 }
                 catch (Exception)
                 {
@@ -120,6 +120,5 @@ namespace TeachMe.Controllers
             }
             return teach.Raters;
         }
-
     }
 }

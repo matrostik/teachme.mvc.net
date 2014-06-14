@@ -138,186 +138,191 @@
 
     <div class="row comments">
         <div class="headline"><h2>תגובות</h2></div>
-        @foreach (var c in Model.Teacher.Comments)
-        {
-             <div class="shadow-wrapper">
-            <div class="tag-box tag-box-v3 margin-bottom-15 box-shadow shadow-effect-2" style="padding:10px">
-                <div class="media">
-                    <a class="pull-right" href="#">
-                        <i class="icon-custom icon-lg icon-color-u fa fa-comments"></i>
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading"><span class="text-border text-border-green">@c.Date.ToString("dd.MM.yyyy")</span></h4>
-                        <p>@c.AuthorName:</p>
-                        <p>@c.CommentText</p>
-                    </div>
-                </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div style="overflow-y:auto; height: 550px;">
+                    @foreach (var c in Model.Teacher.Comments)
+                    {
+                        <div class="shadow-wrapper">
+                            <div class="tag-box tag-box-v3 margin-bottom-15 box-shadow shadow-effect-2" style="padding:10px">
+                                <div class="media">
+                                    <a class="pull-right" href="#">
+                                        <i class="icon-custom icon-lg icon-color-u fa fa-comments"></i>
+                                    </a>
+                                    <div class="media-body">
+                                        <h4 class="media-heading"><span class="text-border text-border-green">@c.Date.ToString("dd.MM.yyyy")</span></h4>
+                                        <p>@c.AuthorName:</p>
+                                        <p>@c.CommentText</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                 </div>
             </div>
         </div>
-        }
-      
-    </div>
-    <!-- Comment Form -->
+                </div>
+                <!-- Comment Form -->
 
-    <p>
-        @Html.Partial("_CreateComment",Model.Comment)
-    </p>
-   
-</div>
-@Styles.Render("~/Content/brand-buttons")
-@*@Styles.Render("~/Content/irfan.rating")*@
+                <p>
+                    @Html.Partial("_CreateComment", Model.Comment)
+                </p>
 
-@section Scripts {
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGG8Hq0jur-Ca6QtjQ0iQFQ3TJG9WzEA8&v=3.exp&sensor=true&language=he" type="text/javascript"></script>
+            </div>
+            @Styles.Render("~/Content/brand-buttons")
+            @*@Styles.Render("~/Content/irfan.rating")*@
 
-@*@Scripts.Render("~/bundles/irfan.rating")*@
+            @section Scripts {
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGG8Hq0jur-Ca6QtjQ0iQFQ3TJG9WzEA8&v=3.exp&sensor=true&language=he" type="text/javascript"></script>
+
+                @*@Scripts.Render("~/bundles/irfan.rating")*@
 
 
-    <script type="text/javascript">
-    //modal comment delete confirm
-    $(document).on("click", "#sendProfile", function () {
-        $('#sendProfileModal').modal('show');
-    });
-    var mapcode;
-    var map;
-    function initialize() {
-        var latlng = new google.maps.LatLng('@Model.Teacher.GeoLocation.Latitude', '@Model.Teacher.GeoLocation.Longitude');
-        var myOptions = {
-            zoom: 14,
-            center: latlng,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
-        var marker = new google.maps.Marker
-        (
-            {
-                position: new google.maps.LatLng('@Model.Teacher.GeoLocation.Latitude', '@Model.Teacher.GeoLocation.Longitude'),
-                map: map,
-                title: 'Click me'
+                <script type="text/javascript">
+                    //modal comment delete confirm
+                    $(document).on("click", "#sendProfile", function () {
+                        $('#sendProfileModal').modal('show');
+                    });
+                    var mapcode;
+                    var map;
+                    function initialize() {
+                        var latlng = new google.maps.LatLng('@Model.Teacher.GeoLocation.Latitude', '@Model.Teacher.GeoLocation.Longitude');
+                        var myOptions = {
+                            zoom: 14,
+                            center: latlng,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                        };
+                        map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+                        var marker = new google.maps.Marker
+                        (
+                            {
+                                position: new google.maps.LatLng('@Model.Teacher.GeoLocation.Latitude', '@Model.Teacher.GeoLocation.Longitude'),
+                                map: map,
+                                title: 'Click me'
+                            }
+                    );
+                        var contentString = '<div class="text-danger" style="width:275px">'
+                            + '<strong>מורה:</strong> ' + 'שם ושם משפחה' + '<br/>'
+                            + '<strong>כתובת:</strong> ' + '@ViewBag.Address' + '<br/>'
+                            + '<div style="margin-top:10px"><a class="label label-warning" href="#">פרופיל המלא »</a></div><br/>'
+                            + '</div>';
+                        var infowindow = new google.maps.InfoWindow({
+                            content: contentString,
+                            size: new google.maps.Size(250, 150)
+                        });
+                        google.maps.event.addListener(marker, 'click', function () {
+                            // Calling the open method of the infoWindow
+                            infowindow.open(map, marker);
+                        });
+                        //markicons();
+                    }
+                    window.onload = initialize;
+
+                    function markicons() {
+                        var latlng = new google.maps.LatLng('@(Model.Teacher.GeoLocation.Latitude)', '@(Model.Teacher.GeoLocation.Longitude)');
+                        var foos = $(".foo");
+                        var markers = new Array();
+                        var mapOptions = {
+                            zoom: 14,
+                            center: latlng,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                        };
+                        var mapCanvas = document.getElementById('map-canvas');
+                        if (mapCanvas != null) {
+                            map = new google.maps.Map(mapCanvas, mapOptions);
+                            $.each(foos, function (key, value) {
+
+                                markers[key] = new google.maps.Marker({
+                                    map: map,
+                                    draggable: false,
+                                    animation: google.maps.Animation.DROP,
+                                    position: new google.maps.LatLng(
+                                        Number($(value).attr("data-latitude")),
+                                        Number($(value).attr("data-longitude")
+                                     ))
+                                });
+
+                                var contentString = '<table><tr>'
+                                    + '<td width="155px"><div class="text-danger" style="width:210px">'
+                                    + '<strong>מורה:</strong> ' + ($(value).attr("data-name")) + '<br/>'
+                                    + '<strong>כתובת:</strong> ' + ($(value).attr("data-address")) + '<br/>'
+                                    + '<div style="margin-top:10px"><a class="label label-warning" href="/Teacher/' + ($(value).attr("data-id")) + '">פרופיל המלא »</a></div><br/>'
+                                    + '</div></td>'
+                                    + '<td width="55px"><img src="' + ($(value).attr("data-picture")) + '" alt="Smiley face" height="75"></td>'
+                                    + '</div></td></tr></table>';
+                                var infowindow = new google.maps.InfoWindow({
+                                    content: contentString,
+                                    size: new google.maps.Size(250, 150)
+                                });
+
+                                google.maps.event.addListener(markers[key], 'click', function () {
+                                    // If you need this...
+                                    infowindow.open(map, markers[key]);
+                                });
+
+                            });
+                        }
+                    }
+
+
+                    function codeAddress() {
+                        var add = document.getElementById('address').value;
+                        mapcode.geocode({ 'address': add }, function (results, status) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                diag.setCenter(results[0].geometry.location);
+                                var hint = new google.maps.Marker({
+                                    diag: map,
+                                    position: results[0].geometry.location,
+                                    title: add
+                                });
+                                hint.setMap(diag);
+                            } else {
+                                alert('This code is not successful ' + status);
+                            }
+                        });
+                    }
+                    google.maps.event.addDomListener(window, 'load', initialize);
+
+                    // ratting system: https://github.com/irfan/jquery-star-rating
+                    $('.ratting-item').rating(function (vote, event) {
+                        var anchor = $(event.currentTarget),
+                            pid = anchor.closest(".ratting-item").data("pid"),
+                            url = '@Url.Action("RateItem", "Teacher")';
+
+                        // show message while doing the database round trip
+                        $('.ratting-item[data-pid=' + pid + ']')
+                            .next()
+                            .text("...מעבדים את בחירתך");
+
+                        $.ajax({
+                            url: url,
+                            type: "GET",
+                            data: { rate: vote, id: pid },
+                            success: function (data) {
+
+                                if (data.success) {
+                                    // all went well, here you can say Thank you
+                                    $('.ratting-item[data-pid=' + data.pid + ']')
+                                        .next()
+                                        .text("סה''כ דירוגים " + data.total + "");
+                                }
+                                else {
+                                    // There must be an Exception error, let's show it
+                                    $('.ratting-item[data-pid=' + data.pid + ']')
+                                        .next()
+                                        .text("כבר דירגת");
+                                }
+                            },
+                            error: function (err) {
+                                // the call thrown an error
+                                //$('.result').text(err);
+                            },
+                            complete: function () {
+                                //$(".loading").hide();
+                            }
+                        });
+                    });
+
+
+                </script>
             }
-    );
-        var contentString = '<div class="text-danger" style="width:275px">'
-            + '<strong>מורה:</strong> ' + 'שם ושם משפחה' + '<br/>'
-            + '<strong>כתובת:</strong> ' + '@ViewBag.Address' + '<br/>'
-            + '<div style="margin-top:10px"><a class="label label-warning" href="#">פרופיל המלא »</a></div><br/>'
-            + '</div>';
-        var infowindow = new google.maps.InfoWindow({
-            content: contentString,
-            size: new google.maps.Size(250, 150)
-        });
-        google.maps.event.addListener(marker, 'click', function () {
-            // Calling the open method of the infoWindow
-            infowindow.open(map, marker);
-        });
-        //markicons();
-    }
-    window.onload = initialize;
-
-    function markicons() {
-        var latlng = new google.maps.LatLng('@(Model.Teacher.GeoLocation.Latitude)', '@(Model.Teacher.GeoLocation.Longitude)');
-        var foos = $(".foo");
-        var markers = new Array();
-        var mapOptions = {
-            zoom: 14,
-            center: latlng,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var mapCanvas = document.getElementById('map-canvas');
-        if (mapCanvas != null) {
-            map = new google.maps.Map(mapCanvas, mapOptions);
-            $.each(foos, function (key, value) {
-
-                markers[key] = new google.maps.Marker({
-                    map: map,
-                    draggable: false,
-                    animation: google.maps.Animation.DROP,
-                    position: new google.maps.LatLng(
-                        Number($(value).attr("data-latitude")),
-                        Number($(value).attr("data-longitude")
-                     ))
-                });
-
-                var contentString = '<table><tr>'
-                    + '<td width="155px"><div class="text-danger" style="width:210px">'
-                    + '<strong>מורה:</strong> ' + ($(value).attr("data-name")) + '<br/>'
-                    + '<strong>כתובת:</strong> ' + ($(value).attr("data-address")) + '<br/>'
-                    + '<div style="margin-top:10px"><a class="label label-warning" href="/Teacher/' + ($(value).attr("data-id")) + '">פרופיל המלא »</a></div><br/>'
-                    + '</div></td>'
-                    + '<td width="55px"><img src="' + ($(value).attr("data-picture")) + '" alt="Smiley face" height="75"></td>'
-                    + '</div></td></tr></table>';
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString,
-                    size: new google.maps.Size(250, 150)
-                });
-
-                google.maps.event.addListener(markers[key], 'click', function () {
-                    // If you need this...
-                    infowindow.open(map, markers[key]);
-                });
-
-            });
-        }
-    }
-
-
-    function codeAddress() {
-        var add = document.getElementById('address').value;
-        mapcode.geocode({ 'address': add }, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                diag.setCenter(results[0].geometry.location);
-                var hint = new google.maps.Marker({
-                    diag: map,
-                    position: results[0].geometry.location,
-                    title: add
-                });
-                hint.setMap(diag);
-            } else {
-                alert('This code is not successful ' + status);
-            }
-        });
-    }
-    google.maps.event.addDomListener(window, 'load', initialize);
-
-    // ratting system: https://github.com/irfan/jquery-star-rating
-    $('.ratting-item').rating(function (vote, event) {
-        var anchor = $(event.currentTarget),
-            pid = anchor.closest(".ratting-item").data("pid"),
-            url = '@Url.Action("RateItem", "Teacher")';
-
-        // show message while doing the database round trip
-        $('.ratting-item[data-pid=' + pid + ']')
-            .next()
-            .text("...מעבדים את בחירתך");
-
-        $.ajax({
-            url: url,
-            type: "GET",
-            data: { rate: vote, id: pid },
-            success: function (data) {
-
-                if (data.success) {
-                    // all went well, here you can say Thank you
-                    $('.ratting-item[data-pid=' + data.pid + ']')
-                        .next()
-                        .text("סה''כ דירוגים " + data.total + "");
-                }
-                else {
-                    // There must be an Exception error, let's show it
-                    $('.ratting-item[data-pid=' + data.pid + ']')
-                        .next()
-                        .text("כבר דירגת");
-                }
-            },
-            error: function (err) {
-                // the call thrown an error
-                //$('.result').text(err);
-            },
-            complete: function () {
-                //$(".loading").hide();
-            }
-        });
-    });
-
-
-</script>
-}

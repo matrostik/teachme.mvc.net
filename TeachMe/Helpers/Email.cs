@@ -7,7 +7,8 @@ namespace TeachMe.Helpers
     {
         Feedback,
         Registration,
-        ResetPassword
+        ResetPassword,
+        Comment
     }
 
     public class Email

@@ -29,6 +29,9 @@ namespace TeachMe.Controllers
             TeacherViewModel model = new TeacherViewModel();
             model.Teacher = Db.Teachers.FirstOrDefault(t => t.Id == id.Value);
             model.Comment = new Comment() { TeacherId = model.Teacher.Id };
+            //Encrease views
+            model.Teacher.Views++;
+            Db.SaveChanges();
             return View(model);
         }
 

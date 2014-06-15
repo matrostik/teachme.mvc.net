@@ -159,7 +159,7 @@ namespace TeachMe.Models
         public string City { get; set; }
         public string Subjects { get; set; }
         public int LessonPrice { get; set; }
-        public int Rating { get; set; }
+        public double Rating { get; set; }
 
     }
 }

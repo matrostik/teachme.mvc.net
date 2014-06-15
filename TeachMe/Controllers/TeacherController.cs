@@ -3,8 +3,6 @@ using System.Linq;
 using System.Web.Mvc;
 using TeachMe.Helpers;
 using TeachMe.Models;
-using System.Collections.Generic;
-
 
 namespace TeachMe.Controllers
 {
@@ -39,8 +37,7 @@ namespace TeachMe.Controllers
         public ActionResult SendProfile(int? id, string from, string email, string comment)
         {
             Teacher teacher = Db.Teachers.FirstOrDefault(t => t.Id == id.Value);
-            // Send reset password email
-            Email.Send(email, "", teacher.GetFullName(), " פרופיל של" + teacher.GetFullName(), EmailTemplate.Comment);
+            Email.Send(email, "", teacher.GetFullName(), " פרופיל של" + teacher.GetFullName(), EmailTemplate.Feedback);
             return RedirectToAction("Index", new { @id = id });
         }
 
@@ -97,7 +94,6 @@ namespace TeachMe.Controllers
                 if (ex.InnerException != null)
                     while (ex.InnerException != null)
                         ex = ex.InnerException;
-
                 error = ex.Message;
             }
             if (totalRaters != 0)
@@ -105,7 +101,7 @@ namespace TeachMe.Controllers
             return Json(new { error = error, success = success, pid = id, total = totalRaters }, JsonRequestBehavior.AllowGet);
         }
 
-        public int IncrementRating(int rate, int id)
+        private int IncrementRating(int rate, int id)
         {
             var teach = Db.Teachers.Where(a => a.Id == id).First();
             try

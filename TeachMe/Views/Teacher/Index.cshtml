@@ -68,7 +68,7 @@
                         </div>
                         <div class=" col-md-3">
                             <div class="headline"><h2>דירוג</h2></div>
-                                 @Html.Partial("_TeacherRatingPartial", Model.Teacher)
+                            @Html.Partial("_TeacherRatingPartial", Model.Teacher)
                         </div>
                     </div>
                 </div>
@@ -93,14 +93,14 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="float:left">×</button>
                         <h4 class="modal-title" id="myModalLabel">שלח לחבר</h4>
                     </div>
-                    @using (Html.BeginForm("SendProfile", "Teacher",FormMethod.Post))
+                    @using (Html.BeginForm("SendProfile", "Teacher", FormMethod.Post))
                     {
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
                                     @Html.AntiForgeryToken()
                                     @Html.ValidationSummary(true)
-                                    @Html.Hidden("id", Model.Teacher.Id )
+                                    @Html.Hidden("id", Model.Teacher.Id)
                                     <label><span class="color-red">*</span>שם השולח/ת</label>
                                     <div class="row margin-bottom-20">
                                         <div class="col-md-6 col-md-offset-6">
@@ -158,111 +158,108 @@
                             </div>
                         </div>
                     }
-                 </div>
+                </div>
             </div>
         </div>
-                </div>
-                <!-- Comment Form -->
+    </div>
+    <!-- Comment Form -->
 
-                <p>
-                    @Html.Partial("_CreateComment", Model.Comment)
-                </p>
+    <p>
+        @Html.Partial("_CreateComment", Model.Comment)
+    </p>
 
-            </div>
-            @Styles.Render("~/Content/brand-buttons")
-            @*@Styles.Render("~/Content/irfan.rating")*@
+</div>
 
-            @section Scripts {
-                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGG8Hq0jur-Ca6QtjQ0iQFQ3TJG9WzEA8&v=3.exp&sensor=true&language=he" type="text/javascript"></script>
+@Styles.Render("~/Content/brand-buttons")
 
-                @*@Scripts.Render("~/bundles/irfan.rating")*@
+@section Scripts {
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGG8Hq0jur-Ca6QtjQ0iQFQ3TJG9WzEA8&v=3.exp&sensor=true&language=he" type="text/javascript"></script>
 
+    <script type="text/javascript">
+        //modal comment delete confirm
+        $(document).on("click", "#sendProfile", function () {
+            $('#sendProfileModal').modal('show');
+        });
+        var mapcode;
+        var map;
+        function initialize() {
+            var image = '/Images/map-marker.png';
+            var latlng = new google.maps.LatLng('@Model.Teacher.GeoLocation.Latitude', '@Model.Teacher.GeoLocation.Longitude');
+            var myOptions = {
+                zoom: 14,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+            var marker = new google.maps.Marker
+            (
+                {
+                    position: new google.maps.LatLng('@Model.Teacher.GeoLocation.Latitude', '@Model.Teacher.GeoLocation.Longitude'),
+                    map: map,
+                    icon: image
+                }
+            );
+        }
+        window.onload = initialize;
 
-                <script type="text/javascript">
-                    //modal comment delete confirm
-                    $(document).on("click", "#sendProfile", function () {
-                        $('#sendProfileModal').modal('show');
+        function codeAddress() {
+            var add = document.getElementById('address').value;
+            mapcode.geocode({ 'address': add }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    diag.setCenter(results[0].geometry.location);
+                    var hint = new google.maps.Marker({
+                        diag: map,
+                        position: results[0].geometry.location,
+                        title: add
                     });
-                    var mapcode;
-                    var map;
-                    function initialize() {
-                        var image = '/Images/map-marker.png';
-                        var latlng = new google.maps.LatLng('@Model.Teacher.GeoLocation.Latitude', '@Model.Teacher.GeoLocation.Longitude');
-                        var myOptions = {
-                            zoom: 14,
-                            center: latlng,
-                            mapTypeId: google.maps.MapTypeId.ROADMAP
-                        };
-                        map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
-                        var marker = new google.maps.Marker
-                        (
-                            {
-                                position: new google.maps.LatLng('@Model.Teacher.GeoLocation.Latitude', '@Model.Teacher.GeoLocation.Longitude'),
-                                map: map,
-                                icon: image
-                            }
-                        );
-                    }
-                    window.onload = initialize;
+                    hint.setMap(diag);
+                } else {
+                    alert('This code is not successful ' + status);
+                }
+            });
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
 
-                    function codeAddress() {
-                        var add = document.getElementById('address').value;
-                        mapcode.geocode({ 'address': add }, function (results, status) {
-                            if (status == google.maps.GeocoderStatus.OK) {
-                                diag.setCenter(results[0].geometry.location);
-                                var hint = new google.maps.Marker({
-                                    diag: map,
-                                    position: results[0].geometry.location,
-                                    title: add
-                                });
-                                hint.setMap(diag);
-                            } else {
-                                alert('This code is not successful ' + status);
-                            }
-                        });
-                    }
-                    google.maps.event.addDomListener(window, 'load', initialize);
+        // ratting system: https://github.com/irfan/jquery-star-rating
+        $('.ratting-item').rating(function (vote, event) {
+            var anchor = $(event.currentTarget),
+                pid = anchor.closest(".ratting-item").data("pid"),
+                url = '@Url.Action("RateItem", "Teacher")';
 
-                    // ratting system: https://github.com/irfan/jquery-star-rating
-                    $('.ratting-item').rating(function (vote, event) {
-                        var anchor = $(event.currentTarget),
-                            pid = anchor.closest(".ratting-item").data("pid"),
-                            url = '@Url.Action("RateItem", "Teacher")';
+            // show message while doing the database round trip
+            $('.ratting-item[data-pid=' + pid + ']')
+                .next()
+                .text("...מעבדים את בחירתך");
 
-                        // show message while doing the database round trip
-                        $('.ratting-item[data-pid=' + pid + ']')
+            $.ajax({
+                url: url,
+                type: "GET",
+                data: { rate: vote, id: pid },
+                success: function (data) {
+
+                    if (data.success) {
+                        // all went well, here you can say Thank you
+                        $('.ratting-item[data-pid=' + data.pid + ']')
                             .next()
-                            .text("...מעבדים את בחירתך");
-
-                        $.ajax({
-                            url: url,
-                            type: "GET",
-                            data: { rate: vote, id: pid },
-                            success: function (data) {
-
-                                if (data.success) {
-                                    // all went well, here you can say Thank you
-                                    $('.ratting-item[data-pid=' + data.pid + ']')
-                                        .next()
-                                        .text("סה''כ דירוגים " + data.total + "");
-                                }
-                                else {
-                                    // There must be an Exception error, let's show it
-                                    $('.ratting-item[data-pid=' + data.pid + ']')
-                                        .next()
-                                        .text("כבר דירגת");
-                                }
-                            },
-                            error: function (err) {
-                                // the call thrown an error
-                                //$('.result').text(err);
-                            },
-                            complete: function () {
-                                //$(".loading").hide();
-                            }
-                        });
-                    });
+                            .text("סה''כ דירוגים " + data.total + "");
+                    }
+                    else {
+                        // There must be an Exception error, let's show it
+                        $('.ratting-item[data-pid=' + data.pid + ']')
+                            .next()
+                            .text("כבר דירגת");
+                    }
+                },
+                error: function (err) {
+                    // the call thrown an error
+                    //$('.result').text(err);
+                },
+                complete: function () {
+                    //$(".loading").hide();
+                }
+            });
+        });
 
 
-                </script>
-            }
+    </script>
+}

@@ -209,11 +209,11 @@
             });
         }
 
-        function buildRate(id, rate) {
+        function buildRate(rate) {
             var result = '';
-            for (var i = 1; i <= 5; i++) {
+            for (var i = 0; i < 5; i++) {
                 result += '<a class="star';
-                if (rate >= i)
+                if (rate > i)
                     result += ' fullStar';
                 result += '"></a>';
             }
@@ -231,13 +231,13 @@
                 success: function (data) {
 
                     for (var i = 0; i < data.length; i++) {
-                        var rate = buildRate(data[i].Id, data[i].Rating);
-                        $('<div class="funny-boxes funny-boxes-right-yellow no-space margin-bottom-15 animated fadeInUpBig"><div class="row"><div class="col-md-9">'
+                        var rate = buildRate(data[i].Rating);
+                        $('<div class="funny-boxes funny-boxes-right-orange no-space margin-bottom-15 animated fadeInUpBig"><div class="row"><div class="col-md-9">'
                             + '<h4 style="padding:0;margin:0"><a href="/Teacher/' + data[i].Id + '">' + data[i].FirstName + ' ' + data[i].LastName + '</a></h4>'
                             + rate
                             + '<ul class="list-unstyled" style="padding:0;">'
-                            + '<li><i class="fa fa-map-marker color-yellow" style="width:15px;padding-right:2px"></i>  עיר: ' + data[i].City + '</li>'
-                            + '<li><i class="fa fa-briefcase color-yellow" style="width:15px"></i> תחום: ' + data[i].Subjects + '</li>'
+                            + '<li><i class="fa fa-map-marker color-orange" style="width:15px;padding-right:2px"></i>  עיר: ' + data[i].City + '</li>'
+                            + '<li><i class="fa fa-briefcase color-orange" style="width:15px"></i> תחום: ' + data[i].Subjects + '</li>'
                             + '</ul></div>'
                             + '<div class="col-md-3 funny-boxes-img"> <a href="/Teacher/' + data[i].Id + '"><img alt="" src="' + data[i].PictureUrl + '" class="img-responsive rounded-2x"></a></div>'
                             + '</div></div>').appendTo("#teachersMostRated");
@@ -254,12 +254,12 @@
                 type: "Get",
                 success: function (data) {
                     for (var i = 0; i < data.length; i++) {
-                        $('<div class="funny-boxes funny-boxes-right-orange no-space margin-bottom-15 animated fadeInUpBig"><div class="row"><div class="col-md-9">'
+                        $('<div class="funny-boxes funny-boxes-right-yellow no-space margin-bottom-15 animated fadeInUpBig"><div class="row"><div class="col-md-9">'
                             + '<h4 style="padding:0;margin:0"><a href="/Teacher/' + data[i].Id + '">' + data[i].FirstName + ' ' + data[i].LastName + '</a></h4>'
                             + '<ul class="list-unstyled" style="padding:0;">'
-                            + '<li><i class="fa fa-map-marker color-orange" style="width:15px;padding-right:2px"></i>  עיר: ' + data[i].City + '</li>'
-                            + '<li><i class="fa fa-briefcase color-orange" style="width:15px"></i> תחום: ' + data[i].Subjects + '</li>'
-                            + '<li><i class="fa fa-money color-orange" style="width:15px"></i> מחיר: ' + data[i].LessonPrice + '</li>'
+                            + '<li><i class="fa fa-map-marker color-yellow" style="width:15px;padding-right:2px"></i>  עיר: ' + data[i].City + '</li>'
+                            + '<li><i class="fa fa-briefcase color-yellow" style="width:15px"></i> תחום: ' + data[i].Subjects + '</li>'
+                            + '<li><i class="fa fa-money color-yellow" style="width:15px"></i> מחיר: ' + data[i].LessonPrice + '</li>'
                             + '</ul></div>'
                             + '<div class="col-md-3 funny-boxes-img"> <a href="/Teacher/' + data[i].Id + '"><img alt="" src="' + data[i].PictureUrl + '" class="img-responsive rounded-2x"></a></div>'
                             + '</div></div>').appendTo("#teachersMostCommented");

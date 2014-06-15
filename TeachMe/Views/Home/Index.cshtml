@@ -88,7 +88,7 @@
 <div class="container content">
     <div class="row">
         <div id="teachersMostCommented" class="col-md-4 animated fadeInUpBig">
-            <div class="headline"><h2>מורים פופולריים</h2></div>
+            <div class="headline"><h2>המורים הנצפים ביותר </h2></div>
             @*@foreach (var item in Model.MostCommentedTeachers)
             {
                 <div class="funny-boxes funny-boxes-right-orange no-space margin-bottom-15">
@@ -109,7 +109,7 @@
             }*@
         </div>
         <div id="teachersMostRated" class="col-md-4 animated fadeInUpBig">
-            <div class="headline"><h2>מורים הכי מדורגים</h2></div>
+            <div class="headline"><h2>המורים הכי מדורגים</h2></div>
             @*@foreach (var item in Model.MostRatedTeachers)
             {
                 <div class="funny-boxes funny-boxes-right-yellow no-space margin-bottom-15">
@@ -250,7 +250,7 @@
 
         function getMostCommentedTeachers() {
             $.ajax({
-                url: "/Home/GetMostCommentedTeachers",
+                url: "/Home/GetMostViewedTeachers",
                 type: "Get",
                 success: function (data) {
                     for (var i = 0; i < data.length; i++) {
@@ -259,7 +259,7 @@
                             + '<ul class="list-unstyled" style="padding:0;">'
                             + '<li><i class="fa fa-map-marker color-yellow" style="width:15px;padding-right:2px"></i>  עיר: ' + data[i].City + '</li>'
                             + '<li><i class="fa fa-briefcase color-yellow" style="width:15px"></i> תחום: ' + data[i].Subjects + '</li>'
-                            + '<li><i class="fa fa-money color-yellow" style="width:15px"></i> מחיר: ' + data[i].LessonPrice + '</li>'
+                            + '<li><i class="fa fa-eye color-orange" style="width:15px"></i> צפיות: ' + data[i].Views + '</li>'
                             + '</ul></div>'
                             + '<div class="col-md-3 funny-boxes-img"> <a href="/Teacher/' + data[i].Id + '"><img alt="" src="' + data[i].PictureUrl + '" class="img-responsive rounded-2x"></a></div>'
                             + '</div></div>').appendTo("#teachersMostCommented");

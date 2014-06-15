@@ -70,20 +70,20 @@ namespace TeachMe.Controllers
                 {
                     Id = x.Id,
                     FirstName = x.User.FirstName,
-                    LastName = x.User.LastName, 
+                    LastName = x.User.LastName,
                     City = x.City,
                     LessonPrice = x.LessonPrice,
                     Subjects = string.Join(", ", x.SubjectsToTeach.Select(s => s.Name)),
                     PictureUrl = x.PictureUrl,
-                    Rating = x.Raters==0 ? 0 : x.Rating/x.Raters
+                    Rating = x.Raters == 0 ? 0 : x.Rating / x.Raters
 
                 }).ToList();
             return Json(teachers, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetMostCommentedTeachers()
+        public ActionResult GetMostViewedTeachers()
         {
-            var teachers = Db.Teachers.OrderByDescending(x => x.Comments.Count).Take(5).ToList()
+            var teachers = Db.Teachers.OrderByDescending(x => x.Views).Take(5).ToList()
                 .Select(x => new TeacherSimple
                 {
                     Id = x.Id,
@@ -91,6 +91,7 @@ namespace TeachMe.Controllers
                     LastName = x.User.LastName,
                     City = x.City,
                     LessonPrice = x.LessonPrice,
+                    Views = x.Views,
                     Subjects = string.Join(", ", x.SubjectsToTeach.Select(s => s.Name)),
                     PictureUrl = x.PictureUrl
                 }).ToList();

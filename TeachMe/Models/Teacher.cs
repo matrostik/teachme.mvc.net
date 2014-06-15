@@ -160,6 +160,7 @@ namespace TeachMe.Models
         public string Subjects { get; set; }
         public int LessonPrice { get; set; }
         public int Rating { get; set; }
+        public int Views { get; set; }
 
     }
 }

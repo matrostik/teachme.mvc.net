@@ -250,7 +250,7 @@
 
         function getMostCommentedTeachers() {
             $.ajax({
-                url: "/Home/GetMostCommentedTeachers",
+                url: "/Home/GetMostViewedTeachers",
                 type: "Get",
                 success: function (data) {
                     for (var i = 0; i < data.length; i++) {
@@ -259,7 +259,7 @@
                             + '<ul class="list-unstyled" style="padding:0;">'
                             + '<li><i class="fa fa-map-marker color-orange" style="width:15px;padding-right:2px"></i>  עיר: ' + data[i].City + '</li>'
                             + '<li><i class="fa fa-briefcase color-orange" style="width:15px"></i> תחום: ' + data[i].Subjects + '</li>'
-                            + '<li><i class="fa fa-money color-orange" style="width:15px"></i> מחיר: ' + data[i].LessonPrice + '</li>'
+                            + '<li><i class="fa fa-eye color-orange" style="width:15px"></i> צפיות: ' + data[i].Views + '</li>'
                             + '</ul></div>'
                             + '<div class="col-md-3 funny-boxes-img"> <a href="/Teacher/' + data[i].Id + '"><img alt="" src="' + data[i].PictureUrl + '" class="img-responsive rounded-2x"></a></div>'
                             + '</div></div>').appendTo("#teachersMostCommented");
